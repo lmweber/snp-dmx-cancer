@@ -9,7 +9,7 @@
 # parameters in both 'qsub' and 'cellranger count' if it doesn't work
 
 
-#qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=200G run_cellranger.sh
+#qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G run_cellranger.sh
 
 
 cellranger count --id=16030X2_HJVMLDMXX \
@@ -19,7 +19,7 @@ cellranger count --id=16030X2_HJVMLDMXX \
 --expect-cells=5000 \
 --jobmode=local \
 --localcores=10 \
---localmem=45
+--localmem=50
 
 # cellranger count --id=16030X3_HJTWLDMXX \
 # --fastqs=../data/16030R/Fastq/16030X3_HJTWLDMXX \
@@ -28,7 +28,7 @@ cellranger count --id=16030X2_HJVMLDMXX \
 # --expect-cells=5000 \
 # --jobmode=local \
 # --localcores=10 \
-# --localmem=45
+# --localmem=50
 
 # cellranger count --id=16030X4_HJTWLDMXX \
 # --fastqs=../data/16030R/Fastq/16030X4_HJTWLDMXX \
@@ -37,6 +37,6 @@ cellranger count --id=16030X2_HJVMLDMXX \
 # --expect-cells=5000 \
 # --jobmode=local \
 # --localcores=10 \
-# --localmem=45
+# --localmem=50
 
 
