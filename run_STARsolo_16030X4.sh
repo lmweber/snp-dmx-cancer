@@ -10,7 +10,7 @@
 # run STARsolo
 # ------------
 
-#qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=11G run_STARsolo.sh
+#qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=11G,h_fsize=100G run_STARsolo.sh
 
 # note: R2 is before R1 in --readFilesIn
 
