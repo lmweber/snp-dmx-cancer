@@ -10,7 +10,7 @@
 
 # generate STAR genome index using Cell Ranger annotation files (only needs to be run once)
 
-#qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=11G run_STAR_index.sh
+#qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=11G,h_fsize=200G run_STAR_index.sh
 
 
 STAR --runMode genomeGenerate \
