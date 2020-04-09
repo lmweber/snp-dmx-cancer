@@ -26,6 +26,7 @@ mkdir BAM_merged
 python ../synth_pool/synth_pool.py \
 -s 16030X2_HJVMLDMXX/outs/possorted_genome_bam.bam,16030X3_HJTWLDMXX/outs/possorted_genome_bam.bam,16030X4_HJTWLDMXX/outs/possorted_genome_bam.bam \
 -b 16030X2_HJVMLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv,16030X3_HJTWLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv,16030X4_HJTWLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv \
+-r ../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
 -o BAM_merged \
 -p 10
 
