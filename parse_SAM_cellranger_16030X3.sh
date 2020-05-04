@@ -9,6 +9,6 @@
 # see also https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/bam
 
 
-sed -i "s/\(CB\:Z\:[A-Z]\+\)\-1/\1\-X2/g" 16030X2_HJVMLDMXX/outs/possorted_genome_bam.sam
+sed -i "s/\(CB\:Z\:[A-Z]\+\)\-1/\1\-X2/g" 16030X3_HJTWLDMXX/outs/possorted_genome_bam.sam
 
 
