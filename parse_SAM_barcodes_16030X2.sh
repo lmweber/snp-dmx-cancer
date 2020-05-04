@@ -9,7 +9,7 @@
 # see also https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/bam
 
 
-#qsub -V -cwd -l mem_free=100G,h_vmem=200G,h_fsize=200G parse_SAM_barcodes.sh
+#qsub -V -cwd -l mem_free=100G,h_vmem=200G,h_fsize=300G parse_SAM_barcodes.sh
 
 
 sed -i "s/\(CB\:Z\:[A-Z]\+\)\-1/\1\-X2/g" 16030X2_HJVMLDMXX/outs/possorted_genome_bam.sam
