@@ -8,6 +8,8 @@
 # parameters in both 'qsub' and 'cellranger count' if it doesn't work
 
 
+# runtime: up to 12 hours
+
 #qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G run_cellranger.sh
 
 
