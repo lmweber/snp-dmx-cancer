@@ -5,7 +5,7 @@
 # assumes BAM files have been parsed to contain unique sample IDs in cell barcodes
 
 
-#qsub -V -cwd -l mem_free=100G,h_vmem=200G,h_fsize=200G merge_BAM_files.sh
+#qsub -V -cwd -l mem_free=100G,h_vmem=200G,h_fsize=200G merge_parsed_BAM_files.sh
 
 
 mkdir bam_merged
