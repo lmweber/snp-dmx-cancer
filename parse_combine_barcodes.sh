@@ -17,5 +17,6 @@ gunzip *
 sed -i "s/\([A-Z]\+\)\-1/\1\-X2/g" barcodes-X2.tsv
 sed -i "s/\([A-Z]\+\)\-1/\1\-X3/g" barcodes-X3.tsv
 sed -i "s/\([A-Z]\+\)\-1/\1\-X4/g" barcodes-X4.tsv
+cat barcodes-X2.tsv.gz barcodes-X3.tsv.gz barcodes-X4.tsv.gz > barcodes_combined.txt
 
 
