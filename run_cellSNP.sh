@@ -9,7 +9,7 @@
 # run cellSNP in mode 1 (using .vcf file containing common variants)
 
 
-#qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=30G,h_fsize=300G run_cellSNP.sh
+#qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G run_cellSNP.sh
 
 
 cellSNP \
