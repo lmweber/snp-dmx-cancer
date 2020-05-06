@@ -5,6 +5,9 @@
 # merged BAM file), then combine into a single file
 
 
+#bash parse_combine_barcodes.sh
+
+
 mkdir barcodes
 cd barcodes
 cp ../16030X2_HJVMLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv.gz barcodes-X2.tsv.gz
