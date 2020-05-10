@@ -9,7 +9,9 @@
 # run cellSNP in mode 1 (using .vcf file containing common variants)
 
 
-#qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G run_cellSNP.sh
+# runtime: 4 days with 10 cores !!
+
+#qsub -V -cwd -pe local 20 -l mem_free=5G,h_vmem=6G,h_fsize=200G run_cellSNP.sh
 
 
 cellSNP \
@@ -17,7 +19,7 @@ cellSNP \
 -b barcodes/barcodes_merged.txt \
 -O out_cellSNP \
 -R ../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
--p 10 \
+-p 20 \
 --minMAF 0.1 \
 --minCOUNT 20
 
