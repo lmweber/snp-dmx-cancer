@@ -1,11 +1,11 @@
-# Bash script to combine BAM files from Cell Ranger
+# Combine BAM files from Cell Ranger
 
 
 # -----------------
 # combine BAM files
 # -----------------
 
-#qsub -V -cwd -l mem_free=100G,h_vmem=110G,h_fsize=200G combine_BAM_files_CellRanger.sh
+#qsub -V -cwd -l mem_free=100G,h_vmem=110G,h_fsize=200G combine_BAM_files.sh
 
 
 mkdir BAM_merged
