@@ -8,6 +8,7 @@ Repository containing scripts to demultiplex HGSOC scRNA-seq samples using Vireo
 - Vireo paper: [Huang et al. (2019), Genome Biology](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1865-2)
 - Vireo: [documentation](https://vireosnp.readthedocs.io/en/latest/index.html)
 - cellSNP: [documentation](https://github.com/single-cell-genetics/cellSNP)
+- Cell Ranger: [documentation](https://support.10xgenomics.com/single-cell-gene-expression/software/overview/welcome)
 
 
 ## Scripts
