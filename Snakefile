@@ -64,7 +64,7 @@ rule run_cellranger:
     CWD=$(pwd) && \
     mkdir -p dir_out && cd dir_out && mkdir -p cellranger && cd cellranger && \
     qsub -V -cwd -pe local {local_cellranger} -l mem_free={mem_free_cellranger},h_vmem={h_vmem_cellranger},h_fsize={h_fsize_cellranger} && \
-    $CWD/{input.script_cellranger} {params.sample} {params.dir_fastq} {params.dir_ref} {params.cores} {params.mem} CWD {dir_timestamps}
+    $CWD/{input.script_cellranger} {params.sample} {params.dir_fastq} {params.dir_ref} {params.cores} {params.mem} $CWD {dir_timestamps}
     """
 
 
