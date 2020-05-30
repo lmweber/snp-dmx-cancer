@@ -59,7 +59,7 @@ rule run_cellranger:
     dir_ref = dir_ref, 
     cores = n_cores_cellranger, 
     mem = mem_cellranger, 
-    path_timestamp = dir_timestamps + "/timestamp_cellranger_{wildcards.sample}.txt"
+    path_timestamp = lambda wildcards: dir_timestamps + "/timestamp_cellranger_{wildcards.sample}.txt"
   shell:
     """
     CWD=$(pwd) && \
