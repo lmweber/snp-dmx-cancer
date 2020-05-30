@@ -38,7 +38,7 @@ dir_ref = dir_data + "/GRCh38/refdata-cellranger-GRCh38-3.0.0"
 
 rule all:
   input:
-    expand(dir_outputs + "/{sample}/outs/possorted_genome_bam.bam", sample = sample_ids)
+    expand("/{sample}/outs/possorted_genome_bam.bam", sample = sample_ids)
 
 
 # run cellranger count
