@@ -92,6 +92,33 @@ recall
 
 
 
+# ---------------------
+# precision-recall plot
+# ---------------------
+
+df_pr <- DataFrame(
+  precision = precision, 
+  recall = recall, 
+  sample = factor(names(recall))
+)
+
+p <- 
+  as.data.frame(df_pr) %>% 
+  ggplot(aes(x = recall, y = precision, color = sample)) + 
+  geom_point(size = 2) + 
+  scale_color_manual(values = unname(palette.colors(palette = "Okabe-Ito"))) + 
+  xlim(c(0.95, 1)) + 
+  ylim(c(0.95, 1)) + 
+  coord_fixed() + 
+  theme_bw() + 
+  theme(panel.grid = element_blank())
+
+p
+
+ggsave("../plots/precision_recall.pdf", width = 4, height = 3.25)
+
+
+
 # ----------------------------------------
 # investigate unassigned and doublet cells
 # ----------------------------------------
