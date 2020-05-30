@@ -397,6 +397,8 @@ plotReducedDim(sce, dimred = "UMAP", colour_by = "qc_lib_thresh")
 plotReducedDim(sce, dimred = "UMAP", colour_by = "qc_nexprs_thresh")
 plotReducedDim(sce, dimred = "UMAP", colour_by = "qc_mito_thresh")
 plotReducedDim(sce, dimred = "UMAP", colour_by = "discard")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "n_genes")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "prop_mito")
 plotReducedDim(sce, dimred = "UMAP", colour_by = "unassigned")
 plotReducedDim(sce, dimred = "UMAP", colour_by = "doublet")
 
@@ -435,6 +437,8 @@ plotReducedDim(sce_sub, dimred = "PCA", ncomponents = 2:3, colour_by = "doublet"
 plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "sample_id")
 plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "unassigned")
 plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "doublet")
+plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "n_genes")
+plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "prop_mito")
 
 
 # how many unassigned/doublets remain after filtering
