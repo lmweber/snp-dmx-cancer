@@ -6,7 +6,7 @@
 
 dir_scripts = "scripts"
 dir_data = "../data"
-dir_out = "../outputs"
+dir_outputs = "../outputs"
 dir_timestamps = "../timestamps"
 
 
@@ -60,11 +60,7 @@ rule run_cellranger:
     cores = n_cores_cellranger, 
     mem = mem_cellranger
   shell:
-    """
-    CWD=$(pwd) && \
-    mkdir -p dir_out && cd dir_out && mkdir -p cellranger && cd cellranger && \
-    qsub -V -cwd -pe local {local_cellranger} -l mem_free={mem_free_cellranger},h_vmem={h_vmem_cellranger},h_fsize={h_fsize_cellranger} && \
-    $CWD/{input.script_cellranger} {params.sample} {params.dir_fastq} {params.dir_ref} {params.cores} {params.mem} $CWD {dir_timestamps}
-    """
+    "qsub -V -cwd -pe local {local_cellranger} -l mem_free={mem_free_cellranger},h_vmem={h_vmem_cellranger},h_fsize={h_fsize_cellranger} {input.script_cellranger} {params.sample} {params.dir_fastq} {params.dir_ref} {params.cores} {params.mem} {dir_outputs} {dir_timestamps}"
+
 
 

@@ -17,9 +17,12 @@
 # $3: directory containing transcriptome reference
 # $4: maximum number of cores
 # $5: maximum memory (GB)
-# $6: original working directory
+# $6: directory to run Cell Ranger (determines output directory)
 # $7: directory for timestamp files (for Snakemake)
 
+
+cwd=$(pwd)
+cd $6
 
 cellranger count --id=$1 \
 --fastqs=$2 \
@@ -31,7 +34,7 @@ cellranger count --id=$1 \
 
 
 # save timestamp file (for Snakemake)
-cd $6
+cd $cwd
 mkdir -p $7
 date > $7/timestamp_cellranger_$1.txt
 
