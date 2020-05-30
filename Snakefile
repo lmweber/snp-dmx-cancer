@@ -49,10 +49,9 @@ rule run_cellranger:
   output:
     dir_outputs + "/{sample}/outs/possorted_genome_bam.bam"
   params:
-    sample = "{wildcards.sample}", 
     dir_fastq = lambda wildcards: dirs_fastq[wildcards.sample]
   shell:
-    "bash {input.script_cellranger} {params.sample} {params.dir_fastq} {dir_ref} {dir_outputs}"
+    "bash {input.script_cellranger} {wildcards.sample} {params.dir_fastq} {dir_ref} {dir_outputs}"
 
 
 
