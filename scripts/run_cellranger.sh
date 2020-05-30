@@ -18,8 +18,6 @@
 # $4: directory where Cell Ranger should run (determines relative output directory)
 
 
-cwd=$(pwd)
-mkdir -p $4
 cd $4
 
 cellranger count --id=$1 \
