@@ -27,7 +27,7 @@ dir_ref = dir_data + "/GRCh38/refdata-cellranger-GRCh38-3.0.0"
 
 # command to run pipeline on cluster
 
-# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G" -j 3 --local-cores 20
+# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=6G,h_fsize=100G" -j 3 --local-cores 10
 
 
 # -----
@@ -47,11 +47,11 @@ rule run_cellranger:
   input:
     script_cellranger = dir_scripts + "/run_cellranger.sh"
   output:
-    dir_outputs + "/{sample}/outs/possorted_genome_bam.bam"
+    "{sample}/outs/possorted_genome_bam.bam"
   params:
     dir_fastq = lambda wildcards: dirs_fastq[wildcards.sample]
   shell:
-    "bash {input.script_cellranger} {wildcards.sample} {params.dir_fastq} {dir_ref} {dir_outputs}"
+    "bash {input.script_cellranger} {wildcards.sample} {params.dir_fastq} {dir_ref}"
 
 
 
