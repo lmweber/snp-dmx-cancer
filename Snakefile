@@ -14,9 +14,9 @@ dir_timestamps = "../timestamps"
 
 sample_ids = ["16030X2", "16030X3", "16030X4"]
 
-dirs_fastq = {"16030X2": dir_data + /16030R/Fastq/16030X2_HJVMLDMXX, 
-              "16030X3": dir_data + /16030R/Fastq/16030X3_HJTWLDMXX, 
-              "16030X4": dir_data + /16030R/Fastq/16030X4_HJTWLDMXX}
+dirs_fastq = {"16030X2": dir_data + "/16030R/Fastq/16030X2_HJVMLDMXX", 
+              "16030X3": dir_data + "/16030R/Fastq/16030X3_HJTWLDMXX", 
+              "16030X4": dir_data + "/16030R/Fastq/16030X4_HJTWLDMXX"}
 
 dir_ref = dir_data + "/GRCh38/refdata-cellranger-GRCh38-3.0.0"
 
