@@ -55,7 +55,7 @@ rule run_cellranger:
     dir_timestamps + "/timestamp_cellranger_{sample}.txt"
   params:
     sample = "{wildcards.sample}", 
-    dir_fastq = lambda wildcards: DIRS_FASTQ[wildcards.sample], 
+    dir_fastq = lambda wildcards: dirs_fastq[wildcards.sample], 
     dir_ref = dir_ref, 
     cores = n_cores_cellranger, 
     mem = mem_cellranger, 
