@@ -13,6 +13,9 @@
 library(tidyverse)
 library(magrittr)
 library(Matrix)
+library(SingleCellExperiment)
+library(scater)
+library(scran)
 
 
 
@@ -188,6 +191,255 @@ df_truth %>%
   summarize(n_cells = n(), 
             mean_n_genes = mean(n_genes), 
             mean_prop_mito = mean(prop_mito))
+
+
+
+# --------------------
+# calculate QC metrics
+# --------------------
+
+# create SCE object
+
+sample_ids_all <- factor(c(rep("X2", ncol(mat_X2)), rep("X3", ncol(mat_X3)), rep("X4", ncol(mat_X4))))
+barcodes_all <- c(colnames(mat_X2), colnames(mat_X3), colnames(mat_X4))
+
+n_cells <- sum(ncol(mat_X2), ncol(mat_X3), ncol(mat_X4))
+stopifnot(length(sample_ids_all) == n_cells)
+stopifnot(length(barcodes_all) == n_cells)
+
+col_data <- DataFrame(
+  sample_id = sample_ids_all, 
+  barcode = barcodes_all
+)
+
+stopifnot(all(rownames(mat_X2) == rownames(mat_X3)))
+stopifnot(all(rownames(mat_X2) == rownames(mat_X4)))
+stopifnot(nrow(mat_X2) == nrow(mat_X3))
+stopifnot(nrow(mat_X2) == nrow(mat_X4))
+
+row_data <- DataFrame(
+  gene_id = feature_names_X2$V1, 
+  symbol = feature_names_X2$V2
+)
+
+counts_all <- cbind(mat_X2, mat_X3, mat_X4)
+
+sce <- SingleCellExperiment(
+  assays = list(counts = counts_all), 
+  rowData = row_data, 
+  colData = col_data
+)
+
+sce
+rowData(sce)
+colData(sce)
+
+
+# calculate QC metrics using Bioconductor functions
+
+is_mito <- grepl("^MT-", rowData(sce)$symbol)
+table(is_mito)
+
+rowData(sce)$is_mito <- is_mito
+
+# calculate per cell QC metrics
+sce <- addPerCellQC(sce, subsets = list(mito = is_mito))
+
+colData(sce)
+
+# identify outliers (3 MADs, using log scale for "lower")
+qc_lib <- isOutlier(colData(sce)$sum, log = TRUE, type = "lower")
+qc_nexprs <- isOutlier(colData(sce)$detected, log = TRUE, type = "lower")
+qc_mito <- isOutlier(colData(sce)$subsets_mito_percent, type = "higher")
+
+# note: thresholds are not appropriate due to large number of dead cells
+attr(qc_lib, "thresholds")
+attr(qc_nexprs, "thresholds")
+attr(qc_mito, "thresholds")
+
+
+# alternatively: calculate metrics separately for each sample (one batch per sample)
+qc_lib2 <- isOutlier(colData(sce)$sum, log = TRUE, type = "lower", batch = colData(sce)$sample_id)
+qc_nexprs2 <- isOutlier(colData(sce)$detected, log = TRUE, type = "lower", batch = colData(sce)$sample_id)
+qc_mito2 <- isOutlier(colData(sce)$subsets_mito_percent, type = "higher", batch = colData(sce)$sample_id)
+
+# thresholds differ substantially between samples, but are still not appropriate
+attr(qc_lib2, "thresholds")
+attr(qc_nexprs2, "thresholds")
+attr(qc_mito2, "thresholds")
+
+
+# alternatively: specify simple thresholds instead
+quantile(colData(sce)$sum, seq(0, 1, by = 0.1))
+quantile(colData(sce)$detected, seq(0, 1, by = 0.1))
+quantile(colData(sce)$subsets_mito_percent, seq(0, 1, by = 0.1))
+
+# simple thresholds chosen based on distributions above
+thresh_lib <- 2000
+thresh_detected <- 500
+thresh_mito_pc <- 30
+
+# manual QC using thresholds
+qc_lib_thresh <- colData(sce)$sum < thresh_lib
+qc_nexprs_thresh <- colData(sce)$detected < thresh_detected
+qc_mito_thresh <- colData(sce)$subsets_mito_percent < thresh_mito_pc
+
+discard <- qc_lib_thresh | qc_nexprs_thresh | qc_mito_thresh
+
+DataFrame(
+  LibSize = sum(qc_lib_thresh), 
+  NExprs = sum(qc_nexprs_thresh), 
+  MitoProp = sum(qc_mito_thresh), 
+  TotalFiltered = sum(discard), 
+  NCells = length(discard)
+)
+
+
+
+# --------
+# QC plots
+# --------
+
+# combine data frames
+
+stopifnot(length(discard) == ncol(sce))
+colData(sce) <- cbind(colData(sce), qc_lib_thresh, qc_nexprs_thresh, qc_mito_thresh, discard)
+
+stopifnot(nrow(df_truth) == ncol(sce))
+stopifnot(all(df_truth$barcode == colData(sce)$barcode))
+stopifnot(all(df_truth$sample_id == colData(sce)$sample_id))
+colData(sce) <- cbind(colData(sce), df_truth[, -c(1:2)])
+
+colData(sce)
+
+
+# plot QC thresholds
+
+plotColData(sce, x = "detected", y = "subsets_mito_percent", colour_by = "sample_id")
+
+plotColData(sce, x = "detected", y = "subsets_mito_percent", colour_by = "qc_lib_thresh")
+plotColData(sce, x = "detected", y = "subsets_mito_percent", colour_by = "qc_nexprs_thresh")
+plotColData(sce, x = "detected", y = "subsets_mito_percent", colour_by = "qc_mito_thresh")
+
+plotColData(sce, x = "detected", y = "subsets_mito_percent", colour_by = "discard")
+
+table(colData(sce)$discard)
+mean(colData(sce)$discard)  ## discarding very large proportion of cells
+
+
+# calculate PCA (with/without QC filtered cells)
+
+sce_sub <- sce[, !discard]
+dim(sce_sub)
+
+
+# calculate PCA and UMAP: with QC filtered cells still included
+set.seed(100)
+clus <- quickCluster(sce)
+sce <- computeSumFactors(sce, cluster = clus)
+sce <- logNormCounts(sce)
+sce
+
+dec <- modelGeneVar(sce)
+top_hvgs <- getTopHVGs(dec, prop = 0.1)
+str(top_hvgs)
+
+set.seed(100)
+sce <- runPCA(sce, subset_row = top_hvgs)
+reducedDimNames(sce)
+dim(reducedDim(sce, "PCA"))
+
+set.seed(100)
+sce <- runUMAP(sce, dimred = "PCA")
+
+
+# calculate PCA: without QC filtered cells
+set.seed(100)
+clus <- quickCluster(sce_sub)
+sce_sub <- computeSumFactors(sce_sub, cluster = clus)
+sce_sub <- logNormCounts(sce_sub)
+sce_sub
+
+dec <- modelGeneVar(sce_sub)
+top_hvgs <- getTopHVGs(dec, prop = 0.1)
+str(top_hvgs)
+
+set.seed(100)
+sce_sub <- runPCA(sce_sub, subset_row = top_hvgs)
+reducedDimNames(sce_sub)
+dim(reducedDim(sce_sub, "PCA"))
+
+set.seed(100)
+sce_sub <- runUMAP(sce_sub, dimred = "PCA")
+
+
+
+# ------------------------------------------------
+# PCA plots: with QC filtered cells still included
+# ------------------------------------------------
+
+plotReducedDim(sce, dimred = "PCA", colour_by = "sample_id")
+
+plotReducedDim(sce, dimred = "PCA", colour_by = "qc_lib_thresh")
+plotReducedDim(sce, dimred = "PCA", colour_by = "qc_nexprs_thresh")
+plotReducedDim(sce, dimred = "PCA", colour_by = "qc_mito_thresh")
+
+plotReducedDim(sce, dimred = "PCA", colour_by = "discard")
+
+# plot Vireo unassigned/doublets in PCA space
+plotReducedDim(sce, dimred = "PCA", colour_by = "unassigned")
+plotReducedDim(sce, dimred = "PCA", colour_by = "doublet")
+
+
+# UMAP
+plotReducedDim(sce, dimred = "UMAP", colour_by = "sample_id")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "qc_lib_thresh")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "qc_nexprs_thresh")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "qc_mito_thresh")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "discard")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "unassigned")
+plotReducedDim(sce, dimred = "UMAP", colour_by = "doublet")
+
+
+# plot QC metrics for Vireo unassigned/doublets
+
+# unassigned
+plotColData(sce, x = "unassigned", y = "sum", colour_by = "qc_lib_thresh") + scale_y_log10()
+plotColData(sce, x = "unassigned", y = "detected", colour_by = "qc_nexprs_thresh") + scale_y_log10()
+plotColData(sce, x = "unassigned", y = "subsets_mito_percent", colour_by = "qc_mito_thresh")
+
+# doublets
+plotColData(sce, x = "doublet", y = "sum", colour_by = "qc_lib_thresh") + scale_y_log10()
+plotColData(sce, x = "doublet", y = "detected", colour_by = "qc_nexprs_thresh") + scale_y_log10()
+plotColData(sce, x = "doublet", y = "subsets_mito_percent", colour_by = "qc_mito_thresh")
+
+
+
+# ------------------------------------
+# PCA plots: without QC filtered cells
+# ------------------------------------
+
+# first PC corresponds to sample ID
+plotReducedDim(sce_sub, dimred = "PCA", colour_by = "sample_id")
+plotReducedDim(sce_sub, dimred = "PCA", ncomponents = 2:3, colour_by = "sample_id")
+
+# plot Vireo unassigned/doublets in PCA space: these have (almost all) been removed by filtering
+plotReducedDim(sce_sub, dimred = "PCA", colour_by = "unassigned")
+plotReducedDim(sce_sub, dimred = "PCA", ncomponents = 2:3, colour_by = "unassigned")
+
+plotReducedDim(sce_sub, dimred = "PCA", colour_by = "doublet")
+plotReducedDim(sce_sub, dimred = "PCA", ncomponents = 2:3, colour_by = "doublet")
+
+
+# UMAP
+plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "sample_id")
+plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "unassigned")
+plotReducedDim(sce_sub, dimred = "UMAP", colour_by = "doublet")
+
+
+# how many unassigned/doublets remain after filtering
+sum((!colData(sce)$discard) & colData(sce)$unassigned)
+sum((!colData(sce)$discard) & colData(sce)$doublet)
 
 
 
