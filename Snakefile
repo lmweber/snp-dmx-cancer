@@ -38,7 +38,7 @@ dir_ref = dir_data + "/GRCh38/refdata-cellranger-GRCh38-3.0.0"
 
 rule all:
   input:
-    expand("{sample}/outs/possorted_genome_bam.bam", sample = sample_ids)
+    expand(dir_timestamps + "/timestamp_cellranger_{sample}.txt", sample = sample_ids)
 
 
 # run cellranger count
@@ -47,11 +47,11 @@ rule run_cellranger:
   input:
     script_cellranger = dir_scripts + "/run_cellranger.sh"
   output:
-    "{sample}/outs/possorted_genome_bam.bam"
+    dir_timestamps + "/timestamp_cellranger_{sample}.txt"
   params:
     dir_fastq = lambda wildcards: dirs_fastq[wildcards.sample]
   shell:
-    "bash {input.script_cellranger} {wildcards.sample} {params.dir_fastq} {dir_ref}"
+    "bash {input.script_cellranger} {wildcards.sample} {params.dir_fastq} {dir_ref} {dir_outputs} {dir_timestamps}"
 
 
 
