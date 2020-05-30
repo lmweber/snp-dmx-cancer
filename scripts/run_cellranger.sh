@@ -19,6 +19,7 @@
 
 
 cwd=$(pwd)
+mkdir -p $4
 cd $4
 
 cellranger count --id=$1 \
