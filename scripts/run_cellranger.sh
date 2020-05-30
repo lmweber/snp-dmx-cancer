@@ -16,13 +16,19 @@
 # $2: directory containing FASTQ files
 # $3: directory containing transcriptome reference
 # $4: directory to run Cell Ranger (determines output directory)
-# $5: directory for timestamp files (for Snakemake)
+# $5: directory for runtime files
+# $6: directory for timestamp files (for Snakemake)
 
 
+# directories
 cwd=$(pwd)
 mkdir -p $4
 cd $4
 
+# runtime
+start=`date +%s`
+
+# run
 cellranger count --id=$1 \
 --fastqs=$2 \
 --sample=$1 \
@@ -32,10 +38,17 @@ cellranger count --id=$1 \
 --localcores=10 \
 --localmem=50
 
+end=`date +%s`
+runtime=`expr $end - $start`
+
+cd $cwd
+
+# save runtime
+mkdir -p $5
+echo runtime: $runtime seconds > $5/runtime_cellranger_$1.txt
 
 # save timestamp file (for Snakemake)
-cd $cwd
-mkdir -p $5
-date > $5/timestamp_cellranger_$1.txt
+mkdir -p $6
+date > $6/timestamp_cellranger_$1.txt
 
 
