@@ -44,11 +44,11 @@ runtime=`expr $end - $start`
 cd $cwd
 
 # save runtime
-mkdir -p $5
-echo runtime: $runtime seconds > $5/runtime_cellranger_$1.txt
+mkdir -p $5/cellranger
+echo runtime: $runtime seconds > $5/cellranger/runtime_cellranger_$1.txt
 
 # save timestamp file (for Snakemake)
-mkdir -p $6
-date > $6/timestamp_cellranger_$1.txt
+mkdir -p $6/cellranger
+date > $6/cellranger/timestamp_cellranger_$1.txt
 
 
