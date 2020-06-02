@@ -35,8 +35,9 @@ cellranger count --id=$1 \
 --transcriptome=$3 \
 --nosecondary \
 --jobmode=local \
---localcores=10 \
---localmem=50
+--localcores=20 \
+--localmem=5 \
+--localvmem=10
 
 end=`date +%s`
 runtime=`expr $end - $start`

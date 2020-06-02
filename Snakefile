@@ -28,7 +28,7 @@ dir_ref = dir_data + "/GRCh38/refdata-cellranger-GRCh38-3.0.0"
 
 # command to run pipeline on cluster
 
-# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=250G" -j 3 --local-cores 10
+# snakemake --cluster "qsub -V -cwd -pe local 20 -l mem_free=5G,h_vmem=10G,h_fsize=200G" -j 3 --local-cores 20
 
 
 # -----
