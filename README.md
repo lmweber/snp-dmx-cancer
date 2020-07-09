@@ -1,4 +1,4 @@
-# SNP-dmx-cancer
+# snp-dmx-cancer
 
 Repository containing Snakemake workflow to demultiplex single-cell RNA sequencing (scRNA-seq) samples using genetic variation based demultiplexing (using Vireo and cellSNP)
 
