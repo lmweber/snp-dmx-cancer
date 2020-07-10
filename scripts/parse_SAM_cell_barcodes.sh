@@ -21,7 +21,7 @@
 # $3: directory for timestamp files
 # $4: number of threads
 # $5: short sample ID
-# $6: input/output directory
+# $6: SAM/BAM output directory from salmon alevin
 
 
 # -----------------------------------

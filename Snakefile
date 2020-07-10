@@ -42,12 +42,24 @@ short_sample_ids_HGSOC = {"16030X2_HJVMLDMXX": "X2",
 
 rule all:
   input:
-    expand(dir_timestamps + "/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_{sample}.txt", sample = sample_ids_HGSOC)
+    expand(dir_timestamps + "/HGSOC/convert_BAM/timestamp_convert_BAM_{sample}.txt", sample = sample_ids_HGSOC)
+
+
+# convert SAM to BAM files
+
+rule convert_BAM:
+  input:
+    script_convert_BAM = dir_scripts + "/convert_BAM.sh", 
+    parse_SAM_barcodes_timestamp = dir_timestamps + "/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_{sample}.txt"
+  output:
+    dir_timestamps + "/HGSOC/convert_BAM/timestamp_convert_BAM_{sample}.txt"
+  shell:
+    "bash {input.script_convert_BAM} {wildcards.sample} {dir_runtimes} {dir_timestamps} NA {dir_outputs}/HGSOC/{wildcards.sample}/alevin_mappings"
 
 
 # parse SAM files to add sample IDs to cell barcodes
 
-rule run_parse_SAM_barcodes:
+rule parse_SAM_barcodes:
   input:
     script_parse_SAM_barcodes = dir_scripts + "/parse_SAM_cell_barcodes.sh", 
     alevin_timestamp = dir_timestamps + "/HGSOC/alevin/timestamp_alevin_{sample}.txt"
