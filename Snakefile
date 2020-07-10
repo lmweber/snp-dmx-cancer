@@ -1,8 +1,8 @@
 ###########################
-# Snakefile to run workflow
+# Snakefile to run pipeline
 ###########################
 
-# directories
+# variables
 
 dir_scripts = "scripts"
 dir_data = "../data"
@@ -11,48 +11,58 @@ dir_runtimes = "../runtimes"
 dir_timestamps = "../timestamps"
 
 
-# variables
+sample_ids_HGSOC = ["16030X2_HJVMLDMXX", "16030X3_HJTWLDMXX", "16030X4_HJTWLDMXX"]
 
-sample_ids = ["16030X2_HJVMLDMXX", "16030X3_HJTWLDMXX", "16030X4_HJTWLDMXX"]
+fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX/16030X2_HJVMLDMXX_S1_L002_R1_001.fastq.gz", 
+                                     dir_data + "/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX/16030X2_HJVMLDMXX_S1_L002_R2_001.fastq.gz"], 
+               "16030X3_HJTWLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX/16030X3_HJTWLDMXX_S1_L001_R1_001.fastq.gz", 
+                                     dir_data + "/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX/16030X3_HJTWLDMXX_S1_L001_R2_001.fastq.gz"], 
+               "16030X4_HJTWLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX/16030X4_HJTWLDMXX_S2_L001_R1_001.fastq.gz", 
+                                     dir_data + "/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX/16030X4_HJTWLDMXX_S2_L001_R2_001.fastq.gz"]}
 
-dirs_fastq = {"16030X2_HJVMLDMXX": dir_data + "/16030R/Fastq/16030X2_HJVMLDMXX", 
-              "16030X3_HJTWLDMXX": dir_data + "/16030R/Fastq/16030X3_HJTWLDMXX", 
-              "16030X4_HJTWLDMXX": dir_data + "/16030R/Fastq/16030X4_HJTWLDMXX"}
 
-dir_ref = dir_data + "/GRCh38/refdata-cellranger-GRCh38-3.0.0"
-
-
-# --------------
-# run on cluster
-# --------------
+# ------------
+# run pipeline
+# ------------
 
 # command to run pipeline on cluster
 
-# snakemake --cluster "qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=20G,h_fsize=200G" -j 3 --local-cores 20
+# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G" -j 6 --local-cores 20
 
 
-# -----
-# rules
-# -----
+# --------------
+# pipeline rules
+# --------------
 
-# default rule (run all)
+# default rule
 
 rule all:
   input:
-    expand(dir_timestamps + "/cellranger/timestamp_cellranger_{sample}.txt", sample = sample_ids)
+    expand(dir_timestamps + "/HGSOC/alevin/timestamp_alevin_{sample}.txt", sample = sample_ids_HGSOC)
 
 
-# run cellranger count
+# run salmon alevin
 
-rule run_cellranger:
+rule run_alevin:
   input:
-    script_cellranger = dir_scripts + "/run_cellranger.sh"
+    script_alevin = dir_scripts + "/run_salmon_alevin.sh", 
+    salmon_index_timestamp = dir_timestamps + "/salmon_index/timestamp_salmon_index.txt"
   output:
-    dir_timestamps + "/cellranger/timestamp_cellranger_{sample}.txt"
+    dir_timestamps + "/HGSOC/alevin/timestamp_alevin_{sample}.txt"
   params:
-    dir_fastq = lambda wildcards: dirs_fastq[wildcards.sample]
+    fastq_1 = lambda wildcards: fastq_HGSOC[wildcards.sample][0], 
+    fastq_2 = lambda wildcards: fastq_HGSOC[wildcards.sample][1]
   shell:
-    "bash {input.script_cellranger} {wildcards.sample} {params.dir_fastq} {dir_ref} {dir_outputs} {dir_runtimes} {dir_timestamps}"
+    "bash {input.script_alevin} {wildcards.sample} {dir_runtimes} {dir_timestamps} 10 {params.fastq_1} {params.fastq_2} {dir_data}/salmon_index {dir_outputs}/HGSOC/{wildcards.sample}"
 
 
+# run salmon index
+
+rule run_salmon_index:
+  input:
+    script_salmon_index = dir_scripts + "/run_salmon_index.sh"
+  output:
+    dir_timestamps + "/salmon_index/timestamp_salmon_index.txt"
+  shell:
+    "bash {input.script_salmon_index} NA {dir_runtimes} {dir_timestamps} 10 {dir_data}/salmon_index"
 
