@@ -1,10 +1,12 @@
-# --------------------------------
-# Bash script to run salmon alevin
-# --------------------------------
+#!/bin/bash
+
+# ---------------------------------
+# Shell script to run salmon alevin
+# ---------------------------------
 
 # runtime: ~1 hour
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G run_salmon_alevin.sh
+# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_salmon_alevin.sh
 
 # arguments:
 # $1: sample ID

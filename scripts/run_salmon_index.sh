@@ -1,10 +1,12 @@
-# -------------------------------
-# Bash script to run salmon index
-# -------------------------------
+#!/bin/bash
+
+# --------------------------------
+# Shell script to run salmon index
+# --------------------------------
 
 # runtime: ~5 min
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G run_salmon_index.sh
+# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_salmon_index.sh
 
 # arguments:
 # $1: sample ID

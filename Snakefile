@@ -20,6 +20,10 @@ fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X2_HJV
                "16030X4_HJTWLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX/16030X4_HJTWLDMXX_S2_L001_R1_001.fastq.gz", 
                                      dir_data + "/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX/16030X4_HJTWLDMXX_S2_L001_R2_001.fastq.gz"]}
 
+short_sample_ids_HGSOC = {"16030X2_HJVMLDMXX": "X2", 
+                          "16030X3_HJTWLDMXX": "X3", 
+                          "16030X4_HJTWLDMXX": "X4"}
+
 
 # ------------
 # run pipeline
@@ -27,7 +31,7 @@ fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X2_HJV
 
 # command to run pipeline on cluster
 
-# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=200G" -j 6 --local-cores 20
+# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G" -j 6 --local-cores 20
 
 
 # --------------
@@ -38,7 +42,21 @@ fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X2_HJV
 
 rule all:
   input:
-    expand(dir_timestamps + "/HGSOC/alevin/timestamp_alevin_{sample}.txt", sample = sample_ids_HGSOC)
+    expand(dir_timestamps + "/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_{sample}.txt", sample = sample_ids_HGSOC)
+
+
+# parse SAM files to add sample IDs to cell barcodes
+
+rule run_parse_SAM_barcodes:
+  input:
+    script_parse_SAM_barcodes = dir_scripts + "/parse_SAM_cell_barcodes.sh", 
+    alevin_timestamp = dir_timestamps + "/HGSOC/alevin/timestamp_alevin_{sample}.txt"
+  output:
+    dir_timestamps + "/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_{sample}.txt"
+  params:
+    short_sample_id = lambda wildcards: short_sample_ids_HGSOC[wildcards.sample]
+  shell:
+    "bash {input.script_parse_SAM_barcodes} {wildcards.sample} {dir_runtimes} {dir_timestamps} NA {params.short_sample_id} {dir_outputs}/HGSOC/{wildcards.sample}/alevin_mappings"
 
 
 # run salmon alevin
