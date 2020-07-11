@@ -16,10 +16,10 @@
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G parse_SAM_cell_barcodes.sh
 
 # arguments:
-# $1: sample ID
-# $2: directory for runtimes
-# $3: directory for timestamp files
-# $4: number of threads
+# $1: directory for runtimes
+# $2: directory for timestamp files
+# $3: number of threads
+# $4: sample ID
 # $5: short sample ID
 # $6: SAM/BAM output directory from salmon alevin
 
@@ -30,7 +30,7 @@ start=`date +%s`
 # -----------------------------------
 
 
-sed -i "s|\(CB\:Z\:[A-Z]\+\)|\1\-$5|g" $6/$1.sam
+sed -i "s|\(CB\:Z\:[A-Z]\+\)|\1\-$5|g" $6/$4.sam
 
 
 # -----------------------------------
@@ -39,14 +39,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $2/HGSOC/parse_SAM_barcodes
-echo runtime: $runtime seconds > $2/HGSOC/parse_SAM_barcodes/runtime_parse_SAM_barcodes_$1.txt
+mkdir -p $1/HGSOC/parse_SAM_barcodes
+echo runtime: $runtime seconds > $1/HGSOC/parse_SAM_barcodes/runtime_parse_SAM_barcodes_$4.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $3/HGSOC/parse_SAM_barcodes
-date > $3/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_$1.txt
+mkdir -p $2/HGSOC/parse_SAM_barcodes
+date > $2/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_$4.txt
 # -----------------------------------
 

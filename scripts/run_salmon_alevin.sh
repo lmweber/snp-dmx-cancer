@@ -9,10 +9,10 @@
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_salmon_alevin.sh
 
 # arguments:
-# $1: sample ID
-# $2: directory for runtimes
-# $3: directory for timestamp files
-# $4: number of threads
+# $1: directory for runtimes
+# $2: directory for timestamp files
+# $3: number of threads
+# $4: sample ID
 # $5: filename for FASTQ file 1
 # $6: filename for FASTQ file 2
 # $7: salmon index directory
@@ -37,10 +37,10 @@ salmon alevin \
 -2 $6 \
 --chromium \
 -i $7 \
--p $4 \
+-p $3 \
 -o $8/alevin_output \
 --tgMap $7/tx2gene.tsv \
---writeMappings=$8/alevin_mappings/$1.sam
+--writeMappings=$8/alevin_mappings/$4.sam
 
 
 # -----------------------------------
@@ -49,14 +49,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $2/HGSOC/alevin
-echo runtime: $runtime seconds > $2/HGSOC/alevin/runtime_alevin_$1.txt
+mkdir -p $1/HGSOC/alevin
+echo runtime: $runtime seconds > $1/HGSOC/alevin/runtime_alevin_$4.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $3/HGSOC/alevin
-date > $3/HGSOC/alevin/timestamp_alevin_$1.txt
+mkdir -p $2/HGSOC/alevin
+date > $2/HGSOC/alevin/timestamp_alevin_$4.txt
 # -----------------------------------
 

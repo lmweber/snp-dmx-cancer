@@ -9,10 +9,10 @@
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_salmon_index.sh
 
 # arguments:
-# $1: sample ID
-# $2: directory for runtimes
-# $3: directory for timestamp files
-# $4: number of threads
+# $1: directory for runtimes
+# $2: directory for timestamp files
+# $3: number of threads
+# $4: sample ID
 # $5: salmon index directory
 
 
@@ -45,7 +45,7 @@ python3 scripts/make_gene2symbol.py -d $5 -f gencode.v34.pc_transcripts.fa.gz -g
 module load gcc/5.5.0
 module load cmake/3.15.4
 
-salmon index -i $5 --gencode -p $4 -t $5/gencode.v34.pc_transcripts.fa.gz
+salmon index -i $5 --gencode -p $3 -t $5/gencode.v34.pc_transcripts.fa.gz
 
 
 # -----------------------------------
@@ -54,14 +54,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $2/salmon_index
-echo runtime: $runtime seconds > $2/salmon_index/runtime_salmon_index.txt
+mkdir -p $1/salmon_index
+echo runtime: $runtime seconds > $1/salmon_index/runtime_salmon_index.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $3/salmon_index
-date > $3/salmon_index/timestamp_salmon_index.txt
+mkdir -p $2/salmon_index
+date > $2/salmon_index/timestamp_salmon_index.txt
 # -----------------------------------
 
