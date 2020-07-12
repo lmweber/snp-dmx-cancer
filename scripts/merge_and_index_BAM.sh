@@ -4,7 +4,7 @@
 # Shell script to merge and index parsed BAM files
 # ------------------------------------------------
 
-# runtime: ~1 hour
+# runtime: ~3 hours
 
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G merge_and_index_parsed_BAM.sh
 
