@@ -50,7 +50,20 @@ fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data_HGSOC + "/16030R/Fastq/16030X2_HJV
 
 rule all:
   input:
-    dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt"
+    dir_timestamps_HGSOC + "/vireo/timestamp_vireo.txt"
+
+
+# run Vireo
+
+rule run_vireo:
+  input:
+    dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt", 
+    script_vireo = dir_scripts + "/run_vireo.sh"
+  output:
+    dir_timestamps_HGSOC + "/vireo/timestamp_vireo.txt"
+  shell:
+    "bash {input.script_vireo} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
+    "{dir_outputs_HGSOC}"
 
 
 # run cellSNP
@@ -92,7 +105,7 @@ rule parse_and_merge_barcodes:
 
 rule merge_and_index_BAM:
   input:
-    expand(dir_timestamps_HGSOC + "/convert_BAM/timestamp_convert_BAM_{sample}.txt", sample = sample_ids_HGSOC), 
+    expand(dir_timestamps_HGSOC + "/convert_sort_BAM/timestamp_convert_sort_BAM_{sample}.txt", sample = sample_ids_HGSOC), 
     script_merge_and_index_BAM = dir_scripts + "/merge_and_index_BAM.sh"
   output:
     dir_timestamps_HGSOC + "/merge_and_index_BAM/timestamp_merge_and_index_BAM.txt"
@@ -105,16 +118,16 @@ rule merge_and_index_BAM:
     "{dir_outputs_HGSOC} {params.sample_id_1} {params.sample_id_2} {params.sample_id_3}"
 
 
-# convert SAM to BAM files
+# convert SAM to BAM / sort BAM files
 
-rule convert_BAM:
+rule convert_sort_BAM:
   input:
     dir_timestamps_HGSOC + "/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_{sample}.txt", 
-    script_convert_BAM = dir_scripts + "/convert_BAM.sh"
+    script_convert_sort_BAM = dir_scripts + "/convert_sort_BAM.sh"
   output:
-    dir_timestamps_HGSOC + "/convert_BAM/timestamp_convert_BAM_{sample}.txt"
+    dir_timestamps_HGSOC + "/convert_sort_BAM/timestamp_convert_sort_BAM_{sample}.txt"
   shell:
-    "bash {input.script_convert_BAM} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
+    "bash {input.script_convert_sort_BAM} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
     "{wildcards.sample} {dir_outputs_HGSOC}"
 
 

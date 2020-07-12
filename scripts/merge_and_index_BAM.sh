@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ------------------------------------------------
-# Shell script to merge and index parsed BAM files
+# Shell script to merge and index BAM parsed files
 # ------------------------------------------------
 
 # runtime: ~3 hours
