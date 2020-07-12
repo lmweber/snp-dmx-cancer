@@ -6,7 +6,7 @@
 
 # convert SAM to BAM files to reduce disk usage and sort BAM files
 
-# runtime: ~2 hours
+# runtime: ~3 hours
 
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G convert_sort_BAM.sh
 
