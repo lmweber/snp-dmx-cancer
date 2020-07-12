@@ -37,9 +37,9 @@ awk '{print $1}' $4/$6/alevin_output/alevin/featureDump.txt | tail -n +2 > $4/ba
 awk '{print $1}' $4/$7/alevin_output/alevin/featureDump.txt | tail -n +2 > $4/barcodes_merged/barcodes_${10}.txt
 
 # add unique sample IDs to cell barcodes for each sample
-sed -i "s|\([A-Z]\+\)|\1|-$8/g" $4/barcodes_merged/barcodes_$8.txt
-sed -i "s|\([A-Z]\+\)|\1|-$9/g" $4/barcodes_merged/barcodes_$9.txt
-sed -i "s|\([A-Z]\+\)|\1|-${10}/g" $4/barcodes_merged/barcodes_${10}.txt
+sed -i "s|\([A-Z]\+\)|\1\-$8|g" $4/barcodes_merged/barcodes_$8.txt
+sed -i "s|\([A-Z]\+\)|\1\-$9|g" $4/barcodes_merged/barcodes_$9.txt
+sed -i "s|\([A-Z]\+\)|\1\-${10}|g" $4/barcodes_merged/barcodes_${10}.txt
 
 # merge files
 cat $4/barcodes_merged/barcodes_$8.txt $4/barcodes_merged/barcodes_$9.txt $4/barcodes_merged/barcodes_${10}.txt > $4/barcodes_merged/barcodes_merged.txt
