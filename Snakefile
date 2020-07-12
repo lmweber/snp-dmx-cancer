@@ -50,7 +50,20 @@ fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data_HGSOC + "/16030R/Fastq/16030X2_HJV
 
 rule all:
   input:
-    dir_timestamps_HGSOC + "/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt"
+    dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt"
+
+
+# run cellSNP
+
+rule run_cellSNP:
+  input:
+    dir_timestamps_HGSOC + "/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt", 
+    script_cellSNP = dir_scripts + "/run_cellSNP.sh"
+  output:
+    dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt"
+  shell:
+    "bash {input.script_cellSNP} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} 10 "
+    "{dir_data} {dir_outputs_HGSOC}"
 
 
 # parse and merge cell barcode files
