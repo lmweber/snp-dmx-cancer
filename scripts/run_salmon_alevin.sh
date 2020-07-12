@@ -40,6 +40,7 @@ salmon alevin \
 -p $3 \
 -o $8/alevin_output \
 --tgMap $7/tx2gene.tsv \
+--dumpMtx \
 --writeMappings=$8/alevin_mappings/$4.sam
 
 
