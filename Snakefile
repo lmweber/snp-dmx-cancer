@@ -13,16 +13,18 @@ dir_timestamps = "../timestamps"
 
 sample_ids_HGSOC = ["16030X2_HJVMLDMXX", "16030X3_HJTWLDMXX", "16030X4_HJTWLDMXX"]
 
+sample_ids_HGSOC_short = ["X2", "X3", "X4"]
+
+sample_ids_HGSOC_short_named = {"16030X2_HJVMLDMXX": "X2", 
+                                "16030X3_HJTWLDMXX": "X3", 
+                                "16030X4_HJTWLDMXX": "X4"}
+
 fastq_HGSOC = {"16030X2_HJVMLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX/16030X2_HJVMLDMXX_S1_L002_R1_001.fastq.gz", 
                                      dir_data + "/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX/16030X2_HJVMLDMXX_S1_L002_R2_001.fastq.gz"], 
                "16030X3_HJTWLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX/16030X3_HJTWLDMXX_S1_L001_R1_001.fastq.gz", 
                                      dir_data + "/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX/16030X3_HJTWLDMXX_S1_L001_R2_001.fastq.gz"], 
                "16030X4_HJTWLDMXX": [dir_data + "/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX/16030X4_HJTWLDMXX_S2_L001_R1_001.fastq.gz", 
                                      dir_data + "/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX/16030X4_HJTWLDMXX_S2_L001_R2_001.fastq.gz"]}
-
-short_sample_ids_HGSOC = {"16030X2_HJVMLDMXX": "X2", 
-                          "16030X3_HJTWLDMXX": "X3", 
-                          "16030X4_HJTWLDMXX": "X4"}
 
 
 # ------------
@@ -31,7 +33,7 @@ short_sample_ids_HGSOC = {"16030X2_HJVMLDMXX": "X2",
 
 # command to run pipeline on cluster
 
-# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G" -j 6 --local-cores 20
+# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G" -j 6 --local-cores 20 --latency-wait 10
 
 
 # --------------
@@ -42,8 +44,29 @@ short_sample_ids_HGSOC = {"16030X2_HJVMLDMXX": "X2",
 
 rule all:
   input:
-    dir_timestamps + "/HGSOC/merge_and_index_BAM/timestamp_merge_and_index_BAM.txt"
-    
+    dir_timestamps + "/HGSOC/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt"
+
+
+# parse and merge cell barcode files
+
+rule parse_and_merge_barcodes:
+  input:
+    dir_timestamps + "/HGSOC/merge_and_index_BAM/timestamp_merge_and_index_BAM.txt", 
+    script_parse_and_merge_barcodes = dir_scripts + "/parse_and_merge_barcodes.sh"
+  output:
+    dir_timestamps + "/HGSOC/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt"
+  params:
+    sample_id_1 = lambda wildcards: sample_ids_HGSOC[0], 
+    sample_id_2 = lambda wildcards: sample_ids_HGSOC[1], 
+    sample_id_3 = lambda wildcards: sample_ids_HGSOC[2], 
+    sample_id_1_short = lambda wildcards: sample_ids_HGSOC_short[0], 
+    sample_id_2_short = lambda wildcards: sample_ids_HGSOC_short[1], 
+    sample_id_3_short = lambda wildcards: sample_ids_HGSOC_short[2]
+  shell:
+    "bash {input.script_parse_and_merge_barcodes} {dir_runtimes} {dir_timestamps} NA "
+    "{dir_outputs}/HGSOC "
+    "{params.sample_id_1} {params.sample_id_2} {params.sample_id_3} "
+    "{params.sample_id_1_short} {params.sample_id_2_short} {params.sample_id_3_short}"
 
 
 # merge and index BAM files
@@ -59,7 +82,7 @@ rule merge_and_index_BAM:
     sample_id_2 = lambda wildcards: sample_ids_HGSOC[1], 
     sample_id_3 = lambda wildcards: sample_ids_HGSOC[2]
   shell:
-    "bash {input.script_merge_and_index_BAM} {dir_runtimes} {dir_timestamps} NA {dir_outputs}/HGSOC {params.sample_id_1} {params.sample_id_2} {params.sample_id_2}"
+    "bash {input.script_merge_and_index_BAM} {dir_runtimes} {dir_timestamps} NA {dir_outputs}/HGSOC {params.sample_id_1} {params.sample_id_2} {params.sample_id_3}"
 
 
 # convert SAM to BAM files
@@ -83,7 +106,7 @@ rule parse_SAM_barcodes:
   output:
     dir_timestamps + "/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_{sample}.txt"
   params:
-    short_sample_id = lambda wildcards: short_sample_ids_HGSOC[wildcards.sample]
+    short_sample_id = lambda wildcards: sample_ids_HGSOC_short_named[wildcards.sample]
   shell:
     "bash {input.script_parse_SAM_barcodes} {dir_runtimes} {dir_timestamps} NA {wildcards.sample} {params.short_sample_id} {dir_outputs}/HGSOC/{wildcards.sample}/alevin_mappings"
 
