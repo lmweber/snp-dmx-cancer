@@ -40,14 +40,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $1/HGSOC/merge_and_index_BAM
-echo runtime: $runtime seconds > $1/HGSOC/merge_and_index_BAM/runtime_merge_and_index_BAM.txt
+mkdir -p $1/merge_and_index_BAM
+echo runtime: $runtime seconds > $1/merge_and_index_BAM/runtime_merge_and_index_BAM.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $2/HGSOC/merge_and_index_BAM
-date > $2/HGSOC/merge_and_index_BAM/timestamp_merge_and_index_BAM.txt
+mkdir -p $2/merge_and_index_BAM
+date > $2/merge_and_index_BAM/timestamp_merge_and_index_BAM.txt
 # -----------------------------------
 

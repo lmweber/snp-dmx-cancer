@@ -51,14 +51,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $1/HGSOC/parse_and_merge_barcodes
-echo runtime: $runtime seconds > $1/HGSOC/parse_and_merge_barcodes/runtime_parse_and_merge_barcodes.txt
+mkdir -p $1/parse_and_merge_barcodes
+echo runtime: $runtime seconds > $1/parse_and_merge_barcodes/runtime_parse_and_merge_barcodes.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $2/HGSOC/parse_and_merge_barcodes
-date > $2/HGSOC/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt
+mkdir -p $2/parse_and_merge_barcodes
+date > $2/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt
 # -----------------------------------
 

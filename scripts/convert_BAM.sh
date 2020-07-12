@@ -24,7 +24,7 @@ start=`date +%s`
 # -----------------------------------
 
 
-samtools view -S -b $5/$4.sam > $5/$4.bam
+samtools view -S -b $5/$4.sam > $5/$4/alevin_mappings/$4.bam
 
 
 # -----------------------------------
@@ -33,14 +33,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $1/HGSOC/convert_BAM
-echo runtime: $runtime seconds > $1/HGSOC/convert_BAM/runtime_convert_BAM_$4.txt
+mkdir -p $1/convert_BAM
+echo runtime: $runtime seconds > $1/convert_BAM/runtime_convert_BAM_$4.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $2/HGSOC/convert_BAM
-date > $2/HGSOC/convert_BAM/timestamp_convert_BAM_$4.txt
+mkdir -p $2/convert_BAM
+date > $2/convert_BAM/timestamp_convert_BAM_$4.txt
 # -----------------------------------
 

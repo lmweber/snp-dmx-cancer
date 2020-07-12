@@ -38,10 +38,10 @@ salmon alevin \
 --chromium \
 -i $7 \
 -p $3 \
--o $8/alevin_output \
+-o $8/$4/alevin_output \
 --tgMap $7/tx2gene.tsv \
 --dumpMtx \
---writeMappings=$8/alevin_mappings/$4.sam
+--writeMappings=$8/$4/alevin_mappings/$4.sam
 
 
 # -----------------------------------
@@ -50,14 +50,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $1/HGSOC/alevin
-echo runtime: $runtime seconds > $1/HGSOC/alevin/runtime_alevin_$4.txt
+mkdir -p $1/alevin
+echo runtime: $runtime seconds > $1/alevin/runtime_alevin_$4.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $2/HGSOC/alevin
-date > $2/HGSOC/alevin/timestamp_alevin_$4.txt
+mkdir -p $2/alevin
+date > $2/alevin/timestamp_alevin_$4.txt
 # -----------------------------------
 

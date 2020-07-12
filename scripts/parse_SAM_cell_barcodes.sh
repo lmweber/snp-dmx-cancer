@@ -21,7 +21,7 @@
 # $3: number of threads
 # $4: sample ID
 # $5: short sample ID
-# $6: SAM/BAM output directory from salmon alevin
+# $6: output directory
 
 
 # -----------------------------------
@@ -30,7 +30,7 @@ start=`date +%s`
 # -----------------------------------
 
 
-sed -i "s|\(CB\:Z\:[A-Z]\+\)|\1\-$5|g" $6/$4.sam
+sed -i "s|\(CB\:Z\:[A-Z]\+\)|\1\-$5|g" $6/$4/alevin_mappings/$4.sam
 
 
 # -----------------------------------
@@ -39,14 +39,14 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p $1/HGSOC/parse_SAM_barcodes
-echo runtime: $runtime seconds > $1/HGSOC/parse_SAM_barcodes/runtime_parse_SAM_barcodes_$4.txt
+mkdir -p $1/parse_SAM_barcodes
+echo runtime: $runtime seconds > $1/parse_SAM_barcodes/runtime_parse_SAM_barcodes_$4.txt
 # -----------------------------------
 
 
 # -----------------------------------
 # save timestamp file (for Snakemake)
-mkdir -p $2/HGSOC/parse_SAM_barcodes
-date > $2/HGSOC/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_$4.txt
+mkdir -p $2/parse_SAM_barcodes
+date > $2/parse_SAM_barcodes/timestamp_parse_SAM_barcodes_$4.txt
 # -----------------------------------
 
