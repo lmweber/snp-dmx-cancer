@@ -15,7 +15,7 @@
 # $2: directory for timestamp files
 # $3: number of threads
 # $4: sample ID
-# $5: SAM/BAM output directory from salmon alevin
+# $5: output directory
 
 
 # -----------------------------------
@@ -24,7 +24,7 @@ start=`date +%s`
 # -----------------------------------
 
 
-samtools view -S -b $5/$4.sam > $5/$4/alevin_mappings/$4.bam
+samtools view -S -b $5/$4/alevin_mappings/$4.sam > $5/$4/alevin_mappings/$4.bam
 
 
 # -----------------------------------
