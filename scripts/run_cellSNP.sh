@@ -14,7 +14,6 @@
 # - https://vireosnp.readthedocs.io/en/latest/genotype.html
 # - https://github.com/single-cell-genetics/cellSNP
 
-
 # runtime: ~10 min
 
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_cellSNP.sh
@@ -39,7 +38,7 @@ cellSNP \
 -O $5/cellSNP \
 -R $4/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p $3 \
---minMAF 0.05
+--minMAF=0.05
 
 
 # -----------------------------------
