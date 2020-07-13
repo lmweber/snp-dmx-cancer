@@ -14,7 +14,7 @@
 # for more details:
 # - https://vireosnp.readthedocs.io/en/latest/manual.html
 
-# runtime: ~1 hour
+# runtime: ~10 min
 
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_vireo.sh
 
