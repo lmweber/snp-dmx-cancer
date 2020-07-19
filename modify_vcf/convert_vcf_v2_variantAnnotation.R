@@ -82,6 +82,15 @@ mean(ix_filter)  ## filters out 17.5% of variants
 rowranges <- rowranges[!ix_filter, ]
 rowranges
 
+# replace position with transcriptomic position
+transcript_pos_filt <- transcript_pos[!ix_filter]
+rr <- ranges(rowranges)
+start(rr) <- as.integer(transcript_pos_filt)
+end(rr) <- as.integer(transcript_pos_filt)
+
+ranges(rowranges) <- rr
+rowranges
+
 # create VCF object with new rowRanges
 vars <- vars[!ix_filter, ]
 vars

@@ -31,12 +31,17 @@
 start=`date +%s`
 # -----------------------------------
 
+# note: vcf file needs to be uncompressed
+# if still in "vcf.bgz" format then uncompress as follows:
+# mv file.vcf.bgz file.vcf.gz
+# gunzip file.vcf.gz
+
 
 cellSNP \
 -s $5/bam_merged/bam_merged.bam \
 -b $5/barcodes_merged/barcodes_merged.txt \
 -O $5/cellSNP \
--R $4/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
+-R $4/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs_transcriptomic_v2.vcf \
 -p $3 \
 --minMAF=0.05
 
