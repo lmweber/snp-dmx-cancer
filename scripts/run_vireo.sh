@@ -14,15 +14,16 @@
 # for more details:
 # - https://vireosnp.readthedocs.io/en/latest/manual.html
 
-# runtime: ~10 min
+# runtime: ~30 min
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_vireo.sh
+# qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G run_vireo.sh
 
 # arguments:
 # $1: directory for runtimes
 # $2: directory for timestamp files
 # $3: number of threads
 # $4: output directory
+# $5: number of samples
 
 
 # -----------------------------------
@@ -31,7 +32,7 @@ start=`date +%s`
 # -----------------------------------
 
 
-vireo -c $4/cellSNP -N 3 -o $4/vireo --randSeed=123
+vireo -c $4/cellSNP -N $5 -o $4/vireo --randSeed=123
 
 
 # -----------------------------------

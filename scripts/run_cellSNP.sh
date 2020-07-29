@@ -14,9 +14,9 @@
 # - https://vireosnp.readthedocs.io/en/latest/genotype.html
 # - https://github.com/single-cell-genetics/cellSNP
 
-# runtime: ~30 min
+# runtime: ~1-2 hours (with 10 cores)
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=20G,h_fsize=300G run_cellSNP.sh
+# qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G run_cellSNP.sh
 
 # arguments:
 # $1: directory for runtimes
@@ -32,16 +32,15 @@ start=`date +%s`
 # -----------------------------------
 
 # note: vcf file needs to be uncompressed
-# if still in "vcf.bgz" format then uncompress as follows:
-# mv file.vcf.bgz file.vcf.gz
-# gunzip file.vcf.gz
+# if still in "vcf.bgz" or "vcf.gz" format then uncompress first
+# (for .bgz format, can rename to .gz then gunzip)
 
 
 cellSNP \
 -s $5/bam_merged/bam_merged.bam \
--b $5/barcodes_merged/barcodes_merged.txt \
+-b $5/barcodes_merged/barcodes_merged.tsv \
 -O $5/cellSNP \
--R $4/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs_transcriptomic_v2.vcf \
+-R $4/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p $3 \
 --minMAF=0.05
 
