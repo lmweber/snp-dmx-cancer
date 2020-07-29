@@ -5,8 +5,14 @@ This repository contains a `Snakemake` workflow for demultiplexing single-cell R
 
 ## Contents
 
+#### Main pipeline
+
 - [Snakefile](Snakefile): `Snakefile` for main `Snakemake` workflow
 - [scripts/](scripts/): directory containing scripts for main `Snakemake` workflow
+
+
+#### Additional scripts
+
 - [filter_vcf/](filter_vcf/): to do
 - [evaluations/](evaluations/): scripts to evaluate performance on our datasets
 - [download_EGA/](download_EGA/): to do
