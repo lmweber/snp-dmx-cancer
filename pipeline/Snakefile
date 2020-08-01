@@ -7,14 +7,14 @@
 # ---------
 
 dir_scripts = "scripts"
-dir_data = "../data"
-dir_outputs = "../outputs"
+dir_data = "../../data"
+dir_outputs = "../../outputs"
 dir_outputs_HGSOC = dir_outputs + "/HGSOC"
 dir_outputs_lung = dir_outputs + "/lung"
-dir_runtimes = "../runtimes"
+dir_runtimes = "../../runtimes"
 dir_runtimes_HGSOC = dir_runtimes + "/HGSOC"
 dir_runtimes_lung = dir_runtimes + "/lung"
-dir_timestamps = "../timestamps"
+dir_timestamps = "../../timestamps"
 dir_timestamps_HGSOC = dir_timestamps + "/HGSOC"
 dir_timestamps_lung = dir_timestamps + "/lung"
 
@@ -34,16 +34,16 @@ sample_ids_lung_short_named = {"LUNG_T08": "T08",
                                "LUNG_T28": "T28", 
                                "LUNG_T31": "T31"}
 
-fastq_dirs_HGSOC = {"16030X2_HJVMLDMXX": "../../data/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX", 
-                    "16030X3_HJTWLDMXX": "../../data/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX", 
-                    "16030X4_HJTWLDMXX": "../../data/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX"}
+fastq_dirs_HGSOC = {"16030X2_HJVMLDMXX": "../../../data/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX", 
+                    "16030X3_HJTWLDMXX": "../../../data/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX", 
+                    "16030X4_HJTWLDMXX": "../../../data/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX"}
 
-fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08", 
-                   "LUNG_T09": "../../data/lung/LUNG_T09", 
-                   "LUNG_T20": "../../data/lung/LUNG_T20", 
-                   "LUNG_T25": "../../data/lung/LUNG_T25", 
-                   "LUNG_T28": "../../data/lung/LUNG_T28", 
-                   "LUNG_T31": "../../data/lung/LUNG_T31"}
+fastq_dirs_lung = {"LUNG_T08": "../../../data/lung/LUNG_T08", 
+                   "LUNG_T09": "../../../data/lung/LUNG_T09", 
+                   "LUNG_T20": "../../../data/lung/LUNG_T20", 
+                   "LUNG_T25": "../../../data/lung/LUNG_T25", 
+                   "LUNG_T28": "../../../data/lung/LUNG_T28", 
+                   "LUNG_T31": "../../../data/lung/LUNG_T31"}
 
 
 # ------------
@@ -262,7 +262,7 @@ rule run_cellranger_HGSOC:
     fastq_dir = lambda wildcards: fastq_dirs_HGSOC[wildcards.sample_HGSOC]
   shell:
     "bash {input.script_cellranger} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} 10 "
-    "{wildcards.sample_HGSOC} ../{dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
+    "{wildcards.sample_HGSOC} ../../{dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
     "{params.fastq_dir} {dir_outputs_HGSOC}"
 
 # lung
@@ -275,6 +275,6 @@ rule run_cellranger_lung:
     fastq_dir = lambda wildcards: fastq_dirs_lung[wildcards.sample_lung]
   shell:
     "bash {input.script_cellranger} {dir_runtimes_lung} {dir_timestamps_lung} 10 "
-    "{wildcards.sample_lung} ../{dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
+    "{wildcards.sample_lung} ../../{dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
     "{params.fastq_dir} {dir_outputs_lung}"
 

@@ -7,13 +7,13 @@
 # ---------
 
 dir_scripts = "scripts"
-dir_data = "../data"
+dir_data = "../../data"
 dir_data_HGSOC = dir_data + "/HGSOC"
-dir_outputs = "../outputs"
+dir_outputs = "../../outputs"
 dir_outputs_HGSOC = dir_outputs + "/HGSOC"
-dir_runtimes = "../runtimes"
+dir_runtimes = "../../runtimes"
 dir_runtimes_HGSOC = dir_runtimes + "/HGSOC"
-dir_timestamps = "../timestamps"
+dir_timestamps = "../../timestamps"
 dir_timestamps_HGSOC = dir_timestamps + "/HGSOC"
 
 
