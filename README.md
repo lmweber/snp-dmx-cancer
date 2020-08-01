@@ -5,19 +5,31 @@ This repository contains a `Snakemake` workflow for demultiplexing single-cell R
 
 ## Contents
 
-### Main pipeline
+### Pipeline
 
-- [Snakefile](Snakefile): `Snakefile` for main `Snakemake` workflow
-- [scripts/](scripts/): directory containing scripts for main `Snakemake` workflow
+Files for the main workflow are saved in the directory [pipeline/](pipeline/).
+
+- [Snakefile](pipeline/Snakefile): `Snakefile` to run the workflow using `Snakemake`
+- [scripts/](pipeline/scripts/): directory containing scripts for the individual steps in the `Snakemake` workflow
 
 
 ### Additional scripts
 
+Scripts for additional steps outside the main workflow.
+
+- [evaluations/](evaluations/): R scripts for performance evaluations on our datasets
 - [filter_vcf/](filter_vcf/): to do
-- [evaluations/](evaluations/): scripts to evaluate performance on our datasets
 - [download_EGA/](download_EGA/): to do
-- [salmon_alevin/](salmon_alevin/): alternative scripts for running `salmon alevin` instead of `Cell Ranger` (using `salmon alevin` in the pipeline currently does not work, since `cellSNP` expects a genomic BAM instead of transcriptomic BAM; however we have kept these scripts here in case they are useful in the future to update the pipeline to use `salmon alevin`)
-- [convert_VCF/](convert_VCF/): alternative scripts to convert the VCF file for `cellSNP` from genomic coordinates to transcriptomic coordinates (these scripts may be useful in the future to update the pipeline to use `salmon alevin`)
+
+
+### Alternatives
+
+Scripts for alternative options or tools to use within the workflow. This mainly includes scripts to use `salmon alevin` instead of `Cell Ranger`. We used `Cell Ranger` in the final pipeline due to incompatibility of the `salmon alevin` outputs with `cellSNP` and `Vireo` (`salmon alevin` generates a transcriptomic BAM, while `cellSNP` and `Vireo` expect a genomic BAM and VCF), so these scripts are not used within the main pipeline. However, we have kept them here in case they are useful in the future or for other work.
+
+These scripts are saved in the directory [alternative](alternative/).
+
+- [salmon_alevin/](alternative/salmon_alevin/): alternative scripts to run `salmon alevin` instead of `Cell Ranger`
+- [convert_VCF/](alternative/convert_VCF/): alternative scripts to convert VCF file from genomic coordinates to transcriptomic coordinates
 
 
 ## Links
