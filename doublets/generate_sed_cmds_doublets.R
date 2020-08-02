@@ -138,7 +138,6 @@ for (prop_doublets in prop_doublets_sims) {
   for (dataset_name in dataset_name_sims) {
     
     file_barcodes_merged <- file.path("../../outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
-    #file_barcodes_merged <- paste0("../../outputs/cellranger_testing_", dataset_name, "/barcodes_merged.tsv")
     
     f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
   }
