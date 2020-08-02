@@ -1,0 +1,146 @@
+######################################################################
+# Doublets simulation: generate sed commands and updated barcodes file
+######################################################################
+
+# Simulate doublets by combining some percentage of cell barcodes in the merged
+# BAM file.
+
+# This script generates:
+# (i) a text file for each simulation scenario, containing a set of sed commands
+# to parse through the merged SAM file to combine some percentage of cell
+# barcodes. This text file can then be called from the corresponding shell
+# script for the simulation scenario.
+# (ii) updated merged cell barcodes file for each scenario
+
+
+# to run on JHPCE cluster
+#module load conda_R/4.0
+
+
+# ---------------------
+# Simulation parameters
+# ---------------------
+
+# parameters for each simulation scenario
+
+# proportion of doublets to simulate (i.e. proportion of final number of cells)
+prop_doublets_sims <- c(0.04, 0.08)
+
+# dataset names
+dataset_name_sims <- c("HGSOC", "lung")
+
+
+# ---------------------------------
+# Function to generate sed commands
+# ---------------------------------
+
+# function to save text file containing sed commands for each simulation scenario
+
+# arguments:
+# prop_doublets: proportion of doublets to simulate
+# dataset_name: dataset name for output files
+# file_barcodes_merged: tsv file containing merged list of cell barcodes from Cell Ranger
+f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
+  
+  library(tidyverse)
+  library(magrittr)
+  
+  # corrected proportion of doublets to simulate, i.e. number of cells to
+  # replace after taking into account reduction in final number of cells
+  prop_doublets_corrected <- prop_doublets * (1 - prop_doublets)
+  print(prop_doublets_corrected)
+  
+  
+  # --------------------------
+  # Generate replacement table
+  # --------------------------
+  
+  # load merged list of cell barcodes
+  df_barcodes <- read_table(file_barcodes_merged, col_names = "barcode")
+  
+  # number of cells
+  n_cells <- nrow(df_barcodes)
+  # number of cells to combine with other cells as doublets
+  n_doublets <- round(prop_doublets_corrected * n_cells)
+  
+  print(n_cells)
+  print(n_doublets)
+  
+  # select random sets of (i) cells to replace and (ii) replacements
+  set.seed(123)
+  ix_original <- sample(seq_len(n_cells), n_doublets)
+  ix_replacement <- sample(setdiff(seq_len(n_cells), ix_original), n_doublets)
+  
+  # generate lookup table / replacement table for cell barcodes
+  df_lookup <- tibble(
+    original = df_barcodes$barcode[ix_original], 
+    replacement = df_barcodes$barcode[ix_replacement]
+  )
+  
+  # save lookup table
+  fn_out <- file.path(
+    paste0("../../outputs/HGSOC/doublets/", prop_doublets * 100, "pc"), 
+    paste0("lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
+  )
+  write_tsv(df_lookup, fn_out)
+  
+  
+  # ------------------------------
+  # Generate updated barcodes file
+  # ------------------------------
+  
+  # generate updated list of cell barcodes
+  barcodes_merged_new <- df_barcodes$barcode
+  barcodes_merged_new[ix_original] <- df_barcodes$barcode[ix_replacement]
+  stopifnot(length(unique(barcodes_merged_new)) == n_cells - n_doublets)
+  stopifnot(length(barcodes_merged_new) == n_cells)
+  
+  # save barcodes file
+  fn_out <- file.path(
+    paste0("../../outputs/HGSOC/doublets/", prop_doublets * 100, "pc"), 
+    paste0("barcodes_merged_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
+  )
+  write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)
+  
+  
+  # ---------------------
+  # Generate sed commands
+  # ---------------------
+  
+  # convert lookup table into a text file containing multiple replacement sed
+  # commands for parsing through SAM file
+  
+  # for details on different options to set this up see:
+  # https://stackoverflow.com/questions/34890378/is-sed-with-multiple-expressions-the-same-as-one-expression-with-semi-colons
+  
+  sed_cmds <- paste0("s/", df_lookup$original, "/", df_lookup$replacement, "/")
+  
+  stopifnot(length(sed_cmds) == nrow(df_lookup))
+  
+  # save in local directory with scripts
+  fn_out <- file.path(
+    ".", 
+    paste0("sed_cmds_doublets_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
+  )
+  write_tsv(tibble(sed_cmds), fn_out, col_names = FALSE)
+  
+}
+
+
+# ----------------------------------------------------------------
+# Save sed commands and barcodes file for each simulation scenario
+# ----------------------------------------------------------------
+
+# run function to save sed commands and updated barcodes file for each
+# simulation scenario
+
+for (prop_doublets in prop_doublets_sims) {
+  for (dataset_name in dataset_name_sims) {
+    
+    file_barcodes_merged <- file.path("../../outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
+    #file_barcodes_merged <- paste0("../../outputs/cellranger_testing_", dataset_name, "/barcodes_merged.tsv")
+    
+    f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
+  }
+}
+

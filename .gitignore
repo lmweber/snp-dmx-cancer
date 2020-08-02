@@ -4,3 +4,4 @@
 .Ruserdata
 **/.DS_Store
 filter_vcf/*
+sed_cmds_*
