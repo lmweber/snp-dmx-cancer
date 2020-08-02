@@ -19,7 +19,8 @@ Scripts for additional steps outside the main workflow.
 
 - [evaluations/](evaluations/): R scripts for performance evaluations on our datasets
 - [filter_vcf/](filter_vcf/): to do
-- [download_EGA/](download_EGA/): to do
+- [download_EGA/](download_EGA/): script to download files for lung adenocarcinoma dataset from European Genome-phenome Archive (EGA)
+- [doublets/](doublets/): scripts to run doublets simulations
 
 
 ### Alternatives
