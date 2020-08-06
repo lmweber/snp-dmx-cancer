@@ -38,9 +38,9 @@
 
 # for one simulation scenario (dataset, percentage of doublets)
 
-samtools view -h ../../outputs/HGSOC/BAM_merged/BAM_merged.bam | \
+samtools view -h ../../outputs/HGSOC/bam_merged/bam_merged.bam | \
 sed -f sed_cmds_doublets_HGSOC_4pc.tsv | \
-samtools view -bo ../../outputs/HGSOC/doublets/4pc/BAM_merged_doublets_HGSOC_4pc.bam
+samtools view -bo ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam
 
 
 # -----------
@@ -48,7 +48,7 @@ samtools view -bo ../../outputs/HGSOC/doublets/4pc/BAM_merged_doublets_HGSOC_4pc
 # -----------
 
 cellSNP \
--s ../../outputs/HGSOC/doublets/4pc/BAM_merged_doublets_HGSOC_4pc.bam \
+-s ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam \
 -b ../../outputs/HGSOC/doublets/4pc/barcodes_merged_HGSOC_4pc.tsv \
 -O ../../outputs/HGSOC/doublets/4pc/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \

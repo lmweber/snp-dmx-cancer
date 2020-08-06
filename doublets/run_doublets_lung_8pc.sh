@@ -38,9 +38,9 @@
 
 # for one simulation scenario (dataset, percentage of doublets)
 
-samtools view -h ../../outputs/lung/BAM_merged/BAM_merged.bam | \
+samtools view -h ../../outputs/lung/bam_merged/bam_merged.bam | \
 sed -f sed_cmds_doublets_lung_8pc.tsv | \
-samtools view -bo ../../outputs/lung/doublets/8pc/BAM_merged_doublets_lung_8pc.bam
+samtools view -bo ../../outputs/lung/doublets/8pc/bam_merged_doublets_lung_8pc.bam
 
 
 # -----------
@@ -48,7 +48,7 @@ samtools view -bo ../../outputs/lung/doublets/8pc/BAM_merged_doublets_lung_8pc.b
 # -----------
 
 cellSNP \
--s ../../outputs/lung/doublets/8pc/BAM_merged_doublets_lung_8pc.bam \
+-s ../../outputs/lung/doublets/8pc/bam_merged_doublets_lung_8pc.bam \
 -b ../../outputs/lung/doublets/8pc/barcodes_merged_lung_8pc.tsv \
 -O ../../outputs/lung/doublets/8pc/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
