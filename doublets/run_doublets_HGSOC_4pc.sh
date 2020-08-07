@@ -9,24 +9,29 @@
 # (ii) parsing through the merged SAM file to replace and combine some 
 # percentage of cell barcodes
 # (iii) converting SAM back to BAM
+# (iv) then continue by running cellSNP and Vireo on the modified BAM file
 
-# Note: sed commands are saved in a .tsv file generated with the script 
-# "generate_sed_cmds_doublets.R" for each simulation scenario.
+# Notes:
+# - lookup table to use in awk command is saved in a .tsv file generated with 
+# the script "generate_awk_lookup_tables_doublets.R"
+# - for more details on how to use awk for multiple replacements see: 
+# https://stackoverflow.com/questions/14234907/replacing-values-in-large-table-using-conversion-table
 
-# Then continue by running cellSNP and Vireo on the modified BAM file.
+
+# qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G run_doublets.sh
 
 
-# -----------------------------------------------------------
-# Generate files containing sed commands and updated barcodes
-# -----------------------------------------------------------
+# ----------------------------------------------------------------
+# Generate files containing awk lookup tables and updated barcodes
+# ----------------------------------------------------------------
 
-# run R script to generate .tsv files containing sed commands and updated lists 
-# of cell barcodes for all simulation scenarios (if not already done)
+# run R script to generate .tsv files containing awk lookup tables and updated 
+# lists of cell barcodes for all simulation scenarios (if not already done)
 
 # run on JHPCE cluster
 #module load conda_R/4.0
 
-#Rscript generate_sed_cmds_doublets.R
+#Rscript generate_awk_lookup_tables_doublets.R
 
 
 # -----------------------------
@@ -38,8 +43,12 @@
 
 # for one simulation scenario (dataset, percentage of doublets)
 
+
+# note hyphen for argument order
 samtools view -h ../../outputs/HGSOC/bam_merged/bam_merged.bam | \
-sed -f sed_cmds_doublets_HGSOC_4pc.tsv | \
+awk \
+'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
+../../outputs/HGSOC/doublets/4pc/lookup_table_doublets_HGSOC_4pc.tsv - | \
 samtools view -bo ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam
 
 
@@ -60,7 +69,7 @@ cellSNP \
 # Run Vireo
 # ---------
 
-# note parameter for known number of samples
+# note parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 
 vireo \
 -c ../../outputs/HGSOC/doublets/4pc/cellSNP \
