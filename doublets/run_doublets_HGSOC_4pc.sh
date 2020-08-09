@@ -52,6 +52,13 @@ awk \
 samtools view -bo ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam
 
 
+# ---------
+# Index BAM
+# ---------
+
+samtools index ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam
+
+
 # -----------
 # Run cellSNP
 # -----------

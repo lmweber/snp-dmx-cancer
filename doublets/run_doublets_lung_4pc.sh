@@ -52,6 +52,13 @@ awk \
 samtools view -bo ../../outputs/lung/doublets/4pc/bam_merged_doublets_lung_4pc.bam
 
 
+# ---------
+# Index BAM
+# ---------
+
+samtools index ../../outputs/lung/doublets/4pc/bam_merged_doublets_lung_4pc.bam
+
+
 # -----------
 # Run cellSNP
 # -----------
