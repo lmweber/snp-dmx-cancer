@@ -88,11 +88,10 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   # Generate updated barcodes file
   # ------------------------------
   
-  # generate updated list of cell barcodes
-  barcodes_merged_new <- df_barcodes$barcode
-  barcodes_merged_new[ix_original] <- df_barcodes$barcode[ix_replacement]
-  stopifnot(length(unique(barcodes_merged_new)) == n_cells - n_doublets)
-  stopifnot(length(barcodes_merged_new) == n_cells)
+  # generate updated list of cell barcodes by removing replaced cells
+  barcodes_merged_new <- df_barcodes$barcode[!(df_barcodes$barcode %in% df_lookup$original)]
+  stopifnot(all(barcodes_merged_new %in% df_barcodes$barcode))
+  stopifnot(length(barcodes_merged_new) == n_cells - n_doublets)
   
   # save barcodes file
   fn_out <- file.path(
