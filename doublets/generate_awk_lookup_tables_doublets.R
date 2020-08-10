@@ -23,7 +23,7 @@
 # parameters for each simulation scenario
 
 # proportion of doublets to simulate (i.e. proportion of final number of cells)
-prop_doublets_sims <- c(0.04, 0.08)
+prop_doublets_sims <- c(0.3)
 
 # dataset names
 dataset_name_sims <- c("HGSOC", "lung")
@@ -46,7 +46,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   
   # corrected proportion of doublets to simulate, i.e. number of cells to
   # replace after taking into account reduction in final number of cells
-  prop_doublets_corrected <- prop_doublets * (1 - prop_doublets)
+  prop_doublets_corrected <- prop_doublets / (1 + prop_doublets)
   print(prop_doublets_corrected)
   
   

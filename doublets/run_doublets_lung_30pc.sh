@@ -18,7 +18,7 @@
 # https://stackoverflow.com/questions/14234907/replacing-values-in-large-table-using-conversion-table
 
 
-# qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G run_doublets.sh
+# qsub -V -cwd -pe local 20 -l mem_free=2G,h_vmem=3G,h_fsize=100G run_doublets.sh
 
 
 # ----------------------------------------------------------------
@@ -45,18 +45,18 @@
 
 
 # note hyphen for argument order
-samtools view -h ../../outputs/HGSOC/bam_merged/bam_merged.bam | \
+samtools view -h ../../outputs/lung/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../outputs/HGSOC/doublets/4pc/lookup_table_doublets_HGSOC_4pc.tsv - | \
-samtools view -bo ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam
+../../outputs/lung/doublets/30pc/lookup_table_doublets_lung_30pc.tsv - | \
+samtools view -bo ../../outputs/lung/doublets/30pc/bam_merged_doublets_lung_30pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam
+samtools index ../../outputs/lung/doublets/30pc/bam_merged_doublets_lung_30pc.bam
 
 
 # -----------
@@ -64,11 +64,11 @@ samtools index ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.ba
 # -----------
 
 cellSNP \
--s ../../outputs/HGSOC/doublets/4pc/bam_merged_doublets_HGSOC_4pc.bam \
--b ../../outputs/HGSOC/doublets/4pc/barcodes_merged_HGSOC_4pc.tsv \
--O ../../outputs/HGSOC/doublets/4pc/cellSNP \
--R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
--p 10 \
+-s ../../outputs/lung/doublets/30pc/bam_merged_doublets_lung_30pc.bam \
+-b ../../outputs/lung/doublets/30pc/barcodes_merged_lung_30pc.tsv \
+-O ../../outputs/lung/doublets/30pc/cellSNP \
+-R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
+-p 20 \
 --minMAF=0.05
 
 
@@ -79,8 +79,8 @@ cellSNP \
 # note parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 
 vireo \
--c ../../outputs/HGSOC/doublets/4pc/cellSNP \
--N 3 \
--o ../../outputs/HGSOC/doublets/4pc/vireo \
+-c ../../outputs/lung/doublets/30pc/cellSNP \
+-N 6 \
+-o ../../outputs/lung/doublets/30pc/vireo \
 --randSeed=123
 
