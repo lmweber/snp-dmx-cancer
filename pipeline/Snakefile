@@ -262,7 +262,7 @@ rule run_cellranger_HGSOC:
     fastq_dir = lambda wildcards: fastq_dirs_HGSOC[wildcards.sample_HGSOC]
   shell:
     "bash {input.script_cellranger} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} 10 "
-    "{wildcards.sample_HGSOC} ../../{dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
+    "{wildcards.sample_HGSOC} {dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
     "{params.fastq_dir} {dir_outputs_HGSOC}"
 
 # lung
@@ -275,6 +275,6 @@ rule run_cellranger_lung:
     fastq_dir = lambda wildcards: fastq_dirs_lung[wildcards.sample_lung]
   shell:
     "bash {input.script_cellranger} {dir_runtimes_lung} {dir_timestamps_lung} 10 "
-    "{wildcards.sample_lung} ../../{dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
+    "{wildcards.sample_lung} {dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
     "{params.fastq_dir} {dir_outputs_lung}"
 
