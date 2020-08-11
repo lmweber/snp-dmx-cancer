@@ -34,16 +34,16 @@ sample_ids_lung_short_named = {"LUNG_T08": "T08",
                                "LUNG_T28": "T28", 
                                "LUNG_T31": "T31"}
 
-fastq_dirs_HGSOC = {"16030X2_HJVMLDMXX": "../../../data/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX", 
-                    "16030X3_HJTWLDMXX": "../../../data/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX", 
-                    "16030X4_HJTWLDMXX": "../../../data/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX"}
+fastq_dirs_HGSOC = {"16030X2_HJVMLDMXX": "../../data/HGSOC/16030R/Fastq/16030X2_HJVMLDMXX", 
+                    "16030X3_HJTWLDMXX": "../../data/HGSOC/16030R/Fastq/16030X3_HJTWLDMXX", 
+                    "16030X4_HJTWLDMXX": "../../data/HGSOC/16030R/Fastq/16030X4_HJTWLDMXX"}
 
-fastq_dirs_lung = {"LUNG_T08": "../../../data/lung/LUNG_T08", 
-                   "LUNG_T09": "../../../data/lung/LUNG_T09", 
-                   "LUNG_T20": "../../../data/lung/LUNG_T20", 
-                   "LUNG_T25": "../../../data/lung/LUNG_T25", 
-                   "LUNG_T28": "../../../data/lung/LUNG_T28", 
-                   "LUNG_T31": "../../../data/lung/LUNG_T31"}
+fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08", 
+                   "LUNG_T09": "../../data/lung/LUNG_T09", 
+                   "LUNG_T20": "../../data/lung/LUNG_T20", 
+                   "LUNG_T25": "../../data/lung/LUNG_T25", 
+                   "LUNG_T28": "../../data/lung/LUNG_T28", 
+                   "LUNG_T31": "../../data/lung/LUNG_T31"}
 
 
 # ------------
