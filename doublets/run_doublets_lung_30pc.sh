@@ -63,6 +63,8 @@ samtools index ../../outputs/lung/doublets/30pc/bam_merged_doublets_lung_30pc.ba
 # Run cellSNP
 # -----------
 
+# note: more stable to run cellSNP interactively using qrsh instead of qsub; not sure why
+
 cellSNP \
 -s ../../outputs/lung/doublets/30pc/bam_merged_doublets_lung_30pc.bam \
 -b ../../outputs/lung/doublets/30pc/barcodes_merged_lung_30pc.tsv \
@@ -76,7 +78,7 @@ cellSNP \
 # Run Vireo
 # ---------
 
-# note parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
+# note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 
 vireo \
 -c ../../outputs/lung/doublets/30pc/cellSNP \
