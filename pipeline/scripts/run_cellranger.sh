@@ -49,8 +49,8 @@ cellranger count --id=$4 \
 --nosecondary \
 --jobmode=local \
 --localcores=10 \
---localmem=40 \
---localvmem=80
+--localmem=50 \
+--localvmem=100
 
 
 # restore working directory

@@ -8,6 +8,7 @@
 
 dir_scripts = "scripts"
 dir_data = "../../data"
+dir_data_cellranger_ref = dir_data + "/cellranger/refdata-gex-GRCh38-2020-A"
 dir_outputs = "../../outputs"
 dir_outputs_HGSOC = dir_outputs + "/HGSOC"
 dir_outputs_lung = dir_outputs + "/lung"
@@ -51,8 +52,13 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 # ------------
 
 # command to run pipeline on cluster
+# notes:
+# - using number of threads specified in each rule
+# - using memory equal to "threads * mem_free" and "threads * h_vmem" (if more 
+# precise control is required over the amount of memory for each job, this could 
+# be specified in a Snakemake cluster config file)
 
-# snakemake --cluster "qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G" -j 9 --local-cores 30 --latency-wait 10
+# snakemake --cluster "qsub -V -cwd -pe local {threads} -l mem_free=5G,h_vmem=10G,h_fsize=100G" -j 9 --local-cores 30 --latency-wait 10
 
 
 # --------------
@@ -80,8 +86,9 @@ rule run_vireo_HGSOC:
     dir_timestamps_HGSOC + "/vireo/timestamp_vireo.txt"
   params:
     n_samples = 3
+  threads: 1
   shell:
-    "bash {input.script_vireo} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
+    "bash {input.script_vireo} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
     "{dir_outputs_HGSOC} {params.n_samples}"
 
 # lung (6 samples)
@@ -93,8 +100,9 @@ rule run_vireo_lung:
     dir_timestamps_lung + "/vireo/timestamp_vireo.txt"
   params:
     n_samples = 6
+  threads: 1
   shell:
-    "bash {input.script_vireo} {dir_runtimes_lung} {dir_timestamps_lung} NA "
+    "bash {input.script_vireo} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
     "{dir_outputs_lung} {params.n_samples}"
 
 
@@ -109,8 +117,9 @@ rule run_cellSNP_HGSOC:
     script_cellSNP = dir_scripts + "/run_cellSNP.sh"
   output:
     dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt"
+  threads: 10
   shell:
-    "bash {input.script_cellSNP} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} 10 "
+    "bash {input.script_cellSNP} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
     "{dir_data} {dir_outputs_HGSOC}"
 
 # lung
@@ -120,8 +129,9 @@ rule run_cellSNP_lung:
     script_cellSNP = dir_scripts + "/run_cellSNP.sh"
   output:
     dir_timestamps_lung + "/cellSNP/timestamp_cellSNP.txt"
+  threads: 10
   shell:
-    "bash {input.script_cellSNP} {dir_runtimes_lung} {dir_timestamps_lung} 10 "
+    "bash {input.script_cellSNP} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
     "{dir_data} {dir_outputs_lung}"
 
 
@@ -143,8 +153,9 @@ rule parse_and_merge_barcodes_HGSOC:
     sample_id_1_short = lambda wildcards: sample_ids_HGSOC_short[0], 
     sample_id_2_short = lambda wildcards: sample_ids_HGSOC_short[1], 
     sample_id_3_short = lambda wildcards: sample_ids_HGSOC_short[2]
+  threads: 1
   shell:
-    "bash {input.script_parse_and_merge_barcodes} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
+    "bash {input.script_parse_and_merge_barcodes} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
     "{dir_outputs_HGSOC} "
     "{params.sample_id_1} {params.sample_id_2} {params.sample_id_3} "
     "{params.sample_id_1_short} {params.sample_id_2_short} {params.sample_id_3_short}"
@@ -169,8 +180,9 @@ rule parse_and_merge_barcodes_lung:
     sample_id_4_short = lambda wildcards: sample_ids_lung_short[3], 
     sample_id_5_short = lambda wildcards: sample_ids_lung_short[4], 
     sample_id_6_short = lambda wildcards: sample_ids_lung_short[5]
+  threads: 1
   shell:
-    "bash {input.script_parse_and_merge_barcodes} {dir_runtimes_lung} {dir_timestamps_lung} NA "
+    "bash {input.script_parse_and_merge_barcodes} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
     "{dir_outputs_lung} "
     "{params.sample_id_1} {params.sample_id_2} {params.sample_id_3} "
     "{params.sample_id_4} {params.sample_id_5} {params.sample_id_6} "
@@ -193,8 +205,9 @@ rule merge_and_index_BAM_HGSOC:
     sample_id_1 = lambda wildcards: sample_ids_HGSOC[0], 
     sample_id_2 = lambda wildcards: sample_ids_HGSOC[1], 
     sample_id_3 = lambda wildcards: sample_ids_HGSOC[2]
+  threads: 1
   shell:
-    "bash {input.script_merge_and_index_BAM} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
+    "bash {input.script_merge_and_index_BAM} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
     "{dir_outputs_HGSOC} {params.sample_id_1} {params.sample_id_2} {params.sample_id_3}"
 
 # lung
@@ -211,8 +224,9 @@ rule merge_and_index_BAM_lung:
     sample_id_4 = lambda wildcards: sample_ids_lung[3], 
     sample_id_5 = lambda wildcards: sample_ids_lung[4], 
     sample_id_6 = lambda wildcards: sample_ids_lung[5]
+  threads: 1
   shell:
-    "bash {input.script_merge_and_index_BAM} {dir_runtimes_lung} {dir_timestamps_lung} NA "
+    "bash {input.script_merge_and_index_BAM} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
     "{dir_outputs_lung} {params.sample_id_1} {params.sample_id_2} {params.sample_id_3} "
     "{params.sample_id_4} {params.sample_id_5} {params.sample_id_6}"
 
@@ -230,8 +244,9 @@ rule parse_BAM_files_HGSOC:
     dir_timestamps_HGSOC + "/parse_BAM_files/timestamp_parse_BAM_files_{sample_HGSOC}.txt"
   params:
     short_sample_id = lambda wildcards: sample_ids_HGSOC_short_named[wildcards.sample_HGSOC]
+  threads: 1
   shell:
-    "bash {input.script_parse_BAM_files} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} NA "
+    "bash {input.script_parse_BAM_files} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
     "{wildcards.sample_HGSOC} {params.short_sample_id} {dir_outputs_HGSOC}"
 
 # lung
@@ -243,8 +258,9 @@ rule parse_BAM_files_lung:
     dir_timestamps_lung + "/parse_BAM_files/timestamp_parse_BAM_files_{sample_lung}.txt"
   params:
     short_sample_id = lambda wildcards: sample_ids_lung_short_named[wildcards.sample_lung]
+  threads: 1
   shell:
-    "bash {input.script_parse_BAM_files} {dir_runtimes_lung} {dir_timestamps_lung} NA "
+    "bash {input.script_parse_BAM_files} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
     "{wildcards.sample_lung} {params.short_sample_id} {dir_outputs_lung}"
 
 
@@ -260,9 +276,10 @@ rule run_cellranger_HGSOC:
     dir_timestamps_HGSOC + "/cellranger/timestamp_cellranger_{sample_HGSOC}.txt"
   params:
     fastq_dir = lambda wildcards: fastq_dirs_HGSOC[wildcards.sample_HGSOC]
+  threads: 10
   shell:
-    "bash {input.script_cellranger} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} 10 "
-    "{wildcards.sample_HGSOC} {dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
+    "bash {input.script_cellranger} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
+    "{wildcards.sample_HGSOC} {dir_data_cellranger_ref} "
     "{params.fastq_dir} {dir_outputs_HGSOC}"
 
 # lung
@@ -273,8 +290,9 @@ rule run_cellranger_lung:
     dir_timestamps_lung + "/cellranger/timestamp_cellranger_{sample_lung}.txt"
   params:
     fastq_dir = lambda wildcards: fastq_dirs_lung[wildcards.sample_lung]
+  threads: 10
   shell:
-    "bash {input.script_cellranger} {dir_runtimes_lung} {dir_timestamps_lung} 10 "
-    "{wildcards.sample_lung} {dir_data}/cellranger/refdata-gex-GRCh38-2020-A "
+    "bash {input.script_cellranger} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
+    "{wildcards.sample_lung} {dir_data_cellranger_ref} "
     "{params.fastq_dir} {dir_outputs_lung}"
 
