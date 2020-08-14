@@ -41,10 +41,15 @@ head(vcf_df)
 
 # duplicate entries are those with the same chromosome (column 1) and position (column 2)
 
-ix_dups <- duplicated(paste(vcf_df[, 1], vcf_df[, 2], sep = "_"))
-table(ix_dups)
+entries <- paste(vcf_df[, 1], vcf_df[, 2], sep = "_")
 
-vcf_df_nodups <- vcf_df[!ix_dups, , drop = FALSE]
+ix_dups <- duplicated(entries)
+ix_dups_all <- entries %in% entries[ix_dups]
+
+table(ix_dups)
+table(ix_dups_all)
+
+vcf_df_nodups <- vcf_df[!ix_dups_all, , drop = FALSE]
 
 
 # -------------
