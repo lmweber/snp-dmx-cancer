@@ -12,7 +12,7 @@
 
 # note: requires STAR index from previous script "create_STAR_index.sh"
 
-# qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=11G,h_fsize=100G bulk_genotype.sh
+# qsub -V -cwd -pe local 20 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_bulk.sh
 
 
 # --------

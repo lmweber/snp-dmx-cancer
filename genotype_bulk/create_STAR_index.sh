@@ -5,7 +5,7 @@
 ###################################
 
 # This script runs STAR to create genome index files, required by the following 
-# scripts "bulk_genotype_HGSOC_17667XX.sh".
+# scripts "genotype_bulk_HGSOC_17667XX.sh".
 
 
 # note: creating STAR index requires up to 200GB of memory

@@ -5,7 +5,7 @@
 #######################################
 
 # This script concatenates VCF files from all 3 samples in the HGSOC dataset, 
-# generated with the scripts "bulk_genotype_HGSOC_17667XX.sh".
+# generated with the scripts "genotype_bulk_HGSOC_17667XX.sh".
 
 
 # qsub -V -cwd -pe local 20 -l mem_free=2G,h_vmem=3G,h_fsize=100G concatenate_vcf.sh
