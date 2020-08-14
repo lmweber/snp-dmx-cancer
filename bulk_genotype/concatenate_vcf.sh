@@ -29,7 +29,11 @@ bgzip ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
 
 mkdir -p ../../bulk/cellSNP_merged
 
-vcf-concat ../../bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf.gz | \
-gzip -c > \
-../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf.gz
+vcf-concat ../../bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf.gz > \
+../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf
+
+
+# keep both unzipped and gzipped versions
+
+gzip -c ../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf > ../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf.gz
 
