@@ -27,13 +27,13 @@ bgzip ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
 
 # concatenate VCF files using vcftools (vcr-concat)
 
-mkdir -p ../../bulk/cellSNP_merged
+mkdir -p ../../bulk/cellSNP_bulk_merged
 
 vcf-concat ../../bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf.gz > \
-../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf
+../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf
 
 
 # keep both unzipped and gzipped versions
 
-gzip -c ../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf > ../../bulk/cellSNP_merged/cellSNP.cells-merged.vcf.gz
+gzip -c ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf > ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf.gz
 
