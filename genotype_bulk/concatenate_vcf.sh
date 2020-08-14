@@ -17,23 +17,23 @@
 
 # convert gzipped output files to bgzipped format (required by vcftools)
 
-gunzip -c ../../bulk/17667X1/cellSNP/cellSNP.cells.vcf.gz > ../../bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf
-gunzip -c ../../bulk/17667X2/cellSNP/cellSNP.cells.vcf.gz > ../../bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf
-gunzip -c ../../bulk/17667X3/cellSNP/cellSNP.cells.vcf.gz > ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
+gunzip -c ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf
+bgzip ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf
+gunzip -c ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf
+bgzip ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf
+gunzip -c ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
+bgzip ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
 
 
 # concatenate VCF files using vcftools (vcr-concat)
 
-mkdir -p ../../bulk/cellSNP_bulk_merged
+mkdir -p ../../genotype_bulk/cellSNP_bulk_merged
 
-vcf-concat ../../bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf.gz > \
-../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf
+vcf-concat ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf.gz ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf.gz > \
+../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf
 
 
 # keep both unzipped and gzipped versions
 
-gzip -c ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf > ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf.gz
+gzip -c ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf > ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf.gz
 

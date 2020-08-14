@@ -23,8 +23,8 @@
 cellSNP \
 -s ../../outputs/HGSOC/bam_merged/bam_merged.bam \
 -b ../../outputs/HGSOC/barcodes_merged/barcodes_merged.tsv \
--O ../../bulk/cellSNP \
--R ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf \
+-O ../../genotype_bulk/cellSNP \
+-R ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf \
 -p 20 \
 --minMAF=0.01
 
@@ -36,8 +36,8 @@ cellSNP \
 # note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 
 vireo \
--c ../../bulk/cellSNP \
+-c ../../genotype_bulk/cellSNP \
 -N 3 \
--o ../../bulk/vireo \
+-o ../../genotype_bulk/vireo \
 --randSeed=123
 

@@ -22,10 +22,10 @@
 # align reads
 
 STAR \
---genomeDir ../../bulk/STAR_index \
+--genomeDir ../../genotype_bulk/STAR_index \
 --runThreadN 10 \
 --readFilesIn ../../data/HGSOC/17667R/Fastq/17667X3_200214_A00421_0157_BHK52CDRXX_S41_L002_R1_001.fastq.gz ../../data/HGSOC/17667R/Fastq/17667X3_200214_A00421_0157_BHK52CDRXX_S41_L002_R2_001.fastq.gz \
---outFileNamePrefix ../../bulk/17667X3/STAR/ \
+--outFileNamePrefix ../../genotype_bulk/17667X3/STAR/ \
 --readFilesCommand gunzip -c \
 --outSAMtype BAM SortedByCoordinate \
 --limitGenomeGenerateRAM 200000000000
@@ -35,7 +35,7 @@ STAR \
 # Index BAM
 # ---------
 
-samtools index ../../bulk/17667X3/STAR/Aligned.sortedByCoord.out.bam
+samtools index ../../genotype_bulk/17667X3/STAR/Aligned.sortedByCoord.out.bam
 
 
 # --------------------
@@ -45,8 +45,8 @@ samtools index ../../bulk/17667X3/STAR/Aligned.sortedByCoord.out.bam
 # note: more stable to run interactively with "qrsh" instead of "qsub" on cluster
 
 cellSNP \
--s ../../bulk/17667X3/STAR/Aligned.sortedByCoord.out.bam \
--O ../../bulk/17667X3/cellSNP \
+-s ../../genotype_bulk/17667X3/STAR/Aligned.sortedByCoord.out.bam \
+-O ../../genotype_bulk/17667X3/cellSNP \
 -p 20 \
 --minMAF=0.01 \
 --minCOUNT=10 \
