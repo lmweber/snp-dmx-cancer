@@ -24,7 +24,7 @@ cellSNP \
 -s ../../outputs/HGSOC/bam_merged/bam_merged.bam \
 -b ../../outputs/HGSOC/barcodes_merged/barcodes_merged.tsv \
 -O ../../bulk/cellSNP \
--R ../../bulk/cellSNP_merged/cellSNP.cells-merged-nodups.vcf \
+-R ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf \
 -p 20 \
 --minMAF=0.01
 
