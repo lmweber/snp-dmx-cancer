@@ -48,7 +48,7 @@ cellSNP \
 -s ../../bulk/17667X2/STAR/Aligned.sortedByCoord.out.bam \
 -O ../../bulk/17667X2/cellSNP \
 -p 20 \
---minMAF=0.05 \
---minCOUNT=100 \
+--minMAF=0.01 \
+--minCOUNT=10 \
 --UMItag=None
 
