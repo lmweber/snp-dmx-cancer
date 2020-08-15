@@ -78,7 +78,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   
   # save lookup table
   fn_out <- file.path(
-    paste0("../../outputs/", dataset_name, "/doublets/", prop_doublets * 100, "pc"), 
+    paste0("../../doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
   write_tsv(df_lookup, fn_out)
@@ -95,7 +95,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   
   # save barcodes file
   fn_out <- file.path(
-    paste0("../../outputs/", dataset_name, "/doublets/", prop_doublets * 100, "pc"), 
+    paste0("../../doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("barcodes_merged_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
   write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)

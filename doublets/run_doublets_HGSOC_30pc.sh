@@ -48,15 +48,15 @@
 samtools view -h ../../outputs/HGSOC/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../outputs/HGSOC/doublets/30pc/lookup_table_doublets_HGSOC_30pc.tsv - | \
-samtools view -bo ../../outputs/HGSOC/doublets/30pc/bam_merged_doublets_HGSOC_30pc.bam
+../../doublets/HGSOC/30pc/lookup_table_doublets_HGSOC_30pc.tsv - | \
+samtools view -bo ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../outputs/HGSOC/doublets/30pc/bam_merged_doublets_HGSOC_30pc.bam
+samtools index ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
 
 
 # -----------
@@ -66,9 +66,9 @@ samtools index ../../outputs/HGSOC/doublets/30pc/bam_merged_doublets_HGSOC_30pc.
 # note: more stable to run cellSNP interactively using qrsh instead of qsub; not sure why
 
 cellSNP \
--s ../../outputs/HGSOC/doublets/30pc/bam_merged_doublets_HGSOC_30pc.bam \
--b ../../outputs/HGSOC/doublets/30pc/barcodes_merged_HGSOC_30pc.tsv \
--O ../../outputs/HGSOC/doublets/30pc/cellSNP \
+-s ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
+-b ../../doublets/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
+-O ../../doublets/HGSOC/30pc/genotype_1000genomes_nofilt/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
 -p 20 \
 --minMAF=0.05
@@ -81,8 +81,8 @@ cellSNP \
 # note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 
 vireo \
--c ../../outputs/HGSOC/doublets/30pc/cellSNP \
+-c ../../doublets/HGSOC/30pc/cellSNP \
 -N 3 \
--o ../../outputs/HGSOC/doublets/30pc/vireo \
+-o ../../doublets/HGSOC/30pc/vireo \
 --randSeed=123
 
