@@ -17,7 +17,7 @@
 # --------
 
 # load annotated VCF file as text
-vcf_file <- "../../singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged.vcf"
+vcf_file <- "../../genotype_singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged.vcf"
 vcf_lines <- readLines(vcf_file)
 
 # extract header (lines beginning with ##)
@@ -58,7 +58,7 @@ vcf_df_nodups <- vcf_df[!ix_dups_all, , drop = FALSE]
 
 # save VCF file without duplicate entries
 
-vcf_file_out <- "../../singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged-nodups.vcf"
+vcf_file_out <- "../../genotype_singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged-nodups.vcf"
 
 writeLines(c(vcf_header, vcf_colnames), vcf_file_out)
 
@@ -72,5 +72,5 @@ write.table(vcf_df_nodups, file = vcf_file_out, append = TRUE,
 
 # also save VCF file in gzipped format
 
-system("gzip -c ../../singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged-nodups.vcf > ../../singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged-nodups.vcf.gz")
+system("gzip -c ../../genotype_singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged-nodups.vcf > ../../genotype_singlecell/cellSNP_singlecell_merged/cellSNP.cells-merged-nodups.vcf.gz")
 
