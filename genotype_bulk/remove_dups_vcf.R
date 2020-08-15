@@ -72,5 +72,5 @@ write.table(vcf_df_nodups, file = vcf_file_out, append = TRUE,
 
 # also save VCF file in gzipped format
 
-system("gzip -c ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf > ../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf.gz")
+system("gzip -c ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf > ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf.gz")
 
