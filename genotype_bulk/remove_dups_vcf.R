@@ -17,7 +17,7 @@
 # --------
 
 # load annotated VCF file as text
-vcf_file <- "../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf"
+vcf_file <- "../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf"
 vcf_lines <- readLines(vcf_file)
 
 # extract header (lines beginning with ##)
@@ -58,7 +58,7 @@ vcf_df_nodups <- vcf_df[!ix_dups_all, , drop = FALSE]
 
 # save VCF file without duplicate entries
 
-vcf_file_out <- "../../bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf"
+vcf_file_out <- "../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf"
 
 writeLines(c(vcf_header, vcf_colnames), vcf_file_out)
 
