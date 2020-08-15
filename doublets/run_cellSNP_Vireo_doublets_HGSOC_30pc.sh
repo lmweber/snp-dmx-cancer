@@ -24,7 +24,8 @@ cellSNP \
 -O ../../doublets/HGSOC/30pc/genotype_1000genomes_filt/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p 20 \
---minMAF=0.05
+--minMAF=0.01 \
+--minCOUNT=10
 
 # run Vireo
 
@@ -49,7 +50,8 @@ cellSNP \
 -O ../../doublets/HGSOC/30pc/genotype_1000genomes_nofilt/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
 -p 20 \
---minMAF=0.05
+--minMAF=0.01 \
+--minCOUNT=10
 
 # run Vireo
 
@@ -72,9 +74,10 @@ cellSNP \
 -s ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
 -b ../../doublets/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
 -O ../../doublets/HGSOC/30pc/genotype_bulk/cellSNP \
--R ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf \
+-R ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf \
 -p 20 \
---minMAF=0.05
+--minMAF=0.01 \
+--minCOUNT=10
 
 # run Vireo
 
@@ -83,5 +86,31 @@ vireo \
 -c ../../doublets/HGSOC/30pc/genotype_bulk/cellSNP \
 -N 3 \
 -o ../../doublets/HGSOC/30pc/genotype_bulk/vireo \
+--randSeed=123
+
+
+# --------------------------------------------------------------
+# Scenario 4: VCF from matched bulk samples (without duplicates)
+# --------------------------------------------------------------
+
+# run cellSNP
+
+# note: more stable to run cellSNP interactively using qrsh instead of qsub
+cellSNP \
+-s ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
+-b ../../doublets/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
+-O ../../doublets/HGSOC/30pc/genotype_bulk_nodups/cellSNP \
+-R ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged-nodups.vcf \
+-p 20 \
+--minMAF=0.01 \
+--minCOUNT=10
+
+# run Vireo
+
+# note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
+vireo \
+-c ../../doublets/HGSOC/30pc/genotype_bulk_nodups/cellSNP \
+-N 3 \
+-o ../../doublets/HGSOC/30pc/genotype_bulk_nodups/vireo \
 --randSeed=123
 

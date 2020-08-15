@@ -24,7 +24,8 @@ cellSNP \
 -O ../../doublets/lung/30pc/genotype_1000genomes_filt/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p 20 \
---minMAF=0.05
+--minMAF=0.01 \
+--minCOUNT=10
 
 # run Vireo
 
@@ -49,7 +50,8 @@ cellSNP \
 -O ../../doublets/lung/30pc/genotype_1000genomes_nofilt/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
 -p 20 \
---minMAF=0.05
+--minMAF=0.01 \
+--minCOUNT=10
 
 # run Vireo
 
