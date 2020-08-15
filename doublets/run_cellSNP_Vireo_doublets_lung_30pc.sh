@@ -51,7 +51,7 @@ cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
 -p 20 \
 --minMAF=0.01 \
---minCOUNT=10
+--minCOUNT=100
 
 # run Vireo
 
