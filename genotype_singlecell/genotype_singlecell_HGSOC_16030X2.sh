@@ -24,9 +24,9 @@ gunzip -c ../../outputs/HGSOC/16030X2_HJVMLDMXX/outs/filtered_feature_bc_matrix/
 cellSNP \
 -s ../../outputs/HGSOC/16030X2_HJVMLDMXX/outs/possorted_genome_bam.bam \
 -b ../../genotype_singlecell/16030X2/barcodes.tsv \
--O ../../genotype_singlecell/16030X2/cellSNP \
+-O ../../genotype_singlecell/16030X2/cellSNP_singlecell \
 -p 20 \
---minMAF=0.01 \
---minCOUNT=10 \
+--minMAF=0.05 \
+--minCOUNT=50 \
 --UMItag=None
 
