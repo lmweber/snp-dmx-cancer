@@ -11,8 +11,33 @@
 # qsub -V -cwd -pe local 20 -l mem_free=2G,h_vmem=3G,h_fsize=100G run_cellSNP_Vireo_doublets.sh
 
 
+# ----------------------------------------------------------
+# Scenario 1: VCF from 1000 Genomes Project, filtered 3' UTR
+# ----------------------------------------------------------
+
+# run cellSNP
+
+# note: more stable to run cellSNP interactively using qrsh instead of qsub
+cellSNP \
+-s ../../doublets/lung/30pc/bam_merged_doublets_lung_30pc.bam \
+-b ../../doublets/lung/30pc/barcodes_merged_lung_30pc.tsv \
+-O ../../doublets/lung/30pc/genotype_1000genomes_filt/cellSNP \
+-R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
+-p 20 \
+--minMAF=0.05
+
+# run Vireo
+
+# note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
+vireo \
+-c ../../doublets/lung/30pc/genotype_1000genomes_filt/cellSNP \
+-N 6 \
+-o ../../doublets/lung/30pc/genotype_1000genomes_filt/vireo \
+--randSeed=123
+
+
 # -------------------------------------------------------
-# Scenario 1: VCF from 1000 Genomes Project, no filtering
+# Scenario 2: VCF from 1000 Genomes Project, no filtering
 # -------------------------------------------------------
 
 # run cellSNP
