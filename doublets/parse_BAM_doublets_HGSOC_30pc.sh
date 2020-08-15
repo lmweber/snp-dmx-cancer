@@ -4,12 +4,13 @@
 # Shell script to run doublets simulation
 #########################################
 
-# This script runs the doublets simulation by:
+# This script runs part of the doublets simulation by:
 # (i) converting BAM to SAM
 # (ii) parsing through the merged SAM file to replace and combine some 
 # percentage of cell barcodes
 # (iii) converting SAM back to BAM
-# (iv) then continue by running cellSNP and Vireo on the modified BAM file
+
+# The modifed BAM file can then be used by cellSNP and Vireo in the next script.
 
 # Notes:
 # - lookup table to use in awk command is saved in a .tsv file generated with 
@@ -18,7 +19,7 @@
 # https://stackoverflow.com/questions/14234907/replacing-values-in-large-table-using-conversion-table
 
 
-# qsub -V -cwd -pe local 20 -l mem_free=2G,h_vmem=3G,h_fsize=100G run_doublets.sh
+# qsub -V -cwd -pe local 20 -l mem_free=2G,h_vmem=3G,h_fsize=100G parse_BAM_doublets.sh
 
 
 # ----------------------------------------------------------------
@@ -38,51 +39,22 @@
 # Parse through merged BAM file
 # -----------------------------
 
-# run doublets simulation by parsing through merged BAM file to combine some 
-# percentage of cell barcodes
+# parse through merged BAM file to combine some percentage of cell barcodes
 
 # for one simulation scenario (dataset, percentage of doublets)
 
 
 # note hyphen for argument order
-samtools view -h ../../outputs/lung/bam_merged/bam_merged.bam | \
+samtools view -h ../../outputs/HGSOC/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../doublets/lung/30pc/lookup_table_doublets_lung_30pc.tsv - | \
-samtools view -bo ../../doublets/lung/30pc/bam_merged_doublets_lung_30pc.bam
+../../doublets/HGSOC/30pc/lookup_table_doublets_HGSOC_30pc.tsv - | \
+samtools view -bo ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../doublets/lung/30pc/bam_merged_doublets_lung_30pc.bam
-
-
-# -----------
-# Run cellSNP
-# -----------
-
-# note: more stable to run cellSNP interactively using qrsh instead of qsub; not sure why
-
-cellSNP \
--s ../../doublets/lung/30pc/bam_merged_doublets_lung_30pc.bam \
--b ../../doublets/lung/30pc/barcodes_merged_lung_30pc.tsv \
--O ../../doublets/lung/30pc/genotype_1000genomes_nofilt/cellSNP \
--R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
--p 20 \
---minMAF=0.05
-
-
-# ---------
-# Run Vireo
-# ---------
-
-# note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
-
-vireo \
--c ../../doublets/lung/30pc/cellSNP \
--N 6 \
--o ../../doublets/lung/30pc/vireo \
---randSeed=123
+samtools index ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
 
