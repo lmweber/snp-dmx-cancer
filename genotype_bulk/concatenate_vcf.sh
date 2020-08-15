@@ -17,19 +17,19 @@
 
 # convert gzipped output files to bgzipped format (required by vcftools)
 
-gunzip -c ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf
-gunzip -c ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf
-gunzip -c ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf
+gunzip -c ../../genotype_bulk/17667X1/cellSNP_bulk/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X1/cellSNP_bulk/cellSNP.cells-bgz.vcf
+bgzip ../../genotype_bulk/17667X1/cellSNP_bulk/cellSNP.cells-bgz.vcf
+gunzip -c ../../genotype_bulk/17667X2/cellSNP_bulk/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X2/cellSNP_bulk/cellSNP.cells-bgz.vcf
+bgzip ../../genotype_bulk/17667X2/cellSNP_bulk/cellSNP.cells-bgz.vcf
+gunzip -c ../../genotype_bulk/17667X3/cellSNP_bulk/cellSNP.cells.vcf.gz > ../../genotype_bulk/17667X3/cellSNP_bulk/cellSNP.cells-bgz.vcf
+bgzip ../../genotype_bulk/17667X3/cellSNP_bulk/cellSNP.cells-bgz.vcf
 
 
 # concatenate VCF files using vcftools (vcr-concat)
 
 mkdir -p ../../genotype_bulk/cellSNP_bulk_merged
 
-vcf-concat ../../genotype_bulk/17667X1/cellSNP/cellSNP.cells-bgz.vcf.gz ../../genotype_bulk/17667X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../genotype_bulk/17667X3/cellSNP/cellSNP.cells-bgz.vcf.gz > \
+vcf-concat ../../genotype_bulk/17667X1/cellSNP_bulk/cellSNP.cells-bgz.vcf.gz ../../genotype_bulk/17667X2/cellSNP_bulk/cellSNP.cells-bgz.vcf.gz ../../genotype_bulk/17667X3/cellSNP_bulk/cellSNP.cells-bgz.vcf.gz > \
 ../../genotype_bulk/cellSNP_bulk_merged/cellSNP.cells-merged.vcf
 
 

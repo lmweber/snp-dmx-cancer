@@ -46,7 +46,7 @@ samtools index ../../genotype_bulk/17667X1/STAR/Aligned.sortedByCoord.out.bam
 
 cellSNP \
 -s ../../genotype_bulk/17667X1/STAR/Aligned.sortedByCoord.out.bam \
--O ../../genotype_bulk/17667X1/cellSNP \
+-O ../../genotype_bulk/17667X1/cellSNP_bulk \
 -p 20 \
 --minMAF=0.01 \
 --minCOUNT=10 \
