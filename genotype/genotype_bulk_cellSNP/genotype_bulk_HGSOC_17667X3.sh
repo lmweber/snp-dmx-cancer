@@ -8,9 +8,13 @@
 # bulk RNA-seq samples in our HGSOC dataset.
 
 
-# note: requires BAM files from previous scripts "align_bulk_HGSOC_17667XX.sh"
+# note: requires BAM files from previous scripts "align_index_bulk_HGSOC_17667XX.sh"
 
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_bulk.sh
+
+
+# start runtime
+start=`date +%s`
 
 
 # --------------------
@@ -26,4 +30,13 @@ cellSNP \
 --minMAF=0.01 \
 --minCOUNT=50 \
 --UMItag=None
+
+
+# end runtime
+end=`date +%s`
+runtime=`expr $end - $start`
+
+# save runtime
+mkdir -p ../../../genotype/runtimes/genotype_bulk_cellSNP
+echo runtime: $runtime seconds > ../../../genotype/runtimes/genotype_bulk_cellSNP/runtime_genotype_bulk_cellSNP_17667X3.txt
 

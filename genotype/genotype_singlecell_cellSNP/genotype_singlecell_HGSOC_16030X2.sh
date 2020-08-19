@@ -12,6 +12,10 @@
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_singlecell.sh
 
 
+# start runtime
+start=`date +%s`
+
+
 # --------------------
 # Run cellSNP (mode 2)
 # --------------------
@@ -30,4 +34,13 @@ cellSNP \
 --minMAF=0.01 \
 --minCOUNT=50 \
 --UMItag=None
+
+
+# end runtime
+end=`date +%s`
+runtime=`expr $end - $start`
+
+# save runtime
+mkdir -p ../../../genotype/runtimes/genotype_singlecell_cellSNP
+echo runtime: $runtime seconds > ../../../genotype/runtimes/genotype_singlecell_cellSNP/runtime_genotype_singlecell_cellSNP_16030X2.txt
 

@@ -13,6 +13,10 @@
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G align_bulk_STAR.sh
 
 
+# start runtime
+start=`date +%s`
+
+
 # --------
 # Run STAR
 # --------
@@ -34,4 +38,13 @@ STAR \
 # ---------
 
 samtools index ../../../genotype/17667X3/STAR/Aligned.sortedByCoord.out.bam
+
+
+# end runtime
+end=`date +%s`
+runtime=`expr $end - $start`
+
+# save runtime
+mkdir -p ../../../genotype/runtimes/align_index_bulk_STAR
+echo runtime: $runtime seconds > ../../../genotype/runtimes/align_index_bulk_STAR/runtime_align_index_bulk_17667X3.txt
 

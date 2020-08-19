@@ -13,6 +13,10 @@
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G align_bulk_STAR.sh
 
 
+# start runtime
+start=`date +%s`
+
+
 # --------
 # Run STAR
 # --------
@@ -22,8 +26,8 @@
 STAR \
 --genomeDir ../../../genotype/STAR_index \
 --runThreadN 10 \
---readFilesIn ../../../data/HGSOC/17667R/Fastq/17667X2_200214_A00421_0157_BHK52CDRXX_S42_L002_R1_001.fastq.gz ../../../data/HGSOC/17667R/Fastq/17667X2_200214_A00421_0157_BHK52CDRXX_S42_L002_R2_001.fastq.gz \
---outFileNamePrefix ../../../genotype/17667X2/STAR/ \
+--readFilesIn ../../../data/HGSOC/17667R/Fastq/17667X1_200214_A00421_0157_BHK52CDRXX_S43_L002_R1_001.fastq.gz ../../../data/HGSOC/17667R/Fastq/17667X1_200214_A00421_0157_BHK52CDRXX_S43_L002_R2_001.fastq.gz \
+--outFileNamePrefix ../../../genotype/17667X1/STAR/ \
 --readFilesCommand gunzip -c \
 --outSAMtype BAM SortedByCoordinate \
 --limitGenomeGenerateRAM 200000000000
@@ -33,5 +37,14 @@ STAR \
 # Index BAM
 # ---------
 
-samtools index ../../../genotype/17667X2/STAR/Aligned.sortedByCoord.out.bam
+samtools index ../../../genotype/17667X1/STAR/Aligned.sortedByCoord.out.bam
+
+
+# end runtime
+end=`date +%s`
+runtime=`expr $end - $start`
+
+# save runtime
+mkdir -p ../../../genotype/runtimes/align_index_bulk_STAR
+echo runtime: $runtime seconds > ../../../genotype/runtimes/align_index_bulk_STAR/runtime_align_index_bulk_17667X1.txt
 

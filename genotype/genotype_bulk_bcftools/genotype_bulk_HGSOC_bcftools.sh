@@ -8,9 +8,13 @@
 # bulk RNA-seq samples in our HGSOC dataset.
 
 
-# note: requires BAM files from previous scripts "align_bulk_HGSOC_17667XX.sh"
+# note: requires BAM files from previous scripts "align_index_bulk_HGSOC_17667XX.sh"
 
 # qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_bulk_HGSOC_bcftools.sh
+
+
+# start runtime
+start=`date +%s`
 
 
 # --------------------
@@ -24,4 +28,13 @@ bcftools mpileup -Ou \
 ../../../genotype/17667X3/STAR/Aligned.sortedByCoord.out.bam | \
 bcftools call -mv -Ov \
 -o ../../../genotype/bcftools/bcftools_HGSOC.vcf
+
+
+# end runtime
+end=`date +%s`
+runtime=`expr $end - $start`
+
+# save runtime
+mkdir -p ../../../genotype/runtimes/genotype_bulk_bcftools
+echo runtime: $runtime seconds > ../../../genotype/runtimes/genotype_bulk_bcftools/runtime_genotype_bulk_HGSOC_bcftools.txt
 
