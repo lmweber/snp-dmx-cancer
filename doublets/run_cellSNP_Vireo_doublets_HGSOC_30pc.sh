@@ -140,3 +140,29 @@ vireo \
 -o ../../doublets/HGSOC/30pc/genotype_bulknodups_and_1000genomesfilt/vireo \
 --randSeed=123
 
+
+# -----------------------------------------------
+# Scenario 6: VCF from bulk samples from bcftools
+# -----------------------------------------------
+
+# run cellSNP
+
+# note: more stable to run cellSNP interactively using qrsh instead of qsub
+cellSNP \
+-s ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
+-b ../../doublets/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
+-O ../../doublets/HGSOC/30pc/genotype_bcftools/cellSNP \
+-R ../../bcftools/bcftools_all.vcf \
+-p 20 \
+--minMAF=0.01 \
+--minCOUNT=10
+
+# run Vireo
+
+# note: parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
+vireo \
+-c ../../doublets/HGSOC/30pc/genotype_bcftools/cellSNP \
+-N 3 \
+-o ../../doublets/HGSOC/30pc/genotype_bcftools/vireo \
+--randSeed=123
+
