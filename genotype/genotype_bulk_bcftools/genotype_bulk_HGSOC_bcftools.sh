@@ -21,6 +21,8 @@ start=`date +%s`
 # Run bcftools mpileup
 # --------------------
 
+mkdir -p ../../../genotype/bcftools
+
 bcftools mpileup -Ou \
 -f ../../../data/cellranger/refdata-gex-GRCh38-2020-A/fasta/genome.fa \
 ../../../genotype/17667X1/STAR/Aligned.sortedByCoord.out.bam \
