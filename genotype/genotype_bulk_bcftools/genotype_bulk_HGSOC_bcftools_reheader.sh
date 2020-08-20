@@ -27,8 +27,7 @@ echo "../../../genotype/17667X2/STAR/Aligned.sortedByCoord.out.bam 17667X2" >> .
 echo "../../../genotype/17667X3/STAR/Aligned.sortedByCoord.out.bam 17667X3" >> ../../../genotype/bcftools/sample_names_bulk.txt
 
 # update sample names in VCF file
-cp ../../../genotype/bcftools/bcftools_HGSOC.vcf ../../../genotype/bcftools/bcftools_HGSOC_bak.vcf
-bcftools reheader -s sample_names_bulk.txt ../../../genotype/bcftools/bcftools_HGSOC_bak.vcf > ../../../genotype/bcftools/bcftools_HGSOC.vcf
+bcftools reheader -s sample_names_bulk.txt ../../../genotype/bcftools/bcftools_HGSOC.vcf > ../../../genotype/bcftools/bcftools_HGSOC_rehead.vcf
 
 
 # end runtime
