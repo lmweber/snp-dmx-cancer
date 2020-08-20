@@ -10,7 +10,7 @@
 
 # note: requires STAR index from previous script "create_STAR_index.sh"
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G align_bulk_STAR.sh
+# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G align_index_bulk_HGSOC.sh
 
 
 # start runtime
