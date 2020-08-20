@@ -10,7 +10,7 @@
 
 # note: requires BAM files from previous scripts "align_index_bulk_HGSOC_17667XX.sh"
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_bulk.sh
+# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_bulk_HGSOC.sh
 
 
 # start runtime
