@@ -27,7 +27,7 @@ Scripts for additional steps outside the main workflow.
 
 - [alternative](alternative/): scripts for alternative tools that were not used in the main workflow (see below)
 - [demuxlet](demuxlet/): scripts to run demuxlet (instead of Vireo)
-- [doublets](doublets/): scripts for doublet simulations
+- [scenarios](scenarios/): scripts to generate results for each scenario (dataset, percent doublets, genotype tool, demultiplexing tool, etc) shown in the figures in our paper
 - [download_EGA/](download_EGA/): script to download files for lung adenocarcinoma dataset from European Genome-phenome Archive (EGA)
 - [evaluations/](evaluations/): R scripts for performance evaluations
 - [filter_vcf/](filter_vcf/): to do
