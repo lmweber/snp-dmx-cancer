@@ -96,7 +96,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   
   # save barcodes file
   fn_out <- file.path(
-    paste0("../../scenarios/doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
+    paste0("../../../scenarios/doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("barcodes_merged_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
   write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)
@@ -112,7 +112,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
 # simulation scenario
 
 for (prop_doublets in prop_doublets_sims) {
-  file_barcodes_merged <- file.path("../../scenarios/outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
+  file_barcodes_merged <- file.path("../../../scenarios/outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
   f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
 }
 
