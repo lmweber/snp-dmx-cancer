@@ -1,6 +1,6 @@
-############################################################################
-# Doublets simulation: generate awk lookup tables and updated barcodes files
-############################################################################
+#############################################################################
+# Doublets simulations: generate awk lookup tables and updated barcodes files
+#############################################################################
 
 # Simulate doublets by combining some percentage of cell barcodes in the merged
 # BAM file.
@@ -12,8 +12,9 @@
 # (ii) updated merged cell barcodes file for each scenario
 
 
-# to run on JHPCE cluster
-#module load conda_R/4.0
+# qrsh -l mem_free=2G,h_vmem=3G,h_fsize=100G
+# module load conda_R/4.0
+# Rscript generate_awk_lookup_tables_doublets.R
 
 
 # ---------------------
@@ -23,10 +24,10 @@
 # parameters for each simulation scenario
 
 # proportion of doublets to simulate (i.e. proportion of final number of cells)
-prop_doublets_sims <- c(0.3)
+prop_doublets_sims <- c(0.2, 0.3)
 
 # dataset names
-dataset_name_sims <- c("HGSOC", "lung")
+dataset_name <- "HGSOC"
 
 
 # ------------------------------------------
@@ -78,7 +79,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   
   # save lookup table
   fn_out <- file.path(
-    paste0("../../doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
+    paste0("../../../scenarios/doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
   write_tsv(df_lookup, fn_out)
@@ -95,7 +96,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
   
   # save barcodes file
   fn_out <- file.path(
-    paste0("../../doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
+    paste0("../../scenarios/doublets/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("barcodes_merged_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
   write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)
@@ -111,11 +112,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
 # simulation scenario
 
 for (prop_doublets in prop_doublets_sims) {
-  for (dataset_name in dataset_name_sims) {
-    
-    file_barcodes_merged <- file.path("../../outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
-    
-    f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
-  }
+  file_barcodes_merged <- file.path("../../scenarios/outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
+  f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
 }
 

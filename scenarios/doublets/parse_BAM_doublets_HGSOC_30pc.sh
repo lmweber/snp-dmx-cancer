@@ -10,7 +10,8 @@
 # percentage of cell barcodes
 # (iii) converting SAM back to BAM
 
-# The modifed BAM file can then be used by cellSNP and Vireo in the next script.
+# The modifed BAM file can then be used by cellSNP and Vireo (or alternative 
+# tools) in the following scripts.
 
 # Notes:
 # - lookup table to use in awk command is saved in a .tsv file generated with 
@@ -19,7 +20,7 @@
 # https://stackoverflow.com/questions/14234907/replacing-values-in-large-table-using-conversion-table
 
 
-# qsub -V -cwd -pe local 20 -l mem_free=2G,h_vmem=3G,h_fsize=100G parse_BAM_doublets.sh
+# qsub -V -cwd -l mem_free=2G,h_vmem=3G,h_fsize=100G parse_BAM_doublets_HGSOC.sh
 
 
 # ----------------------------------------------------------------
@@ -29,10 +30,9 @@
 # run R script to generate .tsv files containing awk lookup tables and updated 
 # lists of cell barcodes for all simulation scenarios (if not already done)
 
-# run on JHPCE cluster
-#module load conda_R/4.0
-
-#Rscript generate_awk_lookup_tables_doublets.R
+# qrsh -l mem_free=2G,h_vmem=3G,h_fsize=100G
+# module load conda_R/4.0
+# Rscript generate_awk_lookup_tables_doublets.R
 
 
 # -----------------------------
@@ -45,16 +45,16 @@
 
 
 # note hyphen for argument order
-samtools view -h ../../outputs/HGSOC/bam_merged/bam_merged.bam | \
+samtools view -h ../../../scenarios/outputs/HGSOC/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../doublets/HGSOC/30pc/lookup_table_doublets_HGSOC_30pc.tsv - | \
-samtools view -bo ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
+../../../scenarios/doublets/HGSOC/30pc/lookup_table_doublets_HGSOC_30pc.tsv - | \
+samtools view -bo ../../../scenarios/doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
+samtools index ../../../scenarios/doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
 
