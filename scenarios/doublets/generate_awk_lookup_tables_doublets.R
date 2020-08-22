@@ -27,7 +27,7 @@
 prop_doublets_sims <- c(0.2, 0.3)
 
 # dataset names
-dataset_name <- "HGSOC"
+dataset_name_sims <- c("HGSOC", "lung")
 
 
 # ------------------------------------------
@@ -112,7 +112,9 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
 # simulation scenario
 
 for (prop_doublets in prop_doublets_sims) {
-  file_barcodes_merged <- file.path("../../../scenarios/outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
-  f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
+  for (dataset_name in dataset_name_sims) {
+    file_barcodes_merged <- file.path("../../../scenarios/outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
+    f_sim_doublets(prop_doublets, dataset_name, file_barcodes_merged)
+  }
 }
 

@@ -20,7 +20,7 @@
 # https://stackoverflow.com/questions/14234907/replacing-values-in-large-table-using-conversion-table
 
 
-# qsub -V -cwd -l mem_free=2G,h_vmem=3G,h_fsize=100G parse_BAM_doublets_HGSOC.sh
+# qsub -V -cwd -l mem_free=2G,h_vmem=3G,h_fsize=100G parse_BAM_doublets.sh
 
 
 # ----------------------------------------------------------------
