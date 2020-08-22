@@ -35,6 +35,10 @@
 # Rscript generate_awk_lookup_tables_doublets.R
 
 
+# start runtime
+start=`date +%s`
+
+
 # -----------------------------
 # Parse through merged BAM file
 # -----------------------------
@@ -57,4 +61,13 @@ samtools view -bo ../../../scenarios/doublets/HGSOC/20pc/bam_merged_doublets_HGS
 # ---------
 
 samtools index ../../../scenarios/doublets/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam
+
+
+# end runtime
+end=`date +%s`
+runtime=`expr $end - $start`
+
+# save runtime
+mkdir -p ../../../scenarios/doublets/HGSOC/20pc
+echo runtime: $runtime seconds > ../../../scenarios/doublets/HGSOC/20pc/runtime_parse_BAM_doublets_HGSOC_20pc.txt
 
