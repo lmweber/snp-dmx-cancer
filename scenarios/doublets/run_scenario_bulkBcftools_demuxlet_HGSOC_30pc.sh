@@ -21,17 +21,17 @@ start=`date +%s`
 # Scenario: bulk samples VCF from bcftools, demuxlet
 # --------------------------------------------------
 
-mkdir -p ../../../scenarios/doublets/HGSOC/30pc/demuxlet
+mkdir -p ../../../scenarios/doublets/HGSOC/30pc/bulkBcftools_demuxlet
 
 # run demuxlet
 
 demuxlet \
 --sam ../../../scenarios/doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
---group-list ../../scenarios/doublets/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
+--group-list ../../../scenarios/doublets/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
 --alpha 0 --alpha 0.5 \
 --vcf ../../../genotype/bcftools/bcftools_HGSOC_rehead.vcf \
 --field GT \
---out ../../../scenarios/doublets/HGSOC/30pc/demuxlet/demuxlet
+--out ../../../scenarios/doublets/HGSOC/30pc/bulkBcftools_demuxlet/demuxlet
 
 
 # end runtime
@@ -39,6 +39,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../../scenarios/doublets/HGSOC/30pc/demuxlet/runtimes
-echo runtime: $runtime seconds > ../../../scenarios/doublets/HGSOC/30pc/demuxlet/runtimes/runtime_demuxlet_HGSOC_30pc.txt
+mkdir -p ../../../scenarios/doublets/HGSOC/30pc/bulkBcftools_demuxlet/runtimes
+echo runtime: $runtime seconds > ../../../scenarios/doublets/HGSOC/30pc/bulkBcftools_demuxlet/runtimes/runtime_bulkBcftools_demuxlet_HGSOC_30pc.txt
 
