@@ -23,6 +23,8 @@ start=`date +%s`
 
 # run cellSNP
 
+mkdir -p ../../../scenarios/doublets/HGSOC/30pc/1000GenomesFilt_cellSNPVireo
+
 # using recommended parameters for cellSNP
 cellSNP \
 -s ../../../scenarios/doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
@@ -50,9 +52,9 @@ start=`date +%s`
 
 # note parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 vireo \
--c ../../scenarios/doublets/HGSOC/30pc/1000GenomesFilt_cellSNPVireo/cellSNP \
+-c ../../../scenarios/doublets/HGSOC/30pc/1000GenomesFilt_cellSNPVireo/cellSNP \
 -N 3 \
--o ../../scenarios/doublets/HGSOC/30pc/1000GenomesFilt_cellSNPVireo/vireo \
+-o ../../../scenarios/doublets/HGSOC/30pc/1000GenomesFilt_cellSNPVireo/vireo \
 --randSeed=123
 
 
