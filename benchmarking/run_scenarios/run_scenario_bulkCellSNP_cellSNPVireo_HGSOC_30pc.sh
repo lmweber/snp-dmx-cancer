@@ -23,13 +23,13 @@ start=`date +%s`
 
 # run cellSNP
 
-mkdir -p ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo
+mkdir -p ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo
 
 # using recommended parameters for cellSNP
 cellSNP \
--s ../../../scenarios/doublets/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam \
--b ../../../scenarios/doublets/HGSOC/20pc/barcodes_merged_HGSOC_20pc.tsv \
--O ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/cellSNP \
+-s ../../../benchmarking/scenarios/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
+-b ../../../benchmarking/scenarios/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
+-O ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/cellSNP \
 -R ../../../genotype/cellSNP_bulk_merged/cellSNP.cells-merged.vcf \
 -p 10 \
 --minMAF=0.1 \
@@ -41,8 +41,8 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/runtimes
-echo runtime: $runtime seconds > ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_cellSNP_HGSOC_20pc.txt
+mkdir -p ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/runtimes
+echo runtime: $runtime seconds > ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_cellSNP_HGSOC_30pc.txt
 
 # start runtime
 start=`date +%s`
@@ -52,9 +52,9 @@ start=`date +%s`
 
 # note parameter for known number of samples (3 for HGSOC dataset, 6 for lung dataset)
 vireo \
--c ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/cellSNP \
+-c ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/cellSNP \
 -N 3 \
--o ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/vireo \
+-o ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/vireo \
 --randSeed=123
 
 
@@ -63,6 +63,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/runtimes
-echo runtime: $runtime seconds > ../../../scenarios/doublets/HGSOC/20pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_vireo_HGSOC_20pc.txt
+mkdir -p ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/runtimes
+echo runtime: $runtime seconds > ../../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_vireo_HGSOC_30pc.txt
 

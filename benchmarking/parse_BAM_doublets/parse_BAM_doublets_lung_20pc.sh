@@ -49,18 +49,18 @@ start=`date +%s`
 
 
 # note hyphen for argument order
-samtools view -h ../../../scenarios/outputs/HGSOC/bam_merged/bam_merged.bam | \
+samtools view -h ../../../benchmarking/outputs/lung/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../../scenarios/doublets/HGSOC/30pc/lookup_table_doublets_HGSOC_30pc.tsv - | \
-samtools view -bo ../../../scenarios/doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
+../../../benchmarking/doublets/lung/20pc/lookup_table_doublets_lung_20pc.tsv - | \
+samtools view -bo ../../../benchmarking/doublets/lung/20pc/bam_merged_doublets_lung_20pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../../scenarios/doublets/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam
+samtools index ../../../benchmarking/doublets/lung/20pc/bam_merged_doublets_lung_20pc.bam
 
 
 # end runtime
@@ -68,6 +68,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../../scenarios/doublets/HGSOC/30pc
-echo runtime: $runtime seconds > ../../../scenarios/doublets/HGSOC/30pc/runtime_parse_BAM_doublets_HGSOC_30pc.txt
+mkdir -p ../../../benchmarking/doublets/lung/20pc
+echo runtime: $runtime seconds > ../../../benchmarking/doublets/lung/20pc/runtime_parse_BAM_doublets_lung_20pc.txt
 

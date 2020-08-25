@@ -4,11 +4,10 @@
 
 # This Snakefile runs initial steps in the analysis pipeline (Cell Ranger,
 # modifying BAM and barcode files) for both datasets (HGSOC, lung), to generate
-# input files required by scripts in the "scenarios" directory.
+# input files required by scripts in the "benchmarking" directory.
 
-# The scripts in "scenarios" ("doublets" and "no_doublets" subdirectories) can
-# then be used to run the final steps in the pipeline (e.g. running cellSNP,
-# Vireo, or alternative tools) for each scenario.
+# The scripts in "benchmarking" can then be used to run the final steps in the 
+# pipeline (e.g. running cellSNP, Vireo, or alternative tools) for each scenario.
 
 # Note this Snakefile re-uses scripts saved in the main pipeline directory
 # ("pipeline/scripts").
@@ -25,13 +24,13 @@
 dir_scripts = "../pipeline/scripts"
 dir_data = "../../data"
 dir_data_cellranger_ref = dir_data + "/cellranger/refdata-gex-GRCh38-2020-A"
-dir_outputs = "../../scenarios/outputs"
+dir_outputs = "../../benchmarking/outputs"
 dir_outputs_HGSOC = dir_outputs + "/HGSOC"
 dir_outputs_lung = dir_outputs + "/lung"
-dir_runtimes = "../../scenarios/runtimes"
+dir_runtimes = "../../benchmarking/runtimes"
 dir_runtimes_HGSOC = dir_runtimes + "/HGSOC"
 dir_runtimes_lung = dir_runtimes + "/lung"
-dir_timestamps = "../../scenarios/timestamps"
+dir_timestamps = "../../benchmarking/timestamps"
 dir_timestamps_HGSOC = dir_timestamps + "/HGSOC"
 dir_timestamps_lung = dir_timestamps + "/lung"
 
