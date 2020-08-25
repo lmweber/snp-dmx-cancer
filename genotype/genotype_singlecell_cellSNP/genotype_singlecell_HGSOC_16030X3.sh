@@ -9,7 +9,7 @@
 # to genotyping matched bulk samples.
 
 
-# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=100G genotype_singlecell_HGSOC.sh
+# qsub -V -cwd -pe local 10 -l mem_free=10G,h_vmem=11G,h_fsize=200G genotype_singlecell_HGSOC.sh
 
 
 # start runtime
