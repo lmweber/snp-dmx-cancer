@@ -27,8 +27,8 @@ mkdir -p ../../../benchmarking/scenarios/HGSOC/nodoublets/bulkBcftools_cellSNPVi
 
 # using recommended parameters for cellSNP
 cellSNP \
--s ../../../benchmarking/scenarios/outputs/HGSOC/bam_merged.bam \
--b ../../../benchmarking/scenarios/outputs/HGSOC/barcodes_merged.tsv \
+-s ../../../benchmarking/outputs/HGSOC/bam_merged/bam_merged.bam \
+-b ../../../benchmarking/outputs/HGSOC/barcodes_merged/barcodes_merged.tsv \
 -O ../../../benchmarking/scenarios/HGSOC/nodoublets/bulkBcftools_cellSNPVireo/cellSNP \
 -R ../../../genotype/bcftools/bcftools_HGSOC_rehead.vcf \
 -p 10 \

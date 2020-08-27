@@ -26,8 +26,8 @@ mkdir -p ../../../benchmarking/scenarios/HGSOC/nodoublets/bulkBcftools_demuxlet
 # run demuxlet
 
 demuxlet \
---sam ../../../benchmarking/scenarios/outputs/HGSOC/bam_merged.bam \
---group-list ../../../benchmarking/scenarios/outputs/HGSOC/barcodes_merged.tsv \
+--sam ../../../benchmarking/outputs/HGSOC/bam_merged/bam_merged.bam \
+--group-list ../../../benchmarking/outputs/HGSOC/barcodes_merged/barcodes_merged.tsv \
 --alpha 0 --alpha 0.5 \
 --vcf ../../../genotype/bcftools/bcftools_HGSOC_rehead.vcf \
 --field GT \
