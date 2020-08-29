@@ -52,15 +52,15 @@ start=`date +%s`
 samtools view -h ../../../benchmarking/outputs/lung/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../../benchmarking/doublets/lung/30pc/lookup_table_doublets_lung_30pc.tsv - | \
-samtools view -bo ../../../benchmarking/doublets/lung/30pc/bam_merged_doublets_lung_30pc.bam
+../../../benchmarking/scenarios/lung/30pc/lookup_table_doublets_lung_30pc.tsv - | \
+samtools view -bo ../../../benchmarking/scenarios/lung/30pc/bam_merged_doublets_lung_30pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../../benchmarking/doublets/lung/30pc/bam_merged_doublets_lung_30pc.bam
+samtools index ../../../benchmarking/scenarios/lung/30pc/bam_merged_doublets_lung_30pc.bam
 
 
 # end runtime
@@ -68,6 +68,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../../benchmarking/doublets/lung/30pc
-echo runtime: $runtime seconds > ../../../benchmarking/doublets/lung/30pc/runtime_parse_BAM_doublets_lung_30pc.txt
+mkdir -p ../../../benchmarking/scenarios/lung/30pc
+echo runtime: $runtime seconds > ../../../benchmarking/scenarios/lung/30pc/runtime_parse_BAM_doublets_lung_30pc.txt
 

@@ -52,15 +52,15 @@ start=`date +%s`
 samtools view -h ../../../benchmarking/outputs/HGSOC/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../../benchmarking/doublets/HGSOC/20pc/lookup_table_doublets_HGSOC_20pc.tsv - | \
-samtools view -bo ../../../benchmarking/doublets/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam
+../../../benchmarking/scenarios/HGSOC/20pc/lookup_table_doublets_HGSOC_20pc.tsv - | \
+samtools view -bo ../../../benchmarking/scenarios/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../../benchmarking/doublets/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam
+samtools index ../../../benchmarking/scenarios/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam
 
 
 # end runtime
@@ -68,6 +68,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../../benchmarking/doublets/HGSOC/20pc
-echo runtime: $runtime seconds > ../../../benchmarking/doublets/HGSOC/20pc/runtime_parse_BAM_doublets_HGSOC_20pc.txt
+mkdir -p ../../../benchmarking/scenarios/HGSOC/20pc
+echo runtime: $runtime seconds > ../../../benchmarking/scenarios/HGSOC/20pc/runtime_parse_BAM_doublets_HGSOC_20pc.txt
 
