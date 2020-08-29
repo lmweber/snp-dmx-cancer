@@ -24,10 +24,10 @@ start=`date +%s`
 
 # gunzip barcodes file
 mkdir -p ../../../genotype/16030X2
-gunzip -c ../../../scenarios/outputs/HGSOC/16030X2_HJVMLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv.gz > ../../../genotype/16030X2/barcodes.tsv
+gunzip -c ../../../benchmarking/outputs/HGSOC/16030X2_HJVMLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv.gz > ../../../genotype/16030X2/barcodes.tsv
 
 cellSNP \
--s ../../../scenarios/outputs/HGSOC/16030X2_HJVMLDMXX/outs/possorted_genome_bam.bam \
+-s ../../../benchmarking/outputs/HGSOC/16030X2_HJVMLDMXX/outs/possorted_genome_bam.bam \
 -b ../../../genotype/16030X2/barcodes.tsv \
 -O ../../../genotype/16030X2/cellSNP_singlecell \
 -p 10 \
