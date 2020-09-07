@@ -21,19 +21,19 @@ start=`date +%s`
 
 # convert gzipped output files to bgzipped format (required by vcftools)
 
-gunzip -c ../../../genotype_singlecell/16030X2/cellSNP/cellSNP.cells.vcf.gz > ../../../genotype/16030X2/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../../genotype/16030X2/cellSNP/cellSNP.cells-bgz.vcf
-gunzip -c ../../../genotype/16030X3/cellSNP/cellSNP.cells.vcf.gz > ../../../genotype/16030X3/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../../genotype/16030X3/cellSNP/cellSNP.cells-bgz.vcf
-gunzip -c ../../../genotype/16030X4/cellSNP/cellSNP.cells.vcf.gz > ../../../genotype/16030X4/cellSNP/cellSNP.cells-bgz.vcf
-bgzip ../../../genotype/16030X4/cellSNP/cellSNP.cells-bgz.vcf
+gunzip -c ../../../genotype/16030X2/cellSNP_singlecell/cellSNP.cells.vcf.gz > ../../../genotype/16030X2/cellSNP_singlecell/cellSNP.cells-bgz.vcf
+bgzip ../../../genotype/16030X2/cellSNP_singlecell/cellSNP.cells-bgz.vcf
+gunzip -c ../../../genotype/16030X3/cellSNP_singlecell/cellSNP.cells.vcf.gz > ../../../genotype/16030X3/cellSNP_singlecell/cellSNP.cells-bgz.vcf
+bgzip ../../../genotype/16030X3/cellSNP_singlecell/cellSNP.cells-bgz.vcf
+gunzip -c ../../../genotype/16030X4/cellSNP_singlecell/cellSNP.cells.vcf.gz > ../../../genotype/16030X4/cellSNP_singlecell/cellSNP.cells-bgz.vcf
+bgzip ../../../genotype/16030X4/cellSNP_singlecell/cellSNP.cells-bgz.vcf
 
 
 # concatenate VCF files using vcftools (vcf-concat)
 
 mkdir -p ../../../genotype/cellSNP_singlecell_merged
 
-vcf-concat ../../../genotype/16030X2/cellSNP/cellSNP.cells-bgz.vcf.gz ../../../genotype/16030X3/cellSNP/cellSNP.cells-bgz.vcf.gz ../../../genotype/16030X4/cellSNP/cellSNP.cells-bgz.vcf.gz > \
+vcf-concat ../../../genotype/16030X2/cellSNP_singlecell/cellSNP.cells-bgz.vcf.gz ../../../genotype/16030X3/cellSNP_singlecell/cellSNP.cells-bgz.vcf.gz ../../../genotype/16030X4/cellSNP_singlecell/cellSNP.cells-bgz.vcf.gz > \
 ../../../genotype/cellSNP_singlecell_merged/cellSNP.cells-merged.vcf
 
 
