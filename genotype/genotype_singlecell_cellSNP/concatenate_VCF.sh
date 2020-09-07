@@ -8,7 +8,7 @@
 # generated with the scripts "genotype_singlecell_HGSOC_16030XX.sh".
 
 
-# qsub -V -cwd -l mem_free=2G,h_vmem=3G,h_fsize=100G concatenate_VCF.sh
+# qsub -V -cwd -l mem_free=2G,h_vmem=3G,h_fsize=300G concatenate_VCF.sh
 
 
 # start runtime
