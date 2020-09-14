@@ -69,3 +69,13 @@ levels(df_truth$predicted)
 tbl_summary <- table(truth = df_truth$truth, predicted = df_truth$predicted)
 tbl_summary
 
+# calculate recall
+recall <- sapply(rownames(tbl_summary), function(s) {
+  tbl_summary[s, s] / sum(tbl_summary[s, ])
+})
+
+# calculate precision
+precision <- sapply(rownames(tbl_summary), function(s) {
+  tbl_summary[s, s] / sum(tbl_summary[, s])
+})
+
