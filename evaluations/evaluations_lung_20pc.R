@@ -4,7 +4,7 @@
 
 # Script to generate plots for performance evaluations of benchmarking scenarios
 
-# HGSOC dataset, 30pc doublets simulation
+# Lung dataset, 20pc doublets simulation
 
 
 # module load conda_R/4.0
@@ -23,11 +23,11 @@ library(ggplot2)
 # load ground truth stored in sample ID suffixes in cell barcodes
 
 # barcodes
-fn_barcodes_merged <- "../../benchmarking/scenarios/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv"
+fn_barcodes_merged <- "../../benchmarking/scenarios/lung/20pc/barcodes_merged_lung_20pc.tsv"
 barcodes_merged <- read_table(fn_barcodes_merged, col_names = "barcode_id")
 
 # identify doublets
-fn_lookup_table <- "../../benchmarking/scenarios/HGSOC/30pc/lookup_table_doublets_HGSOC_30pc.tsv"
+fn_lookup_table <- "../../benchmarking/scenarios/lung/20pc/lookup_table_doublets_lung_20pc.tsv"
 lookup_table <- read_tsv(fn_lookup_table)
 
 lookup_table <- lookup_table %>% mutate(
@@ -50,7 +50,7 @@ df_truth <- df_truth %>% mutate(
   sample_id = gsub("^[A-Za-z]+-", "", barcode_id)
 )
 df_truth$sample_id[df_truth$is_doublet] <- "doublet"
-df_truth$sample_id %<>% factor(levels = c("X2", "X3", "X4", "doublet"))
+df_truth$sample_id %<>% factor(levels = c("T08", "T09", "T20", "T25", "T28", "T31", "doublet"))
 
 head(df_truth)
 
@@ -63,12 +63,7 @@ head(df_truth)
 # demuxlet scenarios: outputs saved in file
 
 scenario_names <- c(
-  "1000GenomesFilt_cellSNPVireo", 
-  "1000GenomesUnfilt_cellSNPVireo", 
-  "bulkBcftools_cellSNPVireo", 
-  "bulkBcftools_demuxlet", 
-  "bulkCellSNP_cellSNPVireo", 
-  "singlecellCellSNP_cellSNPVireo"
+  "1000GenomesFilt_cellSNPVireo"
 )
 
 summary_tables <- vector("list", length(scenario_names))
@@ -88,8 +83,8 @@ for (i in 1:length(scenario_names)) {
   # -----------
   
   # Vireo scenarios
-  if (i %in% c(1:3, 5:6)) {
-    fn <- paste0("../../benchmarking/scenarios/HGSOC/30pc/", scenario_names[i], "/vireo/donor_ids.tsv")
+  if (i == 1) {
+    fn <- paste0("../../benchmarking/scenarios/lung/20pc/", scenario_names[i], "/vireo/donor_ids.tsv")
     out <- read_tsv(fn)
     out_sub <- out[, c("cell", "donor_id")]
     
@@ -100,21 +95,6 @@ for (i in 1:length(scenario_names)) {
     
     df_truth_tmp$truth <- factor(df_truth_tmp$sample_id)
     df_truth_tmp$predicted <- factor(df_truth_tmp$donor_id)
-  }
-  
-  # demuxlet scenarios
-  if (i == 4) {
-    fn <- paste0("../../benchmarking/scenarios/HGSOC/30pc/", scenario_names[i], "/demuxlet.best")
-    out <- read_tsv(fn)
-    out_sub <- out[, c("BARCODE", "BEST")]
-    
-    stopifnot(nrow(df_truth) == nrow(out_sub))
-    
-    # match rows
-    df_truth_tmp <- right_join(df_truth, out_sub, by = c("barcode_id" = "BARCODE"))
-    
-    df_truth_tmp$truth <- factor(df_truth_tmp$sample_id)
-    df_truth_tmp$predicted <- factor(df_truth_tmp$BEST)
   }
   
   
@@ -130,20 +110,7 @@ for (i in 1:length(scenario_names)) {
   
   # Vireo scenarios
   if (i == 1) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X4", "X3", "X2")
-  } else if (i == 2) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X2", "X4")
-  } else if (i == 3) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X2", "X4")
-  } else if (i == 5) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X4", "X2")
-  } else if (i == 6) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X4", "X2")
-  }
-  
-  # demuxlet scenarios
-  if (i == 4) {
-    levels(df_truth_tmp$predicted)[9:11] <- c("X3", "X2", "X4")
+    levels(df_truth_tmp$predicted)[1:6] <- c("T31", "T25", "T20", "T09", "T28", "T08")
   }
   
   # updated summary table
@@ -158,12 +125,12 @@ for (i in 1:length(scenario_names)) {
   # ------------------------------
   
   # calculate recall
-  re <- sapply(rownames(tbl_summary)[1:3], function(s) {
+  re <- sapply(rownames(tbl_summary)[1:6], function(s) {
     tbl_summary[s, s] / sum(tbl_summary[s, ])
   })
   
   # calculate precision
-  pr <- sapply(rownames(tbl_summary)[1:3], function(s) {
+  pr <- sapply(rownames(tbl_summary)[1:6], function(s) {
     tbl_summary[s, s] / sum(tbl_summary[, s])
   })
   
@@ -187,7 +154,7 @@ df_precision$metric <- "precision"
 
 df_plot <- rbind(df_recall, df_precision)
 
-df_plot <- gather(df_plot, "sample_id", "value", "X2", "X3", "X4")
+df_plot <- gather(df_plot, "sample_id", "value", "T08", "T09", "T20", "T25", "T28", "T31")
 
 df_plot$scenario <- factor(df_plot$scenario)
 df_plot$metric <- as.factor(df_plot$metric)
@@ -203,9 +170,9 @@ df_plot <- spread(df_plot, "metric", "value")
 ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_id)) + 
   geom_point(size = 1.5, stroke = 1) + 
   scale_color_manual(values = unname(palette.colors(palette = "Okabe-Ito"))) + 
-  scale_shape_manual(values = c(1, 2, 0)) + 
-  ggtitle("Precision-recall: HGSOC, 30% doublets") + 
+  scale_shape_manual(values = c(1, 2, 0, 3, 4, 5)) + 
+  ggtitle("Precision-recall: lung, 20% doublets") + 
   theme_bw()
 
-ggsave("../../plots/precision_recall_HGSOC_30pc.pdf", width = 6.25, height = 3.5)
+ggsave("../../plots/precision_recall_lung_20pc.pdf", width = 6.25, height = 3.5)
 

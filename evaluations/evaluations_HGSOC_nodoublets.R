@@ -163,7 +163,7 @@ df_precision$metric <- "precision"
 
 df_plot <- rbind(df_recall, df_precision)
 
-df_plot <- gather(df_plot, "sample_id", "value", X2, X3, X4)
+df_plot <- gather(df_plot, "sample_id", "value", "X2", "X3", "X4")
 
 df_plot$scenario <- factor(df_plot$scenario)
 df_plot$metric <- as.factor(df_plot$metric)
