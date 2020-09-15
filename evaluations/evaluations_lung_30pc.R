@@ -167,9 +167,13 @@ df_plot <- spread(df_plot, "metric", "value")
 # generate plots
 # --------------
 
+# color palette (modified Okabe-Ito)
+pal <- unname(palette.colors(palette = "Okabe-Ito"))
+pal[1] <- "darkmagenta"
+
 ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_id)) + 
   geom_point(size = 1.5, stroke = 1) + 
-  scale_color_manual(values = unname(palette.colors(palette = "Okabe-Ito"))) + 
+  scale_color_manual(values = pal) + 
   scale_shape_manual(values = c(1, 2, 0, 3, 4, 5)) + 
   ggtitle("Precision-recall: lung, 30% doublets") + 
   theme_bw()
