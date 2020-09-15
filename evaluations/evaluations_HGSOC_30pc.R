@@ -208,6 +208,8 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   geom_point(size = 1.5, stroke = 1) + 
   scale_color_manual(values = pal) + 
   scale_shape_manual(values = c(1, 2, 0)) + 
+  xlim(0.4, 1.0) + 
+  ylim(0.69, 1.0) + 
   ggtitle("Precision-recall: HGSOC, 30% doublets") + 
   theme_bw()
 
