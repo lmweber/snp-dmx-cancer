@@ -13,6 +13,7 @@
 
 library(tidyverse)
 library(magrittr)
+library(ggplot2)
 
 
 # -----------------
@@ -30,52 +31,157 @@ df_truth <- barcodes_merged %>%
 head(df_truth)
 
 
-# ----------------------------------
-# load benchmarking scenario outputs
-# ----------------------------------
+# ----------------------
+# benchmarking scenarios
+# ----------------------
 
-# Vireo scenarios
-# outputs are saved in "donor_ids.tsv" for each scenario
+# Vireo scenarios: outputs saved in file "donor_ids.tsv"
+# demuxlet scenarios: outputs saved in file
 
-out_vireo_1000GenomesFilt_cellSNPVireo <- read_tsv("../../benchmarking/scenarios/HGSOC/nodoublets/1000GenomesFilt_cellSNPVireo/vireo/donor_ids.tsv")
-out_sub <- out_vireo_1000GenomesFilt_cellSNPVireo[, c("cell", "donor_id", "best_doublet")]
+scenario_names <- c(
+  "1000GenomesFilt_cellSNPVireo", 
+  "1000GenomesUnfilt_cellSNPVireo", 
+  "bulkBcftools_cellSNPVireo", 
+  "bulkBcftools_demuxlet", 
+  "bulkCellSNP_cellSNPVireo", 
+  "singlecellCellSNP_cellSNPVireo"
+)
 
-# match rows
+summary_tables <- vector("list", length(scenario_names))
+names(summary_tables) <- scenario_names
 
-# no doublets scenarios: same number of rows
-stopifnot(nrow(df_truth) == nrow(out_sub))
+precision <- vector("list", length(scenario_names))
+names(precision) <- scenario_names
 
-df_truth <- right_join(df_truth, out_sub, by = c("barcode_id" = "cell"))
+recall <- vector("list", length(scenario_names))
+names(recall) <- scenario_names
 
-df_truth$truth <- factor(df_truth$sample_id)
-df_truth$predicted <- factor(df_truth$donor_id)
+
+for (i in 1:length(scenario_names)) {
+  
+  # -----------
+  # load output
+  # -----------
+  
+  # Vireo scenarios
+  if (i %in% c(1:3, 5:6)) {
+    fn <- paste0("../../benchmarking/scenarios/HGSOC/nodoublets/", scenario_names[i], "/vireo/donor_ids.tsv")
+    out <- read_tsv(fn)
+    out_sub <- out[, c("cell", "donor_id")]
+    
+    stopifnot(nrow(df_truth) == nrow(out_sub))
+    
+    # match rows
+    df_truth_tmp <- right_join(df_truth, out_sub, by = c("barcode_id" = "cell"))
+    
+    df_truth_tmp$truth <- factor(df_truth_tmp$sample_id)
+    df_truth_tmp$predicted <- factor(df_truth_tmp$donor_id)
+  }
+  
+  # demuxlet scenarios
+  if (i == 4) {
+    fn <- paste0("../../benchmarking/scenarios/HGSOC/nodoublets/", scenario_names[i], "/demuxlet.best")
+    out <- read_tsv(fn)
+    out_sub <- out[, c("BARCODE", "BEST")]
+    
+    stopifnot(nrow(df_truth) == nrow(out_sub))
+    
+    # match rows
+    df_truth_tmp <- right_join(df_truth, out_sub, by = c("barcode_id" = "BARCODE"))
+    
+    df_truth_tmp$truth <- factor(df_truth_tmp$sample_id)
+    df_truth_tmp$predicted <- factor(df_truth_tmp$BEST)
+  }
+  
+  
+  # --------------------------------------------
+  # calculate summary table and match sample IDs
+  # --------------------------------------------
+  
+  # summary table
+  tbl_summary <- table(truth = df_truth_tmp$truth, predicted = df_truth_tmp$predicted)
+  tbl_summary
+  
+  # manually match sample IDs (since predicted sample IDs are in arbitrary order)
+  
+  # Vireo scenarios
+  if (i == 1) {
+    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X4", "X2")
+  } else if (i == 2) {
+    levels(df_truth_tmp$predicted)[1:3] <- c("X2", "X4", "X3")
+  } else if (i == 3) {
+    levels(df_truth_tmp$predicted)[1:3] <- c("X2", "X4", "X3")
+  } else if (i == 5) {
+    levels(df_truth_tmp$predicted)[1:3] <- c("X2", "X3", "X4")
+  } else if (i == 6) {
+    levels(df_truth_tmp$predicted)[1:3] <- c("X2", "X3", "X4")
+  }
+  
+  # demuxlet scenarios
+  if (i == 4) {
+    levels(df_truth_tmp$predicted)[9:11] <- c("X3", "X2", "X4")
+  }
+  
+  # updated summary table
+  tbl_summary <- table(truth = df_truth_tmp$truth, predicted = df_truth_tmp$predicted)
+  tbl_summary
+  
+  summary_tables[[i]] <- tbl_summary
+  
+  
+  # ------------------------------
+  # calculate precision and recall
+  # ------------------------------
+  
+  # calculate recall
+  re <- sapply(rownames(tbl_summary), function(s) {
+    tbl_summary[s, s] / sum(tbl_summary[s, ])
+  })
+  
+  # calculate precision
+  pr <- sapply(rownames(tbl_summary), function(s) {
+    tbl_summary[s, s] / sum(tbl_summary[, s])
+  })
+  
+  recall[[i]] <- re
+  precision[[i]] <- pr
+  
+}
 
 
 # ------------------------------
-# calculate precision and recall
+# format data frame for plotting
 # ------------------------------
 
-# match sample IDs
+df_recall <- as.data.frame(t(data.frame(recall, check.names = FALSE)))
+df_recall$scenario <- rownames(df_recall)
+df_recall$metric <- "recall"
 
-# summary table
-tbl_summary <- table(truth = df_truth$truth, predicted = df_truth$predicted)
-tbl_summary
+df_precision <- as.data.frame(t(data.frame(precision, check.names = FALSE)))
+df_precision$scenario <- rownames(df_precision)
+df_precision$metric <- "precision"
 
-# manually match sample IDs (note: this needs to be done manually, since
-# predicted sample IDs are in arbitrary order)
-levels(df_truth$predicted)[1:3] <- c("X3", "X4", "X2")
-levels(df_truth$predicted)
+df_plot <- rbind(df_recall, df_precision)
 
-tbl_summary <- table(truth = df_truth$truth, predicted = df_truth$predicted)
-tbl_summary
+df_plot <- gather(df_plot, "sample_id", "value", X2, X3, X4)
 
-# calculate recall
-recall <- sapply(rownames(tbl_summary), function(s) {
-  tbl_summary[s, s] / sum(tbl_summary[s, ])
-})
+df_plot$scenario <- factor(df_plot$scenario)
+df_plot$metric <- as.factor(df_plot$metric)
+df_plot$sample_id <- as.factor(df_plot$sample_id)
 
-# calculate precision
-precision <- sapply(rownames(tbl_summary), function(s) {
-  tbl_summary[s, s] / sum(tbl_summary[, s])
-})
+df_plot <- spread(df_plot, "metric", "value")
+
+
+# --------------
+# generate plots
+# --------------
+
+ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_id)) + 
+  geom_point(size = 1.5, stroke = 1) + 
+  scale_color_manual(values = unname(palette.colors(palette = "Okabe-Ito"))) + 
+  scale_shape_manual(values = c(1, 2, 0)) + 
+  ggtitle("Precision-recall: HGSOC, no doublets") + 
+  theme_bw()
+
+ggsave("../../plots/precision_recall_HGSOC_nodoublets.pdf", width = 6.25, height = 3.5)
 
