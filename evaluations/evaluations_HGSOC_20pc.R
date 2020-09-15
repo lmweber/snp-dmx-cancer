@@ -212,4 +212,5 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   theme_bw()
 
 ggsave("../../plots/precision_recall_HGSOC_20pc.pdf", width = 6.25, height = 3.5)
+ggsave("../../plots/precision_recall_HGSOC_20pc.png", width = 6.25, height = 3.5)
 
