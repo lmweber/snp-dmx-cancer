@@ -193,6 +193,12 @@ df_plot$scenario <- factor(df_plot$scenario)
 df_plot$metric <- as.factor(df_plot$metric)
 df_plot$sample_id <- as.factor(df_plot$sample_id)
 
+# summary values
+df_plot %>% 
+  group_by(scenario, metric) %>% 
+  summarize(mean = mean(value))
+
+# data frame for plotting
 df_plot <- spread(df_plot, "metric", "value")
 
 
