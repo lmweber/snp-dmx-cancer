@@ -2,7 +2,7 @@
 # Runtime plots
 ###############
 
-# Runtime plots for bulk sample alignment steps
+# Runtime plot for bulk sample alignment steps
 
 # HGSOC dataset
 
@@ -41,9 +41,9 @@ fn <- "../../genotype/runtimes/align_index_bulk_STAR/runtime_create_STAR_index.t
 runtime_create_STAR_index <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 
-# ---------------------------------------------
-# plot runtimes for bulk sample alignment steps
-# ---------------------------------------------
+# -------------
+# plot runtimes
+# -------------
 
 # set up plotting data frame
 
@@ -86,11 +86,11 @@ ggplot(df_plot, aes(x = method, y = runtime, group = sample_id)) +
   geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
   ylim(c(0, max(df_plot$runtime))) + 
   ylab("runtime (hours)") + 
-  ggtitle("Runtimes: bulk") + 
+  ggtitle("Bulk samples") + 
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 
-ggsave("../../plots/runtimes_bulk_samples_HGSOC.pdf", width = 1.8, height = 4)
-ggsave("../../plots/runtimes_bulk_samples_HGSOC.png", width = 1.8, height = 4)
+ggsave("../../plots/runtimes_bulk_samples_HGSOC.pdf", width = 1.75, height = 4)
+ggsave("../../plots/runtimes_bulk_samples_HGSOC.png", width = 1.75, height = 4)
 

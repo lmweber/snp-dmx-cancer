@@ -1,0 +1,90 @@
+###############
+# Runtime plots
+###############
+
+# Runtime plot for cellSNP step in benchmarking scenarios
+
+# HGSOC dataset, 30pc doublets simulation
+
+
+# module load conda_R/4.0
+# Rscript runtimes.R
+
+
+library(tidyverse)
+library(magrittr)
+library(ggplot2)
+
+
+# --------------------------------------------------------
+# load runtimes for cellSNP step in benchmarking scenarios
+# --------------------------------------------------------
+
+# steps with one value for all samples combined
+
+fn <- "../../benchmarking/scenarios/HGSOC/30pc/1000GenomesFilt_cellSNPVireo/runtimes/runtime_1000GenomesFilt_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+runtime_1000GenomesFilt_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
+
+fn <- "../../benchmarking/scenarios/HGSOC/30pc/1000GenomesUnfilt_cellSNPVireo/runtimes/runtime_1000GenomesUnfilt_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+runtime_1000GenomesUnfilt_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
+
+fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+runtime_bulkBcftools_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
+
+fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+runtime_bulkCellSNP_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
+
+fn <- "../../benchmarking/scenarios/HGSOC/30pc/singlecellCellSNP_cellSNPVireo/runtimes/runtime_singlecellCellSNP_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+runtime_singlecellCellSNP_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
+
+
+# -------------
+# plot runtimes
+# -------------
+
+# set up plotting data frame
+
+df_single <- as.data.frame(rbind(
+  X1000GenomesFilt_cellSNP = runtime_1000GenomesFilt_cellSNP, 
+  X1000GenomesUnfilt_cellSNP = runtime_1000GenomesUnfilt_cellSNP, 
+  bulkBcftools_cellSNP = runtime_bulkBcftools_cellSNP, 
+  bulkCellSNP_cellSNP = runtime_bulkCellSNP_cellSNP, 
+  singlecellCellSNP_cellSNP = runtime_singlecellCellSNP_cellSNP
+))
+# fix names
+rownames(df_single)[1:2] <- gsub("^X", "", rownames(df_single)[1:2])
+
+colnames(df_single) <- "all"
+df_single$all %<>% as.numeric
+df_single$method <- rownames(df_single)
+df_single <- gather(df_single, "sample_id", "runtime", "all")
+
+df_combined <- df_single
+
+method_names <- c("1000GenomesFilt_cellSNP", "1000GenomesUnfilt_cellSNP", "bulkBcftools_cellSNP", 
+                  "bulkCellSNP_cellSNP", "singlecellCellSNP_cellSNP")
+
+df_combined$method <- factor(df_combined$method, levels = method_names)
+df_combined$sample_id <- factor(df_combined$sample_id, levels = c("all"))
+
+
+# convert units to hours
+
+df_plot <- df_combined
+df_plot$runtime <- df_plot$runtime / 3600
+
+
+# generate plot
+
+ggplot(df_plot, aes(x = method, y = runtime)) + 
+  geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
+  ylim(c(0, max(df_plot$runtime))) + 
+  ylab("runtime (hours)") + 
+  ggtitle("cellSNP scenarios") + 
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), 
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+
+ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.pdf", width = 2.4, height = 4.5)
+ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.png", width = 2.4, height = 4.5)
+

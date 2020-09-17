@@ -2,7 +2,7 @@
 # Runtime plots
 ###############
 
-# Runtime plots for genotyping
+# Runtime plot for genotyping
 
 # HGSOC dataset
 
@@ -58,9 +58,9 @@ fn <- "../../genotype/runtimes/genotype_bulk_bcftools/runtime_genotype_bulk_HGSO
 runtime_genotype_bulk_bcftools_reheader <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 
-# ----------------------------
-# load runtimes for genotyping
-# ----------------------------
+# -------------
+# plot runtimes
+# -------------
 
 # set up plotting data frame
 
@@ -128,12 +128,12 @@ ggplot(df_plot, aes(x = method, y = runtime, group = sample_id, shape = group_id
   scale_shape_manual(values = c(1, 2, 0)) + 
   ylim(c(0, max(df_plot$runtime))) + 
   ylab("runtime (hours)") + 
-  ggtitle("Runtimes: genotyping") + 
+  ggtitle("Genotyping") + 
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5), 
         legend.position = "none")
 
-ggsave("../../plots/runtimes_genotype_HGSOC.pdf", width = 3, height = 5.25)
-ggsave("../../plots/runtimes_genotype_HGSOC.png", width = 3, height = 5.25)
+ggsave("../../plots/runtimes_genotype_HGSOC.pdf", width = 2.6, height = 5.25)
+ggsave("../../plots/runtimes_genotype_HGSOC.png", width = 2.6, height = 5.25)
 

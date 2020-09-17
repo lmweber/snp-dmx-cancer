@@ -2,7 +2,7 @@
 # Runtime plots
 ###############
 
-# Runtime plots for steps in main pipeline (note: not including bulk sample
+# Runtime plot for steps in main pipeline (note: not including bulk sample
 # genotyping, which is shown in separate plot)
 
 # HGSOC dataset, 30pc doublets simulation, best-performing scenario
@@ -71,9 +71,9 @@ fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkBcftools_cellSNPVireo/runtime
 runtime_vireo <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 
-# --------------------------------
-# plot runtimes for pipeline steps
-# --------------------------------
+# -------------
+# plot runtimes
+# -------------
 
 # set up plotting data frame
 
@@ -121,11 +121,11 @@ ggplot(df_plot, aes(x = method, y = runtime, group = sample_id)) +
   geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
   ylim(c(0, max(df_plot$runtime))) + 
   ylab("runtime (hours)") + 
-  ggtitle("Runtimes: pipeline") + 
+  ggtitle("Pipeline steps") + 
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 
-ggsave("../../plots/runtimes_pipeline_HGSOC_30pc.pdf", width = 3.5, height = 4.5)
-ggsave("../../plots/runtimes_pipeline_HGSOC_30pc.png", width = 3.5, height = 4.5)
+ggsave("../../plots/runtimes_pipeline_HGSOC_30pc.pdf", width = 3.25, height = 4.5)
+ggsave("../../plots/runtimes_pipeline_HGSOC_30pc.png", width = 3.25, height = 4.5)
 
