@@ -119,6 +119,7 @@ df_plot$runtime <- df_plot$runtime / 3600
 
 ggplot(df_plot, aes(x = method, y = runtime, group = sample_id)) + 
   geom_point(color = "#D55E00", shape = 4, size = 1.5, stroke = 1.5) + 
+  ylim(c(0, max(df_plot$runtime))) + 
   ylab("runtime (hours)") + 
   ggtitle("Runtimes: pipeline") + 
   theme_bw() + 
