@@ -109,11 +109,17 @@ df_combined$method <- factor(df_combined$method, levels = method_names)
 df_combined$sample_id <- factor(df_combined$sample_id, levels = c("X2", "X3", "X4", "all"))
 
 
+# convert units to hours
+
+df_plot <- df_combined
+df_plot$runtime <- df_plot$runtime / 3600
+
+
 # generate plot
 
-ggplot(df_combined, aes(x = method, y = runtime, group = sample_id)) + 
+ggplot(df_plot, aes(x = method, y = runtime, group = sample_id)) + 
   geom_point(color = "#D55E00", shape = 4, size = 1.5, stroke = 1.5) + 
-  ylab("runtime (seconds)") + 
+  ylab("runtime (hours)") + 
   ggtitle("Runtimes: pipeline steps") + 
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
