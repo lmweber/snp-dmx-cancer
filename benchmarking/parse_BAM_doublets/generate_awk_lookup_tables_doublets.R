@@ -82,7 +82,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
     paste0("../../../benchmarking/scenarios/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
-  write_tsv(df_lookup, fn_out)
+  #write_tsv(df_lookup, fn_out)
   
   
   # ------------------------------
@@ -99,7 +99,7 @@ f_sim_doublets <- function(prop_doublets, dataset_name, file_barcodes_merged) {
     paste0("../../../benchmarking/scenarios/", dataset_name, "/", prop_doublets * 100, "pc"), 
     paste0("barcodes_merged_", dataset_name, "_", prop_doublets * 100, "pc.tsv")
   )
-  write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)
+  #write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)
   
 }
 
@@ -124,7 +124,7 @@ for (prop_doublets in prop_doublets_sims) {
       paste0("runtime_lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.txt")
     )
     sink(fn_runtime)
-    cat(paste0("runtime: ", round(runtime[["elapsed"]]), " seconds"))
+    cat(paste0("runtime: ", round(runtime[["elapsed"]]), " seconds", "\n"))
     sink()
   }
 }
