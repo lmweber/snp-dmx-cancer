@@ -8,7 +8,7 @@
 
 
 # module load conda_R/4.0
-# Rscript evaluations.R
+# Rscript runtimes.R
 
 
 library(tidyverse)
