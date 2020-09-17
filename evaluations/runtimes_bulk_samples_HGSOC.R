@@ -86,11 +86,11 @@ ggplot(df_plot, aes(x = method, y = runtime, group = sample_id)) +
   geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
   ylim(c(0, max(df_plot$runtime))) + 
   ylab("runtime (hours)") + 
-  ggtitle("Runtimes: bulk samples") + 
+  ggtitle("Runtimes: bulk") + 
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 
-ggsave("../../plots/runtimes_bulk_samples_HGSOC.pdf", width = 2.5, height = 4)
-ggsave("../../plots/runtimes_bulk_samples_HGSOC.png", width = 2.5, height = 4)
+ggsave("../../plots/runtimes_bulk_samples_HGSOC.pdf", width = 1.8, height = 4)
+ggsave("../../plots/runtimes_bulk_samples_HGSOC.png", width = 1.8, height = 4)
 
