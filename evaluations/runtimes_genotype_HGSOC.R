@@ -123,11 +123,9 @@ df_plot$group_id <- factor(
 
 # generate plot
 
-pal <- c("orange2", "orangered3", "orangered4")
-
-ggplot(df_plot, aes(x = method, y = runtime, group = sample_id, color = group_id)) + 
-  geom_point(shape = 4, size = 1.5, stroke = 1.5) + 
-  scale_color_manual(values = pal) + 
+ggplot(df_plot, aes(x = method, y = runtime, group = sample_id, shape = group_id)) + 
+  geom_point(color = "orangered1", size = 1.5, stroke = 1.5) + 
+  scale_shape_manual(values = c(1, 2, 0)) + 
   ylim(c(0, max(df_plot$runtime))) + 
   ylab("runtime (hours)") + 
   ggtitle("Runtimes: genotyping") + 
