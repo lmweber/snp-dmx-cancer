@@ -120,7 +120,7 @@ df_plot$runtime <- df_plot$runtime / 3600
 ggplot(df_plot, aes(x = method, y = runtime, group = sample_id)) + 
   geom_point(color = "#D55E00", shape = 4, size = 1.5, stroke = 1.5) + 
   ylab("runtime (hours)") + 
-  ggtitle("Runtimes: pipeline steps") + 
+  ggtitle("Runtimes: pipeline") + 
   theme_bw() + 
   theme(axis.title.x = element_blank(), 
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
