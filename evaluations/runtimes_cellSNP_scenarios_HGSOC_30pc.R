@@ -76,15 +76,15 @@ df_plot$runtime <- df_plot$runtime / 3600
 
 # generate plot
 
-ggplot(df_plot, aes(x = method, y = runtime)) + 
+ggplot(df_plot, aes(x = runtime, y = method)) + 
   geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
-  ylim(c(0, max(df_plot$runtime))) + 
-  ylab("runtime (hours)") + 
+  xlim(c(0, max(df_plot$runtime))) + 
+  xlab("runtime (hours)") + 
+  scale_y_discrete(limits = rev(levels(df_plot$method))) + 
   ggtitle("cellSNP scenarios") + 
   theme_bw() + 
-  theme(axis.title.x = element_blank(), 
-        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+  theme(axis.title.y = element_blank())
 
-ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.pdf", width = 2.4, height = 4.5)
-ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.png", width = 2.4, height = 4.5)
+ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.pdf", width = 4.5, height = 2.4)
+ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.png", width = 4.5, height = 2.4)
 

@@ -123,17 +123,17 @@ df_plot$group_id <- factor(
 
 # generate plot
 
-ggplot(df_plot, aes(x = method, y = runtime, group = sample_id, shape = group_id)) + 
+ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, shape = group_id)) + 
   geom_point(color = "orangered1", size = 1.5, stroke = 1.5) + 
   scale_shape_manual(values = c(1, 2, 0)) + 
-  ylim(c(0, max(df_plot$runtime))) + 
-  ylab("runtime (hours)") + 
+  xlim(c(0, max(df_plot$runtime))) + 
+  xlab("runtime (hours)") + 
+  scale_y_discrete(limits = rev(levels(df_plot$method))) + 
   ggtitle("Genotyping") + 
   theme_bw() + 
-  theme(axis.title.x = element_blank(), 
-        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5), 
+  theme(axis.title.y = element_blank(), 
         legend.position = "none")
 
-ggsave("../../plots/runtimes_genotype_HGSOC.pdf", width = 2.6, height = 5.25)
-ggsave("../../plots/runtimes_genotype_HGSOC.png", width = 2.6, height = 5.25)
+ggsave("../../plots/runtimes_genotype_HGSOC.pdf", width = 5.25, height = 2.6)
+ggsave("../../plots/runtimes_genotype_HGSOC.png", width = 5.25, height = 2.6)
 
