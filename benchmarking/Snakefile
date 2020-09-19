@@ -83,6 +83,7 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 # default rule
 
 # note: this version of the workflow ends before running cellSNP and Vireo
+# see Snakefile in "workflow" directory for a complete workflow
 
 rule all:
   input:
