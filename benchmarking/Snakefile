@@ -1,27 +1,27 @@
 #####################################
-# Snakefile to run Snakemake pipeline
+# Snakefile to run Snakemake workflow
 #####################################
 
-# This Snakefile runs initial steps in the analysis pipeline (Cell Ranger,
+# This Snakefile runs initial steps in the analysis workflow (Cell Ranger,
 # modifying BAM and barcode files) for both datasets (HGSOC, lung), to generate
 # input files required by scripts in the "benchmarking" directory.
 
 # The scripts in "benchmarking" can then be used to run the final steps in the 
-# pipeline (e.g. running cellSNP, Vireo, or alternative tools) for each scenario.
+# workflow (e.g. running cellSNP, Vireo, or alternative tools) for each scenario.
 
-# Note this Snakefile re-uses scripts saved in the main pipeline directory
-# ("pipeline/scripts").
+# Note this Snakefile re-uses scripts saved in the main workflow directory
+# ("workflow/scripts").
 
 
 # ---------
 # variables
 # ---------
 
-# modifications from main pipeline:
+# modifications from main workflow:
 # - modified directories: scripts, outputs, runtimes, timestamps
 # - addition of lung dataset
 
-dir_scripts = "../pipeline/scripts"
+dir_scripts = "../workflow/scripts"
 dir_data = "../../data"
 dir_data_cellranger_ref = dir_data + "/cellranger/refdata-gex-GRCh38-2020-A"
 dir_outputs = "../../benchmarking/outputs"
@@ -63,10 +63,10 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 
 
 # ------------
-# run pipeline
+# run workflow
 # ------------
 
-# command to run pipeline on cluster
+# command to run workflow on cluster
 # notes:
 # - using number of threads specified in each rule
 # - using memory equal to "threads * mem_free" and "threads * h_vmem" (if more 
@@ -77,12 +77,12 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 
 
 # --------------
-# pipeline rules
+# workflow rules
 # --------------
 
 # default rule
 
-# note: this version of the pipeline ends before running cellSNP and Vireo
+# note: this version of the workflow ends before running cellSNP and Vireo
 
 rule all:
   input:

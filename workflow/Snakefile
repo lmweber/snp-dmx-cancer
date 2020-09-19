@@ -1,5 +1,5 @@
 #####################################
-# Snakefile to run Snakemake pipeline
+# Snakefile to run Snakemake workflow
 #####################################
 
 # ---------
@@ -9,13 +9,13 @@
 dir_scripts = "scripts"
 dir_data = "../../data"
 dir_data_cellranger_ref = dir_data + "/cellranger/refdata-gex-GRCh38-2020-A"
-dir_outputs = "../../pipeline/outputs"
+dir_outputs = "../../workflow/outputs"
 dir_outputs_HGSOC = dir_outputs + "/HGSOC"
 dir_outputs_lung = dir_outputs + "/lung"
-dir_runtimes = "../../pipeline/runtimes"
+dir_runtimes = "../../workflow/runtimes"
 dir_runtimes_HGSOC = dir_runtimes + "/HGSOC"
 dir_runtimes_lung = dir_runtimes + "/lung"
-dir_timestamps = "../../pipeline/timestamps"
+dir_timestamps = "../../workflow/timestamps"
 dir_timestamps_HGSOC = dir_timestamps + "/HGSOC"
 dir_timestamps_lung = dir_timestamps + "/lung"
 
@@ -48,10 +48,10 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 
 
 # ------------
-# run pipeline
+# run workflow
 # ------------
 
-# command to run pipeline on cluster
+# command to run workflow on cluster
 # notes:
 # - using number of threads specified in each rule
 # - using memory equal to "threads * mem_free" and "threads * h_vmem" (if more 
@@ -62,7 +62,7 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 
 
 # --------------
-# pipeline rules
+# workflow rules
 # --------------
 
 # default rule

@@ -6,19 +6,19 @@ The evaluations for the HGSOC dataset include simulated doublets, and the lung d
 
 Based on the evidence from these simulations, we have used sample pooling and genetic variation based demultiplexing for our own studies on HGSOC. This has allowed us to achieve substantial cost savings for library preparation.
 
-The `Snakemake` pipeline can be adapted to perform similar analyses for experimental design planning and budgeting purposes in your own dataset, given an initial set of scRNA-seq pilot samples.
+The `Snakemake` workflow can be adapted to perform similar analyses for experimental design planning and budgeting purposes in your own dataset, given an initial set of scRNA-seq pilot samples.
 
-These analyses and the pipeline will also be described in more detail in an upcoming paper.
+These analyses and the workflow will also be described in more detail in an upcoming paper.
 
 
 ## Contents
 
-### Pipeline
+### Workflow
 
-Code scripts for the main pipeline are saved in the directory [pipeline/](pipeline/).
+Code scripts for the main workflow are saved in the directory [workflow/](workflow/).
 
-- [Snakefile](pipeline/Snakefile): `Snakefile` to run the workflow using `Snakemake`
-- [scripts/](pipeline/scripts/): directory containing scripts for the individual steps in the `Snakemake` workflow
+- [Snakefile](workflow/Snakefile): `Snakefile` to run the workflow using `Snakemake`
+- [scripts/](workflow/scripts/): directory containing scripts for the individual steps in the `Snakemake` workflow
 
 
 ### Additional scripts
