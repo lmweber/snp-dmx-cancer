@@ -2,6 +2,13 @@
 # Snakefile to run Snakemake workflow
 #####################################
 
+# This Snakefile runs a complete workflow for one dataset, doublets simulation 
+# scenario, and choice of genotype file. This can be extended to include additional 
+# simulation scenarios by modifying the rules below, or adding separate scripts. 
+# For examples of scripts for additional scenarios, see the scripts saved in the 
+# "benchmarking/run_scenarios" directory.
+
+
 # ---------
 # variables
 # ---------
@@ -40,7 +47,7 @@ fastq_dirs_HGSOC = {"16030X2_HJVMLDMXX": "../../data/HGSOC/16030R/Fastq/16030X2_
 # precise control is required over the amount of memory for each job, this could 
 # be specified in a Snakemake cluster config file)
 
-# snakemake --cluster "qsub -V -cwd -pe local {threads} -l mem_free=5G,h_vmem=10G,h_fsize=100G" -j 3 --local-cores 30 --latency-wait 10
+# snakemake --cluster "qsub -V -cwd -pe local {threads} -l mem_free=5G,h_vmem=10G,h_fsize=300G" -j 3 --local-cores 30 --latency-wait 10
 
 
 # --------------
@@ -51,43 +58,89 @@ fastq_dirs_HGSOC = {"16030X2_HJVMLDMXX": "../../data/HGSOC/16030R/Fastq/16030X2_
 
 rule all:
   input:
-    dir_timestamps_HGSOC + "/vireo/timestamp_vireo.txt"
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/vireo/timestamp_vireo_HGSOC_20pc.txt"
 
 
 # ---------
 # run Vireo
 # ---------
 
-# HGSOC (3 samples)
-rule run_vireo_HGSOC:
+# for one doublets simulation scenario (dataset, percentage of doublets)
+# note parameter for number of samples (3 samples for HGSOC dataset)
+rule run_vireo_HGSOC_20pc:
   input:
-    dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt", 
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/cellSNP/timestamp_cellSNP_HGSOC_20pc.txt", 
     script_vireo = dir_scripts + "/run_vireo.sh"
   output:
-    dir_timestamps_HGSOC + "/vireo/timestamp_vireo.txt"
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/vireo/timestamp_vireo_HGSOC_20pc.txt"
   params:
-    n_samples = 3
+    n_samples = 3, 
+    dataset_name = "HGSOC", 
+    prop_doublets = "20pc"
   threads: 1
   shell:
-    "bash {input.script_vireo} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
-    "{dir_outputs_HGSOC} {params.n_samples}"
+    "bash {input.script_vireo} {dir_runtimes} {dir_timestamps} {threads} "
+    "{dir_outputs} {params.n_samples} "
+    "{params.dataset_name} {params.prop_doublets}"
 
 
 # -----------
 # run cellSNP
 # -----------
 
-# HGSOC
-rule run_cellSNP_HGSOC:
+# for one doublets simulation scenario (dataset, percentage of doublets)
+rule run_cellSNP_HGSOC_20pc:
   input:
-    dir_timestamps_HGSOC + "/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt", 
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/parse_and_index_BAM_doublets/timestamp_parse_and_index_BAM_doublets_HGSOC_20pc.txt", 
     script_cellSNP = dir_scripts + "/run_cellSNP.sh"
   output:
-    dir_timestamps_HGSOC + "/cellSNP/timestamp_cellSNP.txt"
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/cellSNP/timestamp_cellSNP_HGSOC_20pc.txt"
+  params:
+    dataset_name = "HGSOC", 
+    prop_doublets = "20pc"
   threads: 10
   shell:
-    "bash {input.script_cellSNP} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
-    "{dir_genotype} {dir_outputs_HGSOC}"
+    "bash {input.script_cellSNP} {dir_runtimes} {dir_timestamps} {threads} "
+    "{dir_outputs} {dir_genotype} "
+    "{params.dataset_name} {params.prop_doublets}"
+
+
+# ---------------------------------------------------------
+# parse and index merged BAM files for doublets simulations
+# ---------------------------------------------------------
+
+# for one doublets simulation scenario (dataset, percentage of doublets)
+rule parse_and_index_BAM_doublets_HGSOC_20pc:
+  input:
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/lookup_table_doublets/timestamp_lookup_table_doublets_HGSOC_20pc.txt", 
+    script_parse_and_index_BAM_doublets_HGSOC_20pc = dir_scripts + "/parse_and_index_BAM_doublets_HGSOC_20pc.sh"
+  output:
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/parse_and_index_BAM_doublets/timestamp_parse_and_index_BAM_doublets_HGSOC_20pc.txt"
+  params:
+    dataset_name = "HGSOC", 
+    prop_doublets = "20pc"
+  threads: 1
+  shell:
+    "bash {input.script_parse_and_index_BAM_doublets_HGSOC_20pc} "
+    "{dir_runtimes} {dir_timestamps} {threads} {dir_outputs} "
+    "{params.dataset_name} {params.prop_doublets}"
+
+
+# ---------------------------------------------------
+# generate awk lookup tables for doublets simulations
+# ---------------------------------------------------
+
+# all datasets (extend inputs and outputs to add more datasets)
+rule generate_awk_lookup_tables:
+  input:
+    dir_timestamps_HGSOC + "/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt", 
+    script_generate_awk_lookup_tables_doublets = dir_scripts + "/generate_awk_lookup_tables_doublets.R"
+  output:
+    dir_timestamps + "/HGSOC/doublets_sims/20pc/lookup_table_doublets/timestamp_lookup_table_doublets_HGSOC_20pc.txt"
+  threads: 1
+  shell:
+    "Rscript {input.script_generate_awk_lookup_tables_doublets} "
+    "{dir_runtimes} {dir_timestamps} {dir_outputs}"
 
 
 # ----------------------------------
