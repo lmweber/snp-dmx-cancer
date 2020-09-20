@@ -9,6 +9,7 @@
 dir_scripts = "scripts"
 dir_data = "../../data"
 dir_data_cellranger_ref = dir_data + "/cellranger/refdata-gex-GRCh38-2020-A"
+dir_genotype = "../../genotype"
 dir_outputs = "../../workflow/outputs"
 dir_outputs_HGSOC = dir_outputs + "/HGSOC"
 dir_runtimes = "../../workflow/runtimes"
@@ -86,7 +87,7 @@ rule run_cellSNP_HGSOC:
   threads: 10
   shell:
     "bash {input.script_cellSNP} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
-    "{dir_data} {dir_outputs_HGSOC}"
+    "{dir_genotype} {dir_outputs_HGSOC}"
 
 
 # ----------------------------------
