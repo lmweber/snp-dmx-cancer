@@ -214,6 +214,7 @@ rule parse_BAM_files_HGSOC:
 # ---------------
 
 # HGSOC
+# note extra "../" required for transcriptome directory since Cell Ranger runs in current working directory
 rule run_cellranger_HGSOC:
   input:
     script_cellranger = dir_scripts + "/run_cellranger.sh"
@@ -224,6 +225,6 @@ rule run_cellranger_HGSOC:
   threads: 10
   shell:
     "bash {input.script_cellranger} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
-    "{wildcards.sample_HGSOC} {dir_data_cellranger_ref} "
+    "{wildcards.sample_HGSOC} ../{dir_data_cellranger_ref} "
     "{params.fastq_dir} {dir_outputs_HGSOC}"
 
