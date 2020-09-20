@@ -73,7 +73,7 @@ fastq_dirs_lung = {"LUNG_T08": "../../data/lung/LUNG_T08",
 # precise control is required over the amount of memory for each job, this could 
 # be specified in a Snakemake cluster config file)
 
-# snakemake --cluster "qsub -V -cwd -pe local {threads} -l mem_free=5G,h_vmem=10G,h_fsize=100G" -j 9 --local-cores 30 --latency-wait 10
+# snakemake --cluster "qsub -V -cwd -pe local {threads} -l mem_free=5G,h_vmem=10G,h_fsize=300G" -j 9 --local-cores 30 --latency-wait 10
 
 
 # --------------
