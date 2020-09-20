@@ -224,7 +224,7 @@ rule parse_BAM_files_lung:
 # run Cell Ranger
 # ---------------
 
-# note extra "../" required for transcriptome directory since Cell Ranger runs in current working directory
+# note extra "../" required in shell command since Cell Ranger runs in current working directory
 
 # HGSOC
 rule run_cellranger_HGSOC:
@@ -238,7 +238,7 @@ rule run_cellranger_HGSOC:
   shell:
     "bash {input.script_cellranger} {dir_runtimes_HGSOC} {dir_timestamps_HGSOC} {threads} "
     "{wildcards.sample_HGSOC} ../{dir_data_cellranger_ref} "
-    "{params.fastq_dir} {dir_outputs_HGSOC}"
+    "../{params.fastq_dir} {dir_outputs_HGSOC}"
 
 # lung
 rule run_cellranger_lung:
@@ -252,5 +252,5 @@ rule run_cellranger_lung:
   shell:
     "bash {input.script_cellranger} {dir_runtimes_lung} {dir_timestamps_lung} {threads} "
     "{wildcards.sample_lung} ../{dir_data_cellranger_ref} "
-    "{params.fastq_dir} {dir_outputs_lung}"
+    "../{params.fastq_dir} {dir_outputs_lung}"
 
