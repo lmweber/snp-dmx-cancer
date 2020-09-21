@@ -87,7 +87,7 @@ ggplot(df_plot, aes(x = runtime, y = method, group = sample_id)) +
   xlim(c(0, max(df_plot$runtime))) + 
   xlab("runtime (hours)") + 
   scale_y_discrete(limits = rev(levels(df_plot$method))) + 
-  ggtitle("Bulk samples") + 
+  ggtitle("Bulk samples alignment") + 
   theme_bw() + 
   theme(axis.title.y = element_blank())
 
