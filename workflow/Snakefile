@@ -140,7 +140,7 @@ rule generate_awk_lookup_tables:
     dir_timestamps + "/HGSOC/doublets_sims/20pc/lookup_table_doublets/timestamp_lookup_table_doublets_HGSOC_20pc.txt"
   threads: 1
   shell:
-    "module load conda_R/4.0 && "
+    "module load conda_R/4.0; "
     "Rscript {input.script_generate_awk_lookup_tables_doublets} "
     "{dir_runtimes} {dir_timestamps} {dir_outputs}"
 
