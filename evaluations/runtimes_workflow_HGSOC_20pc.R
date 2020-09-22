@@ -5,7 +5,7 @@
 # Runtime plot for steps in main workflow (note: not including bulk sample
 # genotyping, which is shown in separate plot)
 
-# HGSOC dataset, 30pc doublets simulation, best-performing scenario
+# HGSOC dataset, 20pc doublets simulation, best-performing scenario
 
 
 # module load conda_R/4.0
@@ -55,19 +55,19 @@ runtime_parse_and_merge_barcodes <- gsub("runtime: ", "", gsub(" seconds", "", r
 
 # doublets simulation
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/runtime_lookup_table_doublets_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/runtime_lookup_table_doublets_HGSOC_20pc.txt"
 runtime_lookup_table_doublets <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/runtime_parse_BAM_doublets_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/runtime_parse_BAM_doublets_HGSOC_20pc.txt"
 runtime_parse_BAM_doublets <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 
 # demultiplexing: best-performing scenario (bulkBcftools_cellSNPVireo)
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_vireo_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_vireo_HGSOC_20pc.txt"
 runtime_vireo <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 
@@ -126,6 +126,6 @@ ggplot(df_plot, aes(x = runtime, y = method, group = sample_id)) +
   theme_bw() + 
   theme(axis.title.y = element_blank())
 
-ggsave("../../plots/runtimes_workflow_HGSOC_30pc.pdf", width = 4.5, height = 3.25)
-ggsave("../../plots/runtimes_workflow_HGSOC_30pc.png", width = 4.5, height = 3.25)
+ggsave("../../plots/runtimes_workflow_HGSOC_20pc.pdf", width = 4.5, height = 3.25)
+ggsave("../../plots/runtimes_workflow_HGSOC_20pc.png", width = 4.5, height = 3.25)
 

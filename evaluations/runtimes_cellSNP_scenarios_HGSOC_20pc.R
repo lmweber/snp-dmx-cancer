@@ -4,7 +4,7 @@
 
 # Runtime plot for cellSNP step in benchmarking scenarios
 
-# HGSOC dataset, 30pc doublets simulation
+# HGSOC dataset, 20pc doublets simulation
 
 
 # module load conda_R/4.0
@@ -22,19 +22,19 @@ library(ggplot2)
 
 # steps with one value for all samples combined
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/1000GenomesFilt_cellSNPVireo/runtimes/runtime_1000GenomesFilt_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/1000GenomesFilt_cellSNPVireo/runtimes/runtime_1000GenomesFilt_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_1000GenomesFilt_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/1000GenomesUnfilt_cellSNPVireo/runtimes/runtime_1000GenomesUnfilt_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/1000GenomesUnfilt_cellSNPVireo/runtimes/runtime_1000GenomesUnfilt_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_1000GenomesUnfilt_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/bulkBcftools_cellSNPVireo/runtimes/runtime_bulkBcftools_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_bulkBcftools_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_bulkCellSNP_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/30pc/singlecellCellSNP_cellSNPVireo/runtimes/runtime_singlecellCellSNP_cellSNPVireo_cellSNP_HGSOC_30pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/singlecellCellSNP_cellSNPVireo/runtimes/runtime_singlecellCellSNP_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_singlecellCellSNP_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 
@@ -85,6 +85,6 @@ ggplot(df_plot, aes(x = runtime, y = method)) +
   theme_bw() + 
   theme(axis.title.y = element_blank())
 
-ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.pdf", width = 4.5, height = 2.4)
-ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_30pc.png", width = 4.5, height = 2.4)
+ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_20pc.pdf", width = 4.5, height = 2.4)
+ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_20pc.png", width = 4.5, height = 2.4)
 
