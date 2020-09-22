@@ -2,7 +2,7 @@
 # Runtime plots
 ###############
 
-# Runtime plot for steps in main pipeline (note: not including bulk sample
+# Runtime plot for steps in main workflow (note: not including bulk sample
 # genotyping, which is shown in separate plot)
 
 # HGSOC dataset, 30pc doublets simulation, best-performing scenario
@@ -18,7 +18,7 @@ library(ggplot2)
 
 
 # --------------------------------
-# load runtimes for pipeline steps
+# load runtimes for workflow steps
 # --------------------------------
 
 # initial steps: steps with one value per sample
@@ -126,6 +126,6 @@ ggplot(df_plot, aes(x = runtime, y = method, group = sample_id)) +
   theme_bw() + 
   theme(axis.title.y = element_blank())
 
-ggsave("../../plots/runtimes_pipeline_HGSOC_30pc.pdf", width = 4.5, height = 3.25)
-ggsave("../../plots/runtimes_pipeline_HGSOC_30pc.png", width = 4.5, height = 3.25)
+ggsave("../../plots/runtimes_workflow_HGSOC_30pc.pdf", width = 4.5, height = 3.25)
+ggsave("../../plots/runtimes_workflow_HGSOC_30pc.png", width = 4.5, height = 3.25)
 
