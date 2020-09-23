@@ -41,7 +41,7 @@ Scripts for additional steps outside the main workflow and benchmark evaluations
 
 ## Links
 
-- Vireo paper: [Huang et al. (2019), Genome Biology](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1865-2)
-- Vireo: [documentation](https://vireosnp.readthedocs.io/en/latest/index.html)
-- cellSNP: [documentation](https://github.com/single-cell-genetics/cellSNP)
+- `Vireo` paper: [Huang et al. (2019), Genome Biology](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1865-2)
+- `Vireo`: [documentation](https://vireosnp.readthedocs.io/en/latest/index.html)
+- `cellSNP`: [documentation](https://github.com/single-cell-genetics/cellSNP)
 
