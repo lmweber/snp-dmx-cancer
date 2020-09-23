@@ -17,9 +17,10 @@
 # $1: directory for runtimes
 # $2: directory for timestamp files
 # $3: output directory
+# $4: scripts directory
 
 
 module load conda_R/4.0
 
-Rscript generate_awk_lookup_tables_doublets.R $1 $2 $3
+Rscript $4/generate_awk_lookup_tables_doublets.R $1 $2 $3
 

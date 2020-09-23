@@ -141,7 +141,7 @@ rule generate_awk_lookup_tables:
   threads: 1
   shell:
     "bash {input.script_generate_awk_lookup_tables_doublets} "
-    "{dir_runtimes} {dir_timestamps} {dir_outputs}"
+    "{dir_runtimes} {dir_timestamps} {dir_outputs} {dir_scripts}"
 
 
 # ----------------------------------
