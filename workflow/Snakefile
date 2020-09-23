@@ -135,13 +135,12 @@ rule parse_and_index_BAM_doublets_HGSOC_20pc:
 rule generate_awk_lookup_tables:
   input:
     dir_timestamps_HGSOC + "/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt", 
-    script_generate_awk_lookup_tables_doublets = dir_scripts + "/generate_awk_lookup_tables_doublets.R"
+    script_generate_awk_lookup_tables_doublets = dir_scripts + "/generate_awk_lookup_tables_doublets.sh"
   output:
     dir_timestamps + "/HGSOC/doublets_sims/20pc/lookup_table_doublets/timestamp_lookup_table_doublets_HGSOC_20pc.txt"
   threads: 1
   shell:
-    "module load conda_R/4.0; "
-    "Rscript {input.script_generate_awk_lookup_tables_doublets} "
+    "bash {input.script_generate_awk_lookup_tables_doublets} "
     "{dir_runtimes} {dir_timestamps} {dir_outputs}"
 
 
