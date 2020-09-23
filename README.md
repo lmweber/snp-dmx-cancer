@@ -4,7 +4,9 @@ This repository contains reproducible code for the benchmark evaluations and `Sn
 
 The benchmark evaluations cover a range of simulated doublet proportions (up to 30% for "super-loading" experimental designs) and choice of genotype reference list of SNPs (e.g. 1000 Genomes Project, or genotyping from matched bulk RNA-seq samples).
 
-The `Snakemake` workflow implements a complete workflow for one dataset and doublets scenario (HGSOC dataset, 20% doublets), using the best-performing set of tools (bulk RNA-seq samples genotype from `bcftools`; demultiplexing using `cellSNP`/`Vireo`). The workflow is modular, and can be adapted to substitute alternative tools.
+The `Snakemake` workflow implements a complete workflow for one dataset and doublets scenario (HGSOC dataset, 20% doublets), using the best-performing set of tools (bulk RNA-seq samples genotype from `bcftools`; demultiplexing using `cellSNP`/`Vireo`).
+
+The workflow is modular, and can be adapted to substitute alternative tools.
 
 For more details, see our paper (preprint to be posted on bioRxiv soon).
 
