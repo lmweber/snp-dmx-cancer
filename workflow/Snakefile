@@ -131,7 +131,6 @@ rule parse_and_index_BAM_doublets_HGSOC_20pc:
 # ---------------------------------------------------
 
 # all datasets (extend inputs and outputs to add more datasets)
-# note "module load conda_R/4.0" loads R on cluster
 rule generate_awk_lookup_tables:
   input:
     dir_timestamps_HGSOC + "/parse_and_merge_barcodes/timestamp_parse_and_merge_barcodes.txt", 

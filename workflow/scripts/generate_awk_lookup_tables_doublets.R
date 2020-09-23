@@ -144,7 +144,7 @@ for (prop_doublets in prop_doublets_sims) {
     dir_tmp <- paste0(dir_timestamps, "/", dataset_name, "/doublets_sims/", prop_doublets * 100, "pc", "/lookup_table_doublets")
     system(paste0("mkdir -p ", dir_tmp))
     fn_timestamp <- file.path(
-      paste0("dir_tmp/timestamp_lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.txt")
+      paste0(dir_tmp, "/timestamp_lookup_table_doublets_", dataset_name, "_", prop_doublets * 100, "pc.txt")
     )
     system(paste0("date > ", fn_timestamp))
   }
