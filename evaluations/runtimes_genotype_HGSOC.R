@@ -71,6 +71,7 @@ for (i in 1:ncol(df_separate_bulk)) {
   df_separate_bulk[, i] %<>% as.numeric
 }
 df_separate_bulk$method <- rownames(df_separate_bulk)
+df_separate_bulk$parallel <- c(TRUE)
 df_separate_bulk <- gather(df_separate_bulk, "sample_id", "runtime", 
                            "17667X1", "17667X2", "17667X3")
 
@@ -81,6 +82,7 @@ for (i in 1:ncol(df_separate_singlecell)) {
   df_separate_singlecell[, i] %<>% as.numeric
 }
 df_separate_singlecell$method <- rownames(df_separate_singlecell)
+df_separate_singlecell$parallel <- c(TRUE)
 df_separate_singlecell <- gather(df_separate_singlecell, "sample_id", "runtime", 
                                  "16030X2", "16030X3", "16030X4")
 
@@ -93,6 +95,7 @@ df_single <- as.data.frame(rbind(
 colnames(df_single) <- "all"
 df_single$all %<>% as.numeric
 df_single$method <- rownames(df_single)
+df_single$parallel <- c(FALSE, FALSE, FALSE, FALSE)
 df_single <- gather(df_single, "sample_id", "runtime", "all")
 
 df_combined <- rbind(df_separate_bulk, df_separate_singlecell, df_single)
@@ -123,8 +126,11 @@ df_plot$group_id <- factor(
 
 # generate plot
 
-ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, shape = group_id)) + 
-  geom_point(color = "orangered1", size = 1.5, stroke = 1.5) + 
+colors <- c("firebrick2", "darkorange1")
+
+ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, shape = group_id, color = parallel)) + 
+  geom_point(size = 1.5, stroke = 1.5) + 
+  scale_color_manual(values = colors) + 
   scale_shape_manual(values = c(1, 2, 0)) + 
   xlim(c(0, max(df_plot$runtime))) + 
   xlab("runtime (hours)") + 

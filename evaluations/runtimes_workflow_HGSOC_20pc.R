@@ -85,6 +85,7 @@ for (i in 1:ncol(df_separate)) {
   df_separate[, i] %<>% as.numeric
 }
 df_separate$method <- rownames(df_separate)
+df_separate$parallel <- c(TRUE, FALSE)
 df_separate <- gather(df_separate, "sample_id", "runtime", "X2", "X3", "X4")
 
 df_single <- as.data.frame(rbind(
@@ -98,6 +99,7 @@ df_single <- as.data.frame(rbind(
 colnames(df_single) <- "all"
 df_single$all %<>% as.numeric
 df_single$method <- rownames(df_single)
+df_single$parallel <- c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE)
 df_single <- gather(df_single, "sample_id", "runtime", "all")
 
 df_combined <- rbind(df_separate, df_single)
@@ -117,14 +119,18 @@ df_plot$runtime <- df_plot$runtime / 3600
 
 # generate plot
 
-ggplot(df_plot, aes(x = runtime, y = method, group = sample_id)) + 
-  geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
+colors <- c("firebrick2", "darkorange1")
+
+ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, color = parallel)) + 
+  geom_point(shape = 4, size = 1.5, stroke = 1.5) + 
+  scale_color_manual(values = colors) + 
   xlim(c(0, max(df_plot$runtime))) + 
   xlab("runtime (hours)") + 
   scale_y_discrete(limits = rev(levels(df_plot$method))) + 
   ggtitle("Workflow steps") + 
   theme_bw() + 
-  theme(axis.title.y = element_blank())
+  theme(axis.title.y = element_blank(), 
+        legend.position = "none")
 
 ggsave("../../plots/runtimes_workflow_HGSOC_20pc.pdf", width = 4.5, height = 3.25)
 ggsave("../../plots/runtimes_workflow_HGSOC_20pc.png", width = 4.5, height = 3.25)

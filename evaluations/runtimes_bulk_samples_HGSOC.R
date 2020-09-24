@@ -54,6 +54,7 @@ for (i in 1:ncol(df_separate_bulk)) {
   df_separate_bulk[, i] %<>% as.numeric
 }
 df_separate_bulk$method <- rownames(df_separate_bulk)
+df_separate_bulk$parallel <- c(TRUE)
 df_separate_bulk <- gather(df_separate_bulk, "sample_id", "runtime", 
                            "17667X1", "17667X2", "17667X3")
 
@@ -63,6 +64,7 @@ df_single <- as.data.frame(rbind(
 colnames(df_single) <- "all"
 df_single$all %<>% as.numeric
 df_single$method <- rownames(df_single)
+df_single$parallel <- c(TRUE)
 df_single <- gather(df_single, "sample_id", "runtime", "all")
 
 df_combined <- rbind(df_separate_bulk, df_single)
@@ -82,14 +84,18 @@ df_plot$runtime <- df_plot$runtime / 3600
 
 # generate plot
 
-ggplot(df_plot, aes(x = runtime, y = method, group = sample_id)) + 
-  geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
+colors <- c("firebrick2", "darkorange1")
+
+ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, color = parallel)) + 
+  geom_point(shape = 4, size = 1.5, stroke = 1.5) + 
+  scale_color_manual(values = colors) + 
   xlim(c(0, max(df_plot$runtime))) + 
   xlab("runtime (hours)") + 
   scale_y_discrete(limits = rev(levels(df_plot$method))) + 
   ggtitle("Bulk samples alignment") + 
   theme_bw() + 
-  theme(axis.title.y = element_blank())
+  theme(axis.title.y = element_blank(), 
+        legend.position = "none")
 
 ggsave("../../plots/runtimes_bulk_samples_HGSOC.pdf", width = 4, height = 1.5)
 ggsave("../../plots/runtimes_bulk_samples_HGSOC.png", width = 4, height = 1.5)

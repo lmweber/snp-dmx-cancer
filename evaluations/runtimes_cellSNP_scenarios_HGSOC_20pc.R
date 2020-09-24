@@ -57,6 +57,7 @@ rownames(df_single)[1:2] <- gsub("^X", "", rownames(df_single)[1:2])
 colnames(df_single) <- "all"
 df_single$all %<>% as.numeric
 df_single$method <- rownames(df_single)
+df_single$parallel <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
 df_single <- gather(df_single, "sample_id", "runtime", "all")
 
 df_combined <- df_single
@@ -76,14 +77,18 @@ df_plot$runtime <- df_plot$runtime / 3600
 
 # generate plot
 
-ggplot(df_plot, aes(x = runtime, y = method)) + 
-  geom_point(color = "orangered1", shape = 4, size = 1.5, stroke = 1.5) + 
+colors <- c("firebrick2", "darkorange1")
+
+ggplot(df_plot, aes(x = runtime, y = method, color = parallel)) + 
+  geom_point(shape = 4, size = 1.5, stroke = 1.5) + 
+  scale_color_manual(values = colors) + 
   xlim(c(0, max(df_plot$runtime))) + 
   xlab("runtime (hours)") + 
   scale_y_discrete(limits = rev(levels(df_plot$method))) + 
   ggtitle("cellSNP scenarios") + 
   theme_bw() + 
-  theme(axis.title.y = element_blank())
+  theme(axis.title.y = element_blank(), 
+        legend.position = "none")
 
 ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_20pc.pdf", width = 4.5, height = 2.4)
 ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_20pc.png", width = 4.5, height = 2.4)
