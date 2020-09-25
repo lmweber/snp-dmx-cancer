@@ -126,7 +126,7 @@ df_plot$group_id <- factor(
 
 # generate plot
 
-colors <- c("orangered1", "darkmagenta")
+colors <- c("darkmagenta", "orangered1")
 
 ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, shape = group_id, color = parallel)) + 
   geom_point(size = 1.5, stroke = 1.5) + 
