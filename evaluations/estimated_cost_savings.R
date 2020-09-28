@@ -27,7 +27,8 @@ df_savings <- rbind(
 
 df_plot <- gather(df_savings, "multiplexing", "cost", "multiplexing", "no_multiplexing")
 
-df_plot$multiplexing %<>% factor(levels = c("no_multiplexing", "multiplexing"))
+df_plot$multiplexing %<>% factor(levels = c("no_multiplexing", "multiplexing"), 
+                                 labels = c("no multiplexing", "multiplexing"))
 
 
 # -----------
@@ -45,9 +46,10 @@ ggplot(df_plot, aes(x = n_samples, y = cost,
   ylim(c(0, max(df_plot$cost))) + 
   xlab("number of samples") + 
   ylab("cost ($)") + 
-  ggtitle("Estimated cost for experiment") + 
+  ggtitle("Estimated cost for experiment", 
+          subtitle = "With and without multiplexing prior to library preparation") + 
   theme_bw()
 
-ggsave("../../plots/estimated_cost_savings.pdf", width = 5, height = 3.5)
-ggsave("../../plots/estimated_cost_savings.png", width = 5, height = 3.5)
+ggsave("../../plots/estimated_cost_savings.pdf", width = 5, height = 3.75)
+ggsave("../../plots/estimated_cost_savings.png", width = 5, height = 3.75)
 
