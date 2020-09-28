@@ -119,7 +119,7 @@ df_plot$runtime <- df_plot$runtime / 3600
 
 # generate plot
 
-colors <- c("darkmagenta", "orangered1")
+colors <- c("darkorange", "firebrick")
 
 ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, color = parallel)) + 
   geom_point(shape = 4, size = 1.5, stroke = 1.5) + 
