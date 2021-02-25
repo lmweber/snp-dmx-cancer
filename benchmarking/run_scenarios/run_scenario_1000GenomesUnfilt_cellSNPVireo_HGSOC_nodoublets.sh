@@ -26,14 +26,15 @@ start=`date +%s`
 mkdir -p ../../../benchmarking/scenarios/HGSOC/nodoublets/1000GenomesUnfilt_cellSNPVireo
 
 # using recommended parameters for cellSNP
-cellSNP \
+cellsnp-lite \
 -s ../../../benchmarking/outputs/HGSOC/bam_merged/bam_merged.bam \
 -b ../../../benchmarking/outputs/HGSOC/barcodes_merged/barcodes_merged.tsv \
 -O ../../../benchmarking/scenarios/HGSOC/nodoublets/1000GenomesUnfilt_cellSNPVireo/cellSNP \
 -R ../../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf \
 -p 10 \
 --minMAF=0.1 \
---minCOUNT=20
+--minCOUNT=20 \
+--gzip
 
 
 # end runtime

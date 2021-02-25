@@ -26,14 +26,15 @@ start=`date +%s`
 mkdir -p ../../../benchmarking/scenarios/lung/nodoublets/1000GenomesFilt_cellSNPVireo
 
 # using recommended parameters for cellSNP
-cellSNP \
+cellsnp-lite \
 -s ../../../benchmarking/outputs/lung/bam_merged/bam_merged.bam \
 -b ../../../benchmarking/outputs/lung/barcodes_merged/barcodes_merged.tsv \
 -O ../../../benchmarking/scenarios/lung/nodoublets/1000GenomesFilt_cellSNPVireo/cellSNP \
 -R ../../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p 10 \
 --minMAF=0.1 \
---minCOUNT=20
+--minCOUNT=20 \
+--gzip
 
 
 # end runtime
