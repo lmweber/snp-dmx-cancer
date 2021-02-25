@@ -15,9 +15,9 @@
 
 # for more details:
 # - https://vireosnp.readthedocs.io/en/latest/genotype.html
-# - https://github.com/single-cell-genetics/cellSNP
+# - https://github.com/single-cell-genetics/cellsnp-lite
 
-# runtime: ~6 hours (with 10 cores)
+# runtime: 
 
 # qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G run_cellSNP.sh
 
@@ -40,14 +40,15 @@ start=`date +%s`
 # if still in "vcf.bgz" or "vcf.gz" format then uncompress first
 # (for .bgz format, can rename to .gz then gunzip)
 
-cellSNP \
+cellsnp-lite \
 -s $4/$6/doublets_sims/$7/bam_merged_doublets_$6_$7.bam \
 -b $4/$6/doublets_sims/$7/barcodes_merged_$6_$7.tsv \
 -O $4/$6/doublets_sims/$7/cellSNP \
 -R $5/bcftools/bcftools_HGSOC_rehead.vcf \
 -p $3 \
 --minMAF=0.1 \
---minCOUNT=20
+--minCOUNT=20 \
+--gzip
 
 
 # -----------------------------------
