@@ -8,7 +8,10 @@ The `Snakemake` workflow implements a complete workflow for one dataset and doub
 
 The workflow is modular, and can be adapted to substitute alternative tools.
 
-For more details, see our paper (preprint to be posted on bioRxiv soon).
+
+## Paper
+
+Link to preprint: [Weber LM et al. (2020), "Genetic demultiplexing of pooled single-cell RNA-sequencing samples in cancer facilitates effective experimental design", bioRxiv](https://www.biorxiv.org/content/10.1101/2020.11.06.371963v1)
 
 
 ## Contents
