@@ -34,7 +34,7 @@ runtime_bulkBcftools_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readL
 fn <- "../../benchmarking/scenarios/HGSOC/20pc/bulkCellSNP_cellSNPVireo/runtimes/runtime_bulkCellSNP_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_bulkCellSNP_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../benchmarking/scenarios/HGSOC/20pc/singlecellCellSNP_cellSNPVireo/runtimes/runtime_singlecellCellSNP_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
+fn <- "../../benchmarking/scenarios/HGSOC/20pc/singlecellCellSNP_cellSNPVireo-bak/runtimes/runtime_singlecellCellSNP_cellSNPVireo_cellSNP_HGSOC_20pc.txt"
 runtime_singlecellCellSNP_cellSNP <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 

@@ -44,7 +44,7 @@ scenario_names <- c(
   "bulkBcftools_cellSNPVireo", 
   "bulkBcftools_demuxlet", 
   "bulkCellSNP_cellSNPVireo", 
-  "singlecellCellSNP_cellSNPVireo"
+  "singlecellCellSNP_cellSNPVireo-bak"
 )
 
 summary_tables <- vector("list", length(scenario_names))
