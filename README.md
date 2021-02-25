@@ -40,7 +40,7 @@ Scripts for additional steps outside the main workflow and benchmark evaluations
 
 - [alternative](alternative/): scripts for alternative tools that were not used in the final workflow, which may be useful in the future (e.g. `salmon alevin` instead of `Cell Ranger`)
 - [download_EGA/](download_EGA/): script to download data files for lung adenocarcinoma dataset from European Genome-phenome Archive (EGA) (requires access to the controlled access data repository)
-- [filter_vcf/](filter_vcf/): script to filter 1000 Genomes Project genotype VCF file to retain only SNPs in 3' untranslated region (UTR), for much faster runtime
+- [filter_vcf/](filter_vcf/): script to filter 1000 Genomes Project genotype VCF file to retain only SNPs in 3' untranslated region (UTR), for faster runtime
 - [genotype/](genotype/): scripts to run different options of tools to generate custom genotype VCF file, including from matched bulk RNA-seq samples (using either `bcftools` or `cellSNP`), or directly from single-cell RNA-seq samples (using `cellSNP`)
 
 
@@ -48,5 +48,6 @@ Scripts for additional steps outside the main workflow and benchmark evaluations
 
 - `Vireo` paper: [Huang et al. (2019), Genome Biology](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1865-2)
 - `Vireo`: [documentation](https://vireosnp.readthedocs.io/en/latest/index.html)
+- `cellsnp-lite`: [documentation](https://github.com/single-cell-genetics/cellsnp-lite)
 - `cellSNP`: [documentation](https://github.com/single-cell-genetics/cellSNP)
 
