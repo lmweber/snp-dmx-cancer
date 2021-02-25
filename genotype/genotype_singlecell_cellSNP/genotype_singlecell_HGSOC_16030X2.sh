@@ -33,7 +33,6 @@ cellsnp-lite \
 -p 10 \
 --minMAF=0.01 \
 --minCOUNT=50 \
---UMItag=None \
 --gzip
 
 
