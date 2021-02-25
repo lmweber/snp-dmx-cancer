@@ -17,7 +17,7 @@
 # - https://vireosnp.readthedocs.io/en/latest/genotype.html
 # - https://github.com/single-cell-genetics/cellsnp-lite
 
-# runtime: 
+# runtime: ~2 hours (with 10 cores)
 
 # qsub -V -cwd -pe local 10 -l mem_free=5G,h_vmem=10G,h_fsize=100G run_cellSNP.sh
 
