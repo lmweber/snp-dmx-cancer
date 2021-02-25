@@ -23,13 +23,14 @@ start=`date +%s`
 
 # note: can be more stable to run interactively with "qrsh" instead of "qsub" on cluster
 
-cellSNP \
+cellsnp-lite \
 -s ../../../genotype/17667X1/STAR/Aligned.sortedByCoord.out.bam \
 -O ../../../genotype/17667X1/cellSNP_bulk \
 -p 10 \
 --minMAF=0.01 \
 --minCOUNT=50 \
---UMItag=None
+--UMItag=None \
+--gzip
 
 
 # end runtime

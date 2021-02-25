@@ -26,14 +26,15 @@ start=`date +%s`
 mkdir -p ../../../genotype/16030X2
 gunzip -c ../../../benchmarking/outputs/HGSOC/16030X2_HJVMLDMXX/outs/filtered_feature_bc_matrix/barcodes.tsv.gz > ../../../genotype/16030X2/barcodes.tsv
 
-cellSNP \
+cellsnp-lite \
 -s ../../../benchmarking/outputs/HGSOC/16030X2_HJVMLDMXX/outs/possorted_genome_bam.bam \
 -b ../../../genotype/16030X2/barcodes.tsv \
 -O ../../../genotype/16030X2/cellSNP_singlecell \
 -p 10 \
 --minMAF=0.01 \
 --minCOUNT=50 \
---UMItag=None
+--UMItag=None \
+--gzip
 
 
 # end runtime
