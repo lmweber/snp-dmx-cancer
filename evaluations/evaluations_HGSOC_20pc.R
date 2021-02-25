@@ -136,7 +136,7 @@ for (i in 1:length(scenario_names)) {
   } else if (i == 3) {
     levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X4", "X2")
   } else if (i == 5) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X4", "X3", "X2")
+    levels(df_truth_tmp$predicted)[1:3] <- c("X2", "X4", "X3")
   } else if (i == 6) {
     levels(df_truth_tmp$predicted)[1:3] <- c("X4", "X2", "X3")
   }
