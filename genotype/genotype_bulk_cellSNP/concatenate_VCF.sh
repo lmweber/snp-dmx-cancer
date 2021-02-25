@@ -21,25 +21,25 @@ start=`date +%s`
 
 # convert gzipped output files to bgzipped format (required by vcftools)
 
-gunzip -c ../../../genotype/17667X1/cellSNP_bulk/cellSNP.cells.vcf.gz > ../../../genotype/17667X1/cellSNP_bulk/cellSNP.cells-bgz.vcf
-bgzip ../../../genotype/17667X1/cellSNP_bulk/cellSNP.cells-bgz.vcf
-gunzip -c ../../../genotype/17667X2/cellSNP_bulk/cellSNP.cells.vcf.gz > ../../../genotype/17667X2/cellSNP_bulk/cellSNP.cells-bgz.vcf
-bgzip ../../../genotype/17667X2/cellSNP_bulk/cellSNP.cells-bgz.vcf
-gunzip -c ../../../genotype/17667X3/cellSNP_bulk/cellSNP.cells.vcf.gz > ../../../genotype/17667X3/cellSNP_bulk/cellSNP.cells-bgz.vcf
-bgzip ../../../genotype/17667X3/cellSNP_bulk/cellSNP.cells-bgz.vcf
+gunzip -c ../../../genotype/17667X1/cellSNP_bulk/cellSNP.base.vcf.gz > ../../../genotype/17667X1/cellSNP_bulk/cellSNP.base-bgz.vcf
+bgzip ../../../genotype/17667X1/cellSNP_bulk/cellSNP.base-bgz.vcf
+gunzip -c ../../../genotype/17667X2/cellSNP_bulk/cellSNP.base.vcf.gz > ../../../genotype/17667X2/cellSNP_bulk/cellSNP.base-bgz.vcf
+bgzip ../../../genotype/17667X2/cellSNP_bulk/cellSNP.base-bgz.vcf
+gunzip -c ../../../genotype/17667X3/cellSNP_bulk/cellSNP.base.vcf.gz > ../../../genotype/17667X3/cellSNP_bulk/cellSNP.base-bgz.vcf
+bgzip ../../../genotype/17667X3/cellSNP_bulk/cellSNP.base-bgz.vcf
 
 
 # concatenate VCF files using vcftools (vcf-concat)
 
 mkdir -p ../../../genotype/cellSNP_bulk_merged
 
-vcf-concat ../../../genotype/17667X1/cellSNP_bulk/cellSNP.cells-bgz.vcf.gz ../../../genotype/17667X2/cellSNP_bulk/cellSNP.cells-bgz.vcf.gz ../../../genotype/17667X3/cellSNP_bulk/cellSNP.cells-bgz.vcf.gz > \
-../../../genotype/cellSNP_bulk_merged/cellSNP.cells-merged.vcf
+vcf-concat ../../../genotype/17667X1/cellSNP_bulk/cellSNP.base-bgz.vcf.gz ../../../genotype/17667X2/cellSNP_bulk/cellSNP.base-bgz.vcf.gz ../../../genotype/17667X3/cellSNP_bulk/cellSNP.base-bgz.vcf.gz > \
+../../../genotype/cellSNP_bulk_merged/cellSNP.base-merged.vcf
 
 
 # keep both unzipped and gzipped versions
 
-gzip -c ../../../genotype/cellSNP_bulk_merged/cellSNP.cells-merged.vcf > ../../../genotype/cellSNP_bulk_merged/cellSNP.cells-merged.vcf.gz
+gzip -c ../../../genotype/cellSNP_bulk_merged/cellSNP.base-merged.vcf > ../../../genotype/cellSNP_bulk_merged/cellSNP.base-merged.vcf.gz
 
 
 # end runtime
