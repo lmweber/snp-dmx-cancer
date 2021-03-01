@@ -30,7 +30,7 @@ cellsnp-lite \
 -s ../../../benchmarking/scenarios/HGSOC/30pc/bam_merged_doublets_HGSOC_30pc.bam \
 -b ../../../benchmarking/scenarios/HGSOC/30pc/barcodes_merged_HGSOC_30pc.tsv \
 -O ../../../benchmarking/scenarios/HGSOC/30pc/singlecellCellSNP_cellSNPVireo/cellSNP \
--R ../../../genotype/cellSNP_singlecell_merged/cellSNP.cells-merged.vcf \
+-R ../../../genotype/cellSNP_singlecell_merged/cellSNP.base-merged.vcf \
 -p 10 \
 --minMAF=0.1 \
 --minCOUNT=20 \
