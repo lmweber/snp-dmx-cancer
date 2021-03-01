@@ -35,7 +35,7 @@ for (i in 1:length(sample_names_bulk)){
   fn <- paste0("../../genotype/runtimes/genotype_bulk_cellSNP/runtime_genotype_bulk_cellSNP_", sample_names_bulk[i], ".txt")
   runtime_genotype_bulk_cellSNP[[i]] <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
   
-  fn <- paste0("../../genotype/runtimes/genotype_singlecell_cellSNP-bak/runtime_genotype_singlecell_cellSNP_", sample_names_singlecell[i], ".txt")
+  fn <- paste0("../../genotype/runtimes/genotype_singlecell_cellSNP/runtime_genotype_singlecell_cellSNP_", sample_names_singlecell[i], ".txt")
   runtime_genotype_singlecell_cellSNP[[i]] <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 }
 
@@ -48,7 +48,7 @@ runtime_genotype_singlecell_cellSNP <- unlist(runtime_genotype_singlecell_cellSN
 fn <- "../../genotype/runtimes/genotype_bulk_cellSNP/runtime_concatenate_VCF.txt"
 runtime_genotype_bulk_cellSNP_concatenate <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
-fn <- "../../genotype/runtimes/genotype_singlecell_cellSNP-bak/runtime_concatenate_VCF.txt"
+fn <- "../../genotype/runtimes/genotype_singlecell_cellSNP/runtime_concatenate_VCF.txt"
 runtime_genotype_singlecell_cellSNP_concatenate <- gsub("runtime: ", "", gsub(" seconds", "", readLines(fn)))
 
 fn <- "../../genotype/runtimes/genotype_bulk_bcftools/runtime_genotype_bulk_HGSOC_bcftools.txt"
