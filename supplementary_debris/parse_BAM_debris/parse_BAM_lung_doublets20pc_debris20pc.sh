@@ -38,17 +38,21 @@ start=`date +%s`
 # note hyphen for argument order
 samtools view -h ../../../benchmarking/scenarios/lung/20pc/bam_merged_doublets_lung_20pc.bam | \
 awk \
-'function assign() { cmd = "shuf -n 1 ../../../supplementary_debris/scenarios/lung/20pc/debris_remaining_lung_doublets20pc_debris30pc.tsv"; cmd | getline assigned; close(cmd); return assigned } 
-NR==1 { next } FNR==NR { a[$1]=$1; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, assign()) }1' \
-../../../supplementary_debris/scenarios/lung/20pc/debris_lysed_lung_doublets20pc_debris30pc.tsv - | \
-samtools view -bo ../../../supplementary_debris/scenarios/lung/20pc/bam_merged_lung_doublets20pc_debris30pc.bam
+-v f_remaining="../../../supplementary_debris/scenarios/lung/20pc/debris_remaining_lung_doublets20pc_debris20pc.tsv" \
+-v n_remaining="$(wc -l ../../../supplementary_debris/scenarios/lung/20pc/debris_remaining_lung_doublets20pc_debris20pc.tsv | cut -f1 -d' ')" \
+'NR==1 { next } 
+FNR==NR { lysed[$2]=$2; next } 
+FILENAME==f_remaining { remaining[$1]=$2; next } 
+(i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in lysed { gsub(i, remaining[int(rand()*n_remaining+1)]) }1' \
+../../../supplementary_debris/scenarios/lung/20pc/debris_lysed_lung_doublets20pc_debris20pc.tsv ../../../supplementary_debris/scenarios/lung/20pc/debris_remaining_lung_doublets20pc_debris20pc.tsv - | \
+samtools view -bo ../../../supplementary_debris/scenarios/lung/20pc/bam_merged_lung_doublets20pc_debris20pc.bam
 
 
 # ---------
 # Index BAM
 # ---------
 
-samtools index ../../../supplementary_debris/scenarios/lung/20pc/bam_merged_lung_doublets20pc_debris30pc.bam
+samtools index ../../../supplementary_debris/scenarios/lung/20pc/bam_merged_lung_doublets20pc_debris20pc.bam
 
 
 # end runtime
@@ -57,5 +61,5 @@ runtime=`expr $end - $start`
 
 # save runtime
 mkdir -p ../../../supplementary_debris/scenarios/lung/20pc
-echo runtime: $runtime seconds > ../../../supplementary_debris/scenarios/lung/20pc/runtime_parse_BAM_lung_doublets20pc_debris30pc.txt
+echo runtime: $runtime seconds > ../../../supplementary_debris/scenarios/lung/20pc/runtime_parse_BAM_lung_doublets20pc_debris20pc.txt
 

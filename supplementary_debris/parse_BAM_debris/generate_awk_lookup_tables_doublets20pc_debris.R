@@ -24,7 +24,7 @@
 # parameters for each simulation scenario
 
 # proportion of lysed cells
-prop_debris_sims <- c(0.1, 0.3)
+prop_debris_sims <- c(0.1, 0.2)
 
 # dataset names
 dataset_name_sims <- c("HGSOC", "lung")
@@ -68,11 +68,13 @@ f_sim_debris <- function(prop_debris, dataset_name, file_barcodes_merged) {
   
   # generate lookup table / list of lysed cell barcodes
   df_lookup_lysed <- tibble(
+    index = seq_along(ix_lysed), 
     lysed = df_barcodes$barcode[ix_lysed]
   )
   
   # generate lookup table / list of remaining cell barcodes
   df_lookup_remaining <- tibble(
+    index = seq_along(ix_remaining), 
     remaining = df_barcodes$barcode[ix_remaining]
   )
   
@@ -86,7 +88,7 @@ f_sim_debris <- function(prop_debris, dataset_name, file_barcodes_merged) {
     paste0("debris_remaining_", dataset_name, "_doublets20pc_debris", prop_debris * 100, "pc.tsv")
   )
   write_tsv(df_lookup_lysed, fn_out_lysed)
-  write_tsv(df_lookup_remaining, fn_out_remaining)
+  # write_tsv(df_lookup_remaining, fn_out_remaining)
   
   
   # ------------------------------
@@ -94,10 +96,10 @@ f_sim_debris <- function(prop_debris, dataset_name, file_barcodes_merged) {
   # ------------------------------
   
   # save updated barcodes file containing remaining cells
-  fn_out_barcodes <- file.path(
-    paste0("../../../supplementary_debris/scenarios/", dataset_name, "/20pc"), 
-    paste0("barcodes_merged_", dataset_name, "_doublets20pc_debris", prop_debris * 100, "pc.tsv")
-  )
+  # fn_out_barcodes <- file.path(
+  #   paste0("../../../supplementary_debris/scenarios/", dataset_name, "/20pc"), 
+  #   paste0("barcodes_merged_", dataset_name, "_doublets20pc_debris", prop_debris * 100, "pc.tsv")
+  # )
   write_tsv(df_lookup_remaining, fn_out_remaining, col_names = FALSE)
   
 }
