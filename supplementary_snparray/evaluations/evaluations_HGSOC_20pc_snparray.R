@@ -4,7 +4,7 @@
 
 # Script to generate plots for performance evaluations of benchmarking scenarios
 
-# HGSOC dataset, no doublets simulation
+# HGSOC dataset, 20pc doublets simulation
 
 
 # module load conda_R/4.0
@@ -22,11 +22,35 @@ library(ggplot2)
 
 # load ground truth stored in sample ID suffixes in cell barcodes
 
-fn_barcodes_merged <- "../../benchmarking/outputs/HGSOC/barcodes_merged/barcodes_merged.tsv"
+# barcodes
+fn_barcodes_merged <- "../../../benchmarking/scenarios/HGSOC/20pc/barcodes_merged_HGSOC_20pc.tsv"
 barcodes_merged <- read_table(fn_barcodes_merged, col_names = "barcode_id")
 
-df_truth <- barcodes_merged %>% 
-  mutate(sample_id = gsub("^[A-Za-z]+-", "", barcode_id))
+# identify doublets
+fn_lookup_table <- "../../../benchmarking/scenarios/HGSOC/20pc/lookup_table_doublets_HGSOC_20pc.tsv"
+lookup_table <- read_tsv(fn_lookup_table)
+
+lookup_table <- lookup_table %>% mutate(
+  doublet_sample1 = gsub("^[A-Za-z]+-", "", original), 
+  doublet_sample2 = gsub("^[A-Za-z]+-", "", replacement), 
+  is_doublet = TRUE
+)
+
+lookup_table <- lookup_table %>% mutate(
+  barcode_id = replacement, 
+  doublet_id = paste(doublet_sample1, doublet_sample2, sep = "_")
+)
+
+lookup_table_sub <- lookup_table[, c("barcode_id", "doublet_id", "is_doublet")]
+
+# combine data frames
+df_truth <- left_join(barcodes_merged, lookup_table_sub, by = c("barcode_id" = "barcode_id"))
+df_truth$is_doublet[is.na(df_truth$is_doublet)] <- FALSE
+df_truth <- df_truth %>% mutate(
+  sample_id = gsub("^[A-Za-z]+-", "", barcode_id)
+)
+df_truth$sample_id[df_truth$is_doublet] <- "doublet"
+df_truth$sample_id %<>% factor(levels = c("X2", "X3", "X4", "doublet"))
 
 head(df_truth)
 
@@ -61,7 +85,7 @@ for (i in 1:length(scenario_names)) {
   
   # Vireo scenarios
   if (i %in% c(1:2)) {
-    fn <- paste0("../../supplementary_snparray/scenarios/HGSOC/nodoublets/", scenario_names[i], "/vireo/donor_ids.tsv")
+    fn <- paste0("../../../supplementary_snparray/scenarios/HGSOC/20pc/", scenario_names[i], "/vireo/donor_ids.tsv")
     out <- read_tsv(fn)
     out_sub <- out[, c("cell", "donor_id")]
     
@@ -76,7 +100,7 @@ for (i in 1:length(scenario_names)) {
   
   # # demuxlet scenarios
   # if (i == 4) {
-  #   fn <- paste0("../../supplementary_snparray/scenarios/HGSOC/nodoublets/", scenario_names[i], "/demuxlet.best")
+  #   fn <- paste0("../../../supplementary_snparray/scenarios/HGSOC/20pc/", scenario_names[i], "/demuxlet.best")
   #   out <- read_tsv(fn)
   #   out_sub <- out[, c("BARCODE", "BEST")]
   #   
@@ -104,7 +128,7 @@ for (i in 1:length(scenario_names)) {
   if (i == 1) {
     levels(df_truth_tmp$predicted)[1:3] <- c("X4", "X2", "X3")
   } else if (i == 2) {
-    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X2", "X4")
+    levels(df_truth_tmp$predicted)[1:3] <- c("X4", "X3", "X2")
   }
   
   # demuxlet scenarios
@@ -183,9 +207,9 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   scale_shape_manual(values = c(1, 2, 0)) + 
   xlim(0.4, 1.0) + 
   ylim(0.67, 1.0) + 
-  ggtitle("Precision-recall: HGSOC, no doublets") + 
+  ggtitle("Precision-recall: HGSOC, 20% doublets") + 
   theme_bw()
 
-ggsave("../../plots/supp_snparray/precision_recall_HGSOC_nodoublets_snparray.pdf", width = 6.25, height = 3.5)
-ggsave("../../plots/supp_snparray/precision_recall_HGSOC_nodoublets_snparray.png", width = 6.25, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_20pc_snparray.pdf", width = 6.25, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_20pc_snparray.png", width = 6.25, height = 3.5)
 
