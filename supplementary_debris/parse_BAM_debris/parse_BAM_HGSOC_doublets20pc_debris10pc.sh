@@ -38,8 +38,8 @@ start=`date +%s`
 # note hyphen for argument order
 samtools view -h ../../../benchmarking/scenarios/HGSOC/20pc/bam_merged_doublets_HGSOC_20pc.bam | \
 awk \
--v assigned="$(shuf -n 1 ../../../supplementary_debris/scenarios/HGSOC/20pc/debris_remaining_HGSOC_doublets20pc_debris10pc.tsv)" \
-'NR==1 { next } FNR==NR { a[$1]=$1; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, assigned) }1' \
+'function assign() { cmd = "shuf -n 1 ../../../supplementary_debris/scenarios/HGSOC/20pc/debris_remaining_HGSOC_doublets20pc_debris10pc.tsv"; cmd | getline assigned; close(cmd); return assigned } 
+NR==1 { next } FNR==NR { a[$1]=$1; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, assign()) }1' \
 ../../../supplementary_debris/scenarios/HGSOC/20pc/debris_lysed_HGSOC_doublets20pc_debris10pc.tsv - | \
 samtools view -bo ../../../supplementary_debris/scenarios/HGSOC/20pc/bam_merged_HGSOC_doublets20pc_debris10pc.bam
 
