@@ -29,7 +29,7 @@ mkdir -p ../../../supplementary_debris/scenarios/HGSOC/30pc/debris10pc/bulkBcfto
 # using recommended parameters for cellSNP
 cellsnp-lite \
 -s ../../../supplementary_debris/scenarios/HGSOC/30pc/bam_merged_HGSOC_doublets30pc_debris10pc.bam \
--b ../../../supplementary_debris/scenarios/HGSOC/30pc/debris_remaining_HGSOC_doublets30pc_debris10pc.tsv \
+-b ../../../supplementary_debris/scenarios/HGSOC/30pc/barcodes_merged_HGSOC_doublets30pc_debris10pc.tsv \
 -O ../../../supplementary_debris/scenarios/HGSOC/30pc/debris10pc/bulkBcftools_cellSNPVireo/cellSNP \
 -R ../../../genotype/bcftools/bcftools_HGSOC_rehead.vcf \
 -p 4 \

@@ -28,7 +28,7 @@ mkdir -p ../../../supplementary_debris/scenarios/HGSOC/30pc/debris20pc/bulkBcfto
 
 demuxlet \
 --sam ../../../supplementary_debris/scenarios/HGSOC/30pc/bam_merged_HGSOC_doublets30pc_debris20pc.bam \
---group-list ../../../supplementary_debris/scenarios/HGSOC/30pc/debris_remaining_HGSOC_doublets30pc_debris20pc.tsv \
+--group-list ../../../supplementary_debris/scenarios/HGSOC/30pc/barcodes_merged_HGSOC_doublets30pc_debris20pc.tsv \
 --alpha 0 --alpha 0.5 \
 --vcf ../../../genotype/bcftools/bcftools_HGSOC_rehead.vcf \
 --field GT \

@@ -29,7 +29,7 @@ mkdir -p ../../../supplementary_debris/scenarios/lung/nodoublets/debris10pc/1000
 # using recommended parameters for cellSNP
 cellsnp-lite \
 -s ../../../supplementary_debris/scenarios/lung/nodoublets/bam_merged_lung_nodoublets_debris10pc.bam \
--b ../../../supplementary_debris/scenarios/lung/nodoublets/debris_remaining_lung_nodoublets_debris10pc.tsv \
+-b ../../../supplementary_debris/scenarios/lung/nodoublets/barcodes_merged_lung_nodoublets_debris10pc.tsv \
 -O ../../../supplementary_debris/scenarios/lung/nodoublets/debris10pc/1000GenomesFilt_cellSNPVireo/cellSNP \
 -R ../../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p 4 \

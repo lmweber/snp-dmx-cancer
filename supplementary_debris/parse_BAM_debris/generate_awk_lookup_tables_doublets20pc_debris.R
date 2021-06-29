@@ -88,19 +88,21 @@ f_sim_debris <- function(prop_debris, dataset_name, file_barcodes_merged) {
     paste0("debris_remaining_", dataset_name, "_doublets20pc_debris", prop_debris * 100, "pc.tsv")
   )
   write_tsv(df_lookup_lysed, fn_out_lysed)
-  # write_tsv(df_lookup_remaining, fn_out_remaining)
+  write_tsv(df_lookup_remaining, fn_out_remaining, col_names = FALSE)
   
   
   # ------------------------------
   # Generate updated barcodes file
   # ------------------------------
   
-  # save updated barcodes file containing remaining cells
-  # fn_out_barcodes <- file.path(
-  #   paste0("../../../supplementary_debris/scenarios/", dataset_name, "/20pc"), 
-  #   paste0("barcodes_merged_", dataset_name, "_doublets20pc_debris", prop_debris * 100, "pc.tsv")
-  # )
-  write_tsv(df_lookup_remaining, fn_out_remaining, col_names = FALSE)
+  # save updated barcodes file containing remaining cells (without column of indices)
+  df_barcodes <- df_lookup_remaining[, 2, drop = FALSE]
+  
+  fn_out_barcodes <- file.path(
+    paste0("../../../supplementary_debris/scenarios/", dataset_name, "/20pc"),
+    paste0("barcodes_merged_", dataset_name, "_doublets20pc_debris", prop_debris * 100, "pc.tsv")
+  )
+  write_tsv(df_barcodes, fn_out_barcodes, col_names = FALSE)
   
 }
 
