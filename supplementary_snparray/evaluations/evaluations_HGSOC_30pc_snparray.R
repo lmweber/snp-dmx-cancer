@@ -64,7 +64,8 @@ head(df_truth)
 
 scenario_names <- c(
   "1000GenomesFiltMEGA_cellSNPVireo", 
-  "bulkBcftoolsMEGA_cellSNPVireo"
+  "bulkBcftoolsMEGA_cellSNPVireo"#, 
+  #"bulkBcftoolsMEGA_demuxlet"
 )
 
 summary_tables <- vector("list", length(scenario_names))
@@ -99,7 +100,7 @@ for (i in 1:length(scenario_names)) {
   }
   
   # # demuxlet scenarios
-  # if (i == 4) {
+  # if (i == 3) {
   #   fn <- paste0("../../../supplementary_snparray/scenarios/HGSOC/30pc/", scenario_names[i], "/demuxlet.best")
   #   out <- read_tsv(fn)
   #   out_sub <- out[, c("BARCODE", "BEST")]
@@ -132,7 +133,7 @@ for (i in 1:length(scenario_names)) {
   }
   
   # demuxlet scenarios
-  # if (i == 4) {
+  # if (i == 3) {
   #   levels(df_truth_tmp$predicted)[8:10] <- c("X3", "X2", "X4")
   # }
   
