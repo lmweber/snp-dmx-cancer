@@ -162,6 +162,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Precision-recall: lung, no doublets") + 
   theme_bw()
 
-ggsave("../../../plots/supp_snparray/precision_recall_lung_nodoublets_snparray.pdf", width = 6.25, height = 3.5)
-ggsave("../../../plots/supp_snparray/precision_recall_lung_nodoublets_snparray.png", width = 6.25, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_lung_nodoublets_snparray.pdf", width = 6.5, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_lung_nodoublets_snparray.png", width = 6.5, height = 3.5)
 

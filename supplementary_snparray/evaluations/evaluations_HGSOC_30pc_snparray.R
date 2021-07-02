@@ -212,6 +212,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Precision-recall: HGSOC, 30% doublets") + 
   theme_bw()
 
-ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_30pc_snparray.pdf", width = 6.25, height = 3.5)
-ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_30pc_snparray.png", width = 6.25, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_30pc_snparray.pdf", width = 6.5, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_30pc_snparray.png", width = 6.5, height = 3.5)
 
