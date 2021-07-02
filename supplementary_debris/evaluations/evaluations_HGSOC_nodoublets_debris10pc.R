@@ -188,6 +188,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("HGSOC, no doublets, 10% debris") + 
   theme_bw()
 
-ggsave("../../../plots/supp_debris/precision_recall_HGSOC_nodoublets_debris10pc.pdf", width = 6.25, height = 3.5)
-ggsave("../../../plots/supp_debris/precision_recall_HGSOC_nodoublets_debris10pc.png", width = 6.25, height = 3.5)
+ggsave("../../../plots/supp_debris/precision_recall_HGSOC_nodoublets_debris10pc.pdf", width = 6, height = 3.5)
+ggsave("../../../plots/supp_debris/precision_recall_HGSOC_nodoublets_debris10pc.png", width = 6, height = 3.5)
 
