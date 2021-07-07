@@ -21,7 +21,7 @@ library(ggplot2)
 # load ground truth stored in sample ID suffixes in cell barcodes
 
 # barcodes
-fn_barcodes_merged <- "../../supplementary_healthy/scenarios/30pc/barcodes_merged_30pc.tsv"
+fn_barcodes_merged <- "../../supplementary_healthy/scenarios/30pc/barcodes_merged_doublets_30pc.tsv"
 barcodes_merged <- read_table(fn_barcodes_merged, col_names = "barcode_id")
 
 # identify doublets

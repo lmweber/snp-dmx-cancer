@@ -91,7 +91,7 @@ f_sim_doublets <- function(prop_doublets, file_barcodes_merged) {
   # save barcodes file
   fn_out <- file.path(
     dir_out, 
-    paste0("barcodes_merged_", prop_doublets * 100, "pc.tsv")
+    paste0("barcodes_merged_doublets_", prop_doublets * 100, "pc.tsv")
   )
   write_tsv(tibble(barcodes_merged_new), fn_out, col_names = FALSE)
   

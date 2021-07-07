@@ -15,7 +15,7 @@ mkdir -p ../../supplementary_healthy/scenarios/30pc/1000GenomesFilt_cellSNPVireo
 
 cellsnp-lite \
 -s ../../supplementary_healthy/scenarios/30pc/bam_merged_doublets_30pc.bam \
--b ../../supplementary_healthy/scenarios/30pc/barcodes_merged_30pc.tsv \
+-b ../../supplementary_healthy/scenarios/30pc/barcodes_merged_doublets_30pc.tsv \
 -O ../../supplementary_healthy/scenarios/30pc/1000GenomesFilt_cellSNPVireo/cellSNP \
 -R ../../data/cellSNP/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.threeUTRs.vcf \
 -p 10 \
