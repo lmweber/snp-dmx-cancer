@@ -69,10 +69,15 @@ sum(snps_MEGA %in% snps_bcftools)  # 45846 out of 605375 (7.6%)
 sum(snps_MEGA %in% snps_1000GenomesUnfilt)  # 638665 out of 7416067 (8.6%)
 sum(snps_MEGA %in% snps_1000GenomesFilt)  # 14021 out of 85594 (16.4%)
 
+sum(snps_bcftools %in% snps_MEGA)  # 45846 out of 1733365 (2.6%)
+sum(snps_1000GenomesUnfilt %in% snps_MEGA)  # 638668 out of 1733365 (3.7%)
+sum(snps_1000GenomesFilt %in% snps_MEGA)  # 14150 out of 1733365 (0.8%)
+
 
 # also calculate previous overlap
 
 sum(snps_bcftools %in% snps_1000GenomesUnfilt)  # 356814 out of 7416067 (4.8%)
+sum(snps_bcftools %in% snps_1000GenomesFilt)  # 28502 out of 85594 (33.3%)
 
 
 # --------------
