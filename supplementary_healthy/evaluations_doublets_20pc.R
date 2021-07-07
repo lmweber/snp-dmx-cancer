@@ -107,7 +107,7 @@ for (i in 1:length(scenario_names)) {
   
   # Vireo scenarios
   if (i == 1) {
-    levels(df_truth_tmp$predicted)[1:5] <- c("oaqd2", "euts1", "ieki3", "nufh3", "babz3")
+    levels(df_truth_tmp$predicted)[1:5] <- c("euts1", "babz3", "nufh3", "ieki3", "oaqd2")
   }
   
   # updated summary table
@@ -155,7 +155,10 @@ df_plot <- gather(df_plot, "sample_id", "value", "euts1", "nufh3", "babz3", "oaq
 
 df_plot$scenario <- factor(df_plot$scenario)
 df_plot$metric <- as.factor(df_plot$metric)
-df_plot$sample_id <- as.factor(df_plot$sample_id)
+df_plot$sample_id <- factor(
+  df_plot$sample_id, 
+  levels = c("euts1", "nufh3", "babz3", "oaqd2", "ieki3")
+)
 
 # summary values
 df_plot %>% 

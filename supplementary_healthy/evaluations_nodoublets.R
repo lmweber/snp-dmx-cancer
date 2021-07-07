@@ -132,7 +132,7 @@ df_plot <- gather(df_plot, "sample_id", "value", "euts1", "nufh3", "babz3", "oaq
 
 df_plot$scenario <- factor(df_plot$scenario)
 df_plot$metric <- as.factor(df_plot$metric)
-df_plot$sample_id <- as.factor(
+df_plot$sample_id <- factor(
   df_plot$sample_id, 
   levels = c("euts1", "nufh3", "babz3", "oaqd2", "ieki3")
 )
