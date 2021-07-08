@@ -100,6 +100,11 @@ for (i in 1:length(scenario_names)) {
     
     df_truth_tmp$truth <- factor(df_truth_tmp$sample_id)
     df_truth_tmp$predicted <- factor(df_truth_tmp$donor_id)
+    
+    # truth for doublets confusion matrix
+    df_truth_tmp$truth_doublets <- as.character(df_truth_tmp$sample_id)
+    ix_dbl <- df_truth_tmp$sample_id == "doublet"
+    df_truth_tmp$truth_doublets[ix_dbl] <- as.character(df_truth_tmp$doublet_id[ix_dbl])
   }
   
   # demuxlet scenarios
@@ -115,12 +120,22 @@ for (i in 1:length(scenario_names)) {
     
     df_truth_tmp$truth <- factor(df_truth_tmp$sample_id)
     df_truth_tmp$predicted <- factor(df_truth_tmp$BEST)
+    
+    # truth for doublets confusion matrix
+    df_truth_tmp$truth_doublets <- as.character(df_truth_tmp$sample_id)
+    ix_dbl <- df_truth_tmp$sample_id == "doublet"
+    df_truth_tmp$truth_doublets[ix_dbl] <- as.character(df_truth_tmp$doublet_id[ix_dbl])
   }
   
   
   # --------------------------------------------
   # calculate summary table and match sample IDs
   # --------------------------------------------
+  
+  # doublets confusion matrix
+  tbl_doublets <- table(truth = df_truth_tmp$truth_doublets, predicted = df_truth_tmp$predicted)
+  #colnames(tbl_doublets) <- gsub("17667", "", gsub("-0.500", "", colnames(tbl_doublets)))
+  tbl_doublets
   
   # summary table
   tbl_summary <- table(truth = df_truth_tmp$truth, predicted = df_truth_tmp$predicted)
