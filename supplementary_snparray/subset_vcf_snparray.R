@@ -65,6 +65,26 @@ head(snps_1000GenomesUnfilt)
 head(snps_1000GenomesFilt)
 head(snps_MEGA)
 
+length(unique(snps_bcftools))  # 605367
+length(unique(snps_1000GenomesUnfilt))  # 7414539
+length(unique(snps_1000GenomesFilt))  # 84853
+length(unique(snps_MEGA))  # 1733345
+
+sum(unique(snps_bcftools) %in% unique(snps_MEGA))  # 45843
+sum(unique(snps_1000GenomesUnfilt) %in% unique(snps_MEGA))  # 638657
+sum(unique(snps_1000GenomesFilt) %in% unique(snps_MEGA))  # 14021
+
+
+# also calculate previous overlaps
+
+sum(unique(snps_bcftools) %in% unique(snps_1000GenomesUnfilt))  # 356812
+sum(unique(snps_bcftools) %in% unique(snps_1000GenomesFilt))  # 28501
+
+# check
+sum(unique(snps_1000GenomesFilt) %in% unique(snps_1000GenomesUnfilt))  # 84853
+
+
+
 sum(snps_MEGA %in% snps_bcftools)  # 45846 out of 605375 (7.6%)
 sum(snps_MEGA %in% snps_1000GenomesUnfilt)  # 638665 out of 7416067 (8.6%)
 sum(snps_MEGA %in% snps_1000GenomesFilt)  # 14021 out of 85594 (16.4%)
