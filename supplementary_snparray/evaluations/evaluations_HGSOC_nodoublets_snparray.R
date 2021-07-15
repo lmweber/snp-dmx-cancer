@@ -40,6 +40,7 @@ head(df_truth)
 
 scenario_names <- c(
   "1000GenomesFiltMEGA_cellSNPVireo", 
+  "1000GenomesUnfiltMEGA_cellSNPVireo", 
   "bulkBcftoolsMEGA_cellSNPVireo", 
   "bulkBcftoolsMEGA_demuxlet"
 )
@@ -61,7 +62,7 @@ for (i in 1:length(scenario_names)) {
   # -----------
   
   # Vireo scenarios
-  if (i %in% c(1:2)) {
+  if (i %in% c(1:3)) {
     fn <- paste0("../../../supplementary_snparray/scenarios/HGSOC/nodoublets/", scenario_names[i], "/vireo/donor_ids.tsv")
     out <- read_tsv(fn)
     out_sub <- out[, c("cell", "donor_id")]
@@ -76,7 +77,7 @@ for (i in 1:length(scenario_names)) {
   }
   
   # # demuxlet scenarios
-  if (i == 3) {
+  if (i == 4) {
     fn <- paste0("../../../supplementary_snparray/scenarios/HGSOC/nodoublets/", scenario_names[i], "/demuxlet.best")
     out <- read_tsv(fn)
     out_sub <- out[, c("BARCODE", "BEST")]
@@ -106,11 +107,13 @@ for (i in 1:length(scenario_names)) {
   if (i == 1) {
     levels(df_truth_tmp$predicted)[1:3] <- c("X4", "X2", "X3")
   } else if (i == 2) {
+    levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X4", "X2")
+  } else if (i == 3) {
     levels(df_truth_tmp$predicted)[1:3] <- c("X3", "X2", "X4")
   }
   
   # demuxlet scenarios
-  if (i == 3) {
+  if (i == 4) {
     levels(df_truth_tmp$predicted)[16:18] <- c("X4", "X3", "X2")
   }
   
@@ -177,7 +180,7 @@ df_plot <- spread(df_plot, "metric", "value")
 # color palette (modified Okabe-Ito)
 pal <- unname(palette.colors(palette = "Okabe-Ito"))
 pal[1] <- "darkmagenta"
-pal <- pal[c(1, 3, 4)]
+pal <- pal[1:4]
 
 ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_id)) + 
   geom_point(size = 1.5, stroke = 1) + 
