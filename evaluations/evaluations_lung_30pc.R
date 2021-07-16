@@ -7,7 +7,7 @@
 # Lung dataset, 30pc doublets simulation
 
 
-# module load conda_R/4.0
+# module load conda_R/4.1
 # Rscript evaluations.R
 
 
@@ -60,7 +60,7 @@ head(df_truth)
 # ----------------------
 
 # Vireo scenarios: outputs saved in file "donor_ids.tsv"
-# demuxlet scenarios: outputs saved in file
+# demuxlet scenarios: outputs saved in file "demuxlet.best"
 
 scenario_names <- c(
   "1000GenomesFilt_cellSNPVireo"

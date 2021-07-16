@@ -8,7 +8,7 @@
 # HGSOC dataset, 20pc doublets simulation, best-performing scenario
 
 
-# module load conda_R/4.0
+# module load conda_R/4.1
 # Rscript runtimes.R
 
 
