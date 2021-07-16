@@ -24,7 +24,7 @@
 # parameters for each simulation scenario
 
 # proportion of lysed cells
-prop_debris_sims <- c(0.1, 0.2)
+prop_debris_sims <- c(0.1, 0.2, 0.4)
 
 # dataset names
 dataset_name_sims <- c("HGSOC", "lung")
@@ -117,6 +117,8 @@ f_sim_debris <- function(prop_debris, dataset_name, file_barcodes_merged) {
 for (prop_debris in prop_debris_sims) {
   for (dataset_name in dataset_name_sims) {
     runtime <- system.time({
+      print(dataset_name)
+      print(prop_debris)
       file_barcodes_merged <- file.path("../../../benchmarking/outputs", dataset_name, "barcodes_merged/barcodes_merged.tsv")
       f_sim_debris(prop_debris, dataset_name, file_barcodes_merged)
     })
