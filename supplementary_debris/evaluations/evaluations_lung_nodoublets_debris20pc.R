@@ -164,6 +164,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Lung, no doublets, 20% debris") + 
   theme_bw()
 
-ggsave("../../../plots/supp_debris/precision_recall_lung_nodoublets_debris20pc.pdf", width = 6, height = 3.5)
-ggsave("../../../plots/supp_debris/precision_recall_lung_nodoublets_debris20pc.png", width = 6, height = 3.5)
+ggsave("../../../plots/supp_debris/precision_recall_lung_nodoublets_debris20pc.pdf", width = 6.15, height = 3.5)
+ggsave("../../../plots/supp_debris/precision_recall_lung_nodoublets_debris20pc.png", width = 6.15, height = 3.5)
 
