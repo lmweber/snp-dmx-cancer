@@ -13,14 +13,14 @@ start=`date +%s`
 
 # set working directory for output path
 cwd=$(pwd)
-mkdir -p ../../supplementary_healthy/outputs/oaqd2
-cd ../../supplementary_healthy/outputs/oaqd2
+mkdir -p ../../../supplementary_healthy/outputs/oaqd2
+cd ../../../supplementary_healthy/outputs/oaqd2
 
 
 cellranger count --id=oaqd2 \
 --description=oaqd2 \
---transcriptome=../../../data/cellranger/refdata-gex-GRCh38-2020-A \
---fastqs=../../../data/souporcell/fastq/oaqd2 \
+--transcriptome=../../../../data/cellranger/refdata-gex-GRCh38-2020-A \
+--fastqs=../../../../data/souporcell/fastq/oaqd2 \
 --sample=oaqd2 \
 --nosecondary \
 --jobmode=local \
@@ -37,6 +37,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../supplementary_healthy/runtimes/cellranger
-echo runtime: $runtime seconds > ../../supplementary_healthy/runtimes/cellranger/runtime_cellranger_oaqd2.txt
+mkdir -p ../../../supplementary_healthy/runtimes/cellranger
+echo runtime: $runtime seconds > ../../../supplementary_healthy/runtimes/cellranger/runtime_cellranger_oaqd2.txt
 

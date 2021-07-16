@@ -13,14 +13,14 @@ start=`date +%s`
 
 # set working directory for output path
 cwd=$(pwd)
-mkdir -p ../../supplementary_healthy/outputs/babz3
-cd ../../supplementary_healthy/outputs/babz3
+mkdir -p ../../../supplementary_healthy/outputs/babz3
+cd ../../../supplementary_healthy/outputs/babz3
 
 
 cellranger count --id=babz3 \
 --description=babz3 \
---transcriptome=../../../data/cellranger/refdata-gex-GRCh38-2020-A \
---fastqs=../../../data/souporcell/fastq/babz3 \
+--transcriptome=../../../../data/cellranger/refdata-gex-GRCh38-2020-A \
+--fastqs=../../../../data/souporcell/fastq/babz3 \
 --sample=babz3 \
 --nosecondary \
 --jobmode=local \
@@ -37,6 +37,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../supplementary_healthy/runtimes/cellranger
-echo runtime: $runtime seconds > ../../supplementary_healthy/runtimes/cellranger/runtime_cellranger_babz3.txt
+mkdir -p ../../../supplementary_healthy/runtimes/cellranger
+echo runtime: $runtime seconds > ../../../supplementary_healthy/runtimes/cellranger/runtime_cellranger_babz3.txt
 

@@ -13,14 +13,14 @@ start=`date +%s`
 
 # set working directory for output path
 cwd=$(pwd)
-mkdir -p ../../supplementary_healthy/outputs/ieki3
-cd ../../supplementary_healthy/outputs/ieki3
+mkdir -p ../../../supplementary_healthy/outputs/ieki3
+cd ../../../supplementary_healthy/outputs/ieki3
 
 
 cellranger count --id=ieki3 \
 --description=ieki3 \
---transcriptome=../../../data/cellranger/refdata-gex-GRCh38-2020-A \
---fastqs=../../../data/souporcell/fastq/ieki3 \
+--transcriptome=../../../../data/cellranger/refdata-gex-GRCh38-2020-A \
+--fastqs=../../../../data/souporcell/fastq/ieki3 \
 --sample=ieki3 \
 --nosecondary \
 --jobmode=local \
@@ -37,6 +37,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../supplementary_healthy/runtimes/cellranger
-echo runtime: $runtime seconds > ../../supplementary_healthy/runtimes/cellranger/runtime_cellranger_ieki3.txt
+mkdir -p ../../../supplementary_healthy/runtimes/cellranger
+echo runtime: $runtime seconds > ../../../supplementary_healthy/runtimes/cellranger/runtime_cellranger_ieki3.txt
 

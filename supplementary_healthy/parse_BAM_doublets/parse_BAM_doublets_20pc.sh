@@ -14,16 +14,16 @@ start=`date +%s`
 # parse through BAM file
 
 # note hyphen for argument order
-samtools view -h ../../supplementary_healthy/outputs/bam_merged/bam_merged.bam | \
+samtools view -h ../../../supplementary_healthy/outputs/bam_merged/bam_merged.bam | \
 awk \
 'NR==1 { next } FNR==NR { a[$1]=$2; next } (i=gensub(/.*CB\:Z\:([A-Za-z]+\-[A-Za-z0-9]+).*/, "\\1", 1, $0)) in a { gsub(i, a[i]) }1' \
-../../supplementary_healthy/scenarios/20pc/lookup_table_doublets_20pc.tsv - | \
-samtools view -bo ../../supplementary_healthy/scenarios/20pc/bam_merged_doublets_20pc.bam
+../../../supplementary_healthy/scenarios/20pc/lookup_table_doublets_20pc.tsv - | \
+samtools view -bo ../../../supplementary_healthy/scenarios/20pc/bam_merged_doublets_20pc.bam
 
 
 # index BAM file
 
-samtools index ../../supplementary_healthy/scenarios/20pc/bam_merged_doublets_20pc.bam
+samtools index ../../../supplementary_healthy/scenarios/20pc/bam_merged_doublets_20pc.bam
 
 
 # end runtime
@@ -31,6 +31,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 
 # save runtime
-mkdir -p ../../supplementary_healthy/runtimes/parse_BAM_doublets
-echo runtime: $runtime seconds > ../../supplementary_healthy/runtimes/parse_BAM_doublets/runtime_parse_BAM_HGSOC_20pc.txt
+mkdir -p ../../../supplementary_healthy/runtimes/parse_BAM_doublets
+echo runtime: $runtime seconds > ../../../supplementary_healthy/runtimes/parse_BAM_doublets/runtime_parse_BAM_HGSOC_20pc.txt
 

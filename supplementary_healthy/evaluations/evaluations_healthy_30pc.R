@@ -21,11 +21,34 @@ library(ggplot2)
 # load ground truth stored in sample ID suffixes in cell barcodes
 
 # barcodes
-fn_barcodes_merged <- "../../supplementary_healthy/outputs/barcodes_merged/barcodes_merged.tsv"
+fn_barcodes_merged <- "../../../supplementary_healthy/scenarios/30pc/barcodes_merged_doublets_30pc.tsv"
 barcodes_merged <- read_table(fn_barcodes_merged, col_names = "barcode_id")
 
-df_truth <- barcodes_merged %>% 
-  mutate(sample_id = gsub("^[A-Za-z]+-", "", barcode_id))
+# identify doublets
+fn_lookup_table <- "../../../supplementary_healthy/scenarios/30pc/lookup_table_doublets_30pc.tsv"
+lookup_table <- read_tsv(fn_lookup_table)
+
+lookup_table <- lookup_table %>% mutate(
+  doublet_sample1 = gsub("^[A-Za-z]+-", "", original), 
+  doublet_sample2 = gsub("^[A-Za-z]+-", "", replacement), 
+  is_doublet = TRUE
+)
+
+lookup_table <- lookup_table %>% mutate(
+  barcode_id = replacement, 
+  doublet_id = paste(doublet_sample1, doublet_sample2, sep = "_")
+)
+
+lookup_table_sub <- lookup_table[, c("barcode_id", "doublet_id", "is_doublet")]
+
+# combine data frames
+df_truth <- left_join(barcodes_merged, lookup_table_sub, by = c("barcode_id" = "barcode_id"))
+df_truth$is_doublet[is.na(df_truth$is_doublet)] <- FALSE
+df_truth <- df_truth %>% mutate(
+  sample_id = gsub("^[A-Za-z]+-", "", barcode_id)
+)
+df_truth$sample_id[df_truth$is_doublet] <- "doublet"
+df_truth$sample_id %<>% factor(levels = c("euts1", "nufh3", "babz3", "oaqd2", "ieki3", "doublet"))
 
 head(df_truth)
 
@@ -58,7 +81,7 @@ for (i in 1:length(scenario_names)) {
   
   # Vireo scenarios
   if (i %in% c(1)) {
-    fn <- paste0("../../supplementary_healthy/scenarios/nodoublets/", scenario_names[i], "/vireo/donor_ids.tsv")
+    fn <- paste0("../../../supplementary_healthy/scenarios/30pc/", scenario_names[i], "/vireo/donor_ids.tsv")
     out <- read_tsv(fn)
     out_sub <- out[, c("cell", "donor_id")]
     
@@ -84,7 +107,7 @@ for (i in 1:length(scenario_names)) {
   
   # Vireo scenarios
   if (i == 1) {
-    levels(df_truth_tmp$predicted)[1:5] <- c("oaqd2", "euts1", "babz3", "ieki3", "nufh3")
+    levels(df_truth_tmp$predicted)[1:5] <- c("oaqd2", "euts1", "ieki3", "nufh3", "babz3")
   }
   
   # updated summary table
@@ -158,11 +181,11 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   geom_point(size = 1.5, stroke = 1) + 
   scale_color_manual(values = pal) + 
   scale_shape_manual(values = c(1, 2, 0, 3, 4)) + 
-  xlim(0.7, 1) + 
-  ylim(0.7, 1) + 
-  ggtitle("Cell lines, no doublets") + 
+  xlim(0.9, 1.0) + 
+  ylim(0.7, 1.0) + 
+  ggtitle("Cell lines, 30% doublets") + 
   theme_bw()
 
-ggsave("../../plots/supp_healthy/precision_recall_healthy_nodoublets.pdf", width = 6, height = 3.5)
-ggsave("../../plots/supp_healthy/precision_recall_healthy_nodoublets.png", width = 6, height = 3.5)
+ggsave("../../../plots/supp_healthy/precision_recall_healthy_doublets30pc.pdf", width = 6, height = 3.5)
+ggsave("../../../plots/supp_healthy/precision_recall_healthy_doublets30pc.png", width = 6, height = 3.5)
 

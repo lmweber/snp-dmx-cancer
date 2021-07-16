@@ -69,7 +69,7 @@ f_sim_doublets <- function(prop_doublets, file_barcodes_merged) {
   )
   
   # save lookup table
-  dir_out <- paste0("../../supplementary_healthy/scenarios/", prop_doublets * 100, "pc")
+  dir_out <- paste0("../../../supplementary_healthy/scenarios/", prop_doublets * 100, "pc")
   dir.create(dir_out, recursive = TRUE)
   
   fn_out <- file.path(
@@ -107,7 +107,7 @@ f_sim_doublets <- function(prop_doublets, file_barcodes_merged) {
 
 for (prop_doublets in prop_doublets_sims) {
   runtime <- system.time({
-    file_barcodes_merged <- file.path("../../supplementary_healthy/outputs/barcodes_merged/barcodes_merged.tsv")
+    file_barcodes_merged <- file.path("../../../supplementary_healthy/outputs/barcodes_merged/barcodes_merged.tsv")
     f_sim_doublets(prop_doublets, file_barcodes_merged)
   })
 }
