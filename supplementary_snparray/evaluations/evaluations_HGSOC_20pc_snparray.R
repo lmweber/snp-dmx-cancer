@@ -7,7 +7,7 @@
 # HGSOC dataset, 20pc doublets simulation
 
 
-# module load conda_R/4.0
+# module load conda_R/4.1
 # Rscript evaluations.R
 
 
@@ -60,7 +60,7 @@ head(df_truth)
 # ----------------------
 
 # Vireo scenarios: outputs saved in file "donor_ids.tsv"
-# demuxlet scenarios: outputs saved in file
+# demuxlet scenarios: outputs saved in file "demuxlet.best"
 
 scenario_names <- c(
   "1000GenomesFiltMEGA_cellSNPVireo", 
@@ -215,6 +215,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Precision-recall: HGSOC, 20% doublets") + 
   theme_bw()
 
-ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_20pc_snparray.pdf", width = 6.5, height = 3.5)
-ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_20pc_snparray.png", width = 6.5, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_20pc_snparray.pdf", width = 6.7, height = 3.5)
+ggsave("../../../plots/supp_snparray/precision_recall_HGSOC_20pc_snparray.png", width = 6.7, height = 3.5)
 
