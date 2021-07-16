@@ -186,6 +186,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Cell lines, 20% doublets") + 
   theme_bw()
 
-ggsave("../../../plots/supp_healthy/precision_recall_healthy_doublets20pc.pdf", width = 6, height = 3.5)
-ggsave("../../../plots/supp_healthy/precision_recall_healthy_doublets20pc.png", width = 6, height = 3.5)
+ggsave("../../../plots/supp_healthy/precision_recall_healthy_doublets20pc.pdf", width = 6.15, height = 3.5)
+ggsave("../../../plots/supp_healthy/precision_recall_healthy_doublets20pc.png", width = 6.15, height = 3.5)
 

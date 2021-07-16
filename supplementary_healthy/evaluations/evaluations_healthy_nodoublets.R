@@ -163,6 +163,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Cell lines, no doublets") + 
   theme_bw()
 
-ggsave("../../../plots/supp_healthy/precision_recall_healthy_nodoublets.pdf", width = 6, height = 3.5)
-ggsave("../../../plots/supp_healthy/precision_recall_healthy_nodoublets.png", width = 6, height = 3.5)
+ggsave("../../../plots/supp_healthy/precision_recall_healthy_nodoublets.pdf", width = 6.15, height = 3.5)
+ggsave("../../../plots/supp_healthy/precision_recall_healthy_nodoublets.png", width = 6.15, height = 3.5)
 
