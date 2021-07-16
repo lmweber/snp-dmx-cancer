@@ -50,6 +50,6 @@ ggplot(df_plot, aes(x = n_samples, y = cost,
           subtitle = "With and without multiplexing prior to library preparation") + 
   theme_bw()
 
-ggsave("../../plots/estimated_cost_savings.pdf", width = 5, height = 3.75)
-ggsave("../../plots/estimated_cost_savings.png", width = 5, height = 3.75)
+ggsave("../../plots/main/estimated_cost_savings.pdf", width = 5, height = 3.75)
+ggsave("../../plots/main/estimated_cost_savings.png", width = 5, height = 3.75)
 

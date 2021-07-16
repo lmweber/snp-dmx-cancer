@@ -186,6 +186,6 @@ ggplot(df_plot, aes(x = recall, y = precision, color = scenario, shape = sample_
   ggtitle("Precision-recall: lung, 20% doublets") + 
   theme_bw()
 
-ggsave("../../plots/precision_recall_lung_20pc.pdf", width = 6.15, height = 3.5)
-ggsave("../../plots/precision_recall_lung_20pc.png", width = 6.15, height = 3.5)
+ggsave("../../plots/main/precision_recall_lung_20pc.pdf", width = 6.15, height = 3.5)
+ggsave("../../plots/main/precision_recall_lung_20pc.png", width = 6.15, height = 3.5)
 

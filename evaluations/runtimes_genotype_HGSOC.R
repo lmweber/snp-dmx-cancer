@@ -126,6 +126,6 @@ ggplot(df_plot, aes(x = runtime, y = method, group = sample_id, color = parallel
   theme(axis.title.y = element_blank(), 
         legend.position = "none")
 
-ggsave("../../plots/runtimes_genotype_HGSOC.pdf", width = 4.55, height = 1.75)
-ggsave("../../plots/runtimes_genotype_HGSOC.png", width = 4.55, height = 1.75)
+ggsave("../../plots/main/runtimes_genotype_HGSOC.pdf", width = 4.55, height = 1.75)
+ggsave("../../plots/main/runtimes_genotype_HGSOC.png", width = 4.55, height = 1.75)
 

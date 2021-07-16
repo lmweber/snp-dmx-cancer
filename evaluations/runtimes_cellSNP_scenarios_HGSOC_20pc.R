@@ -90,6 +90,6 @@ ggplot(df_plot, aes(x = runtime, y = method, color = parallel)) +
   theme(axis.title.y = element_blank(), 
         legend.position = "none")
 
-ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_20pc.pdf", width = 4.5, height = 2.4)
-ggsave("../../plots/runtimes_cellSNP_scenarios_HGSOC_20pc.png", width = 4.5, height = 2.4)
+ggsave("../../plots/main/runtimes_cellSNP_scenarios_HGSOC_20pc.pdf", width = 4.5, height = 2.4)
+ggsave("../../plots/main/runtimes_cellSNP_scenarios_HGSOC_20pc.png", width = 4.5, height = 2.4)
 
