@@ -1,6 +1,6 @@
 #####################################################################
 # Script to run downstream doublet detection and evaluate performance
-# Lukas Weber, June 2021
+# Lukas Weber, July 2021
 #####################################################################
 
 # Script to run downstream doublet detection tool and evaluate performance for 
