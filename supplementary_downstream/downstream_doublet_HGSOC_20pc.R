@@ -178,5 +178,5 @@ table(true = colData(sce)$true_doublet, chosen = colData(sce)$chosen_doublet)
 #        chosen
 # true   FALSE TRUE
 # FALSE  6405  3720
-# TRUE   1003  600
+# TRUE   1003   600
 

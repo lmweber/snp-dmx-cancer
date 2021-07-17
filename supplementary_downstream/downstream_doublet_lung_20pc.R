@@ -182,5 +182,5 @@ table(true = colData(sce)$true_doublet, chosen = colData(sce)$chosen_doublet)
 #        chosen
 # true   FALSE  TRUE
 # FALSE  17678  2088
-# TRUE   2221   346
+# TRUE    2221   346
 

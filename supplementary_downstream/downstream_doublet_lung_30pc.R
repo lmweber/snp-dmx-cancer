@@ -179,8 +179,8 @@ colData(sce)$chosen_doublet <- colData(sce)$label %in% chosen_dbl
 table(true = colData(sce)$true_doublet, chosen = colData(sce)$chosen_doublet)
 
 # output:
-# chosen
+#        chosen
 # true   FALSE  TRUE
-# FALSE  14251  1676
-# TRUE   3166   488
+# FALSE  14798  1129
+# TRUE    3328   326
 
