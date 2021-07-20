@@ -34,26 +34,26 @@ Scripts for the benchmark evaluations are saved in [benchmarking/](benchmarking/
 
 Scripts for the supplementary analyses are saved in the following directories:
 
-- [supplementary_debris](supplementary_debris/): scripts for additional scenarios including 10%, 20%, or 40% ambient RNA from simulated cell debris or lysed cells
-- [supplementary_snparray](supplementary_snparray/): scripts for additional scenarios using subset of SNPs from SNP array as genotype reference
-- [supplementary_healthy](supplementary_healthy/): scripts for additional scenarios for healthy (non-cancer) cell line dataset
-- [supplementary_downstream](supplementary_downstream/): scripts to run downstream doublet detection tool
+- [supplementary_debris/](supplementary_debris/): scripts for additional scenarios including 10%, 20%, or 40% ambient RNA from simulated cell debris or lysed cells
+- [supplementary_snparray/](supplementary_snparray/): scripts for additional scenarios using subset of SNPs from SNP array as genotype reference
+- [supplementary_healthy/](supplementary_healthy/): scripts for additional scenarios for healthy (non-cancer) cell line dataset
+- [supplementary_downstream/](supplementary_downstream/): scripts to run downstream doublet detection tool
 
 
 ### Additional scripts
 
 Scripts for additional steps outside the main workflow and benchmark evaluations:
 
-- [alternative](alternative/): scripts for alternative tools that were not used in the final workflow, which may be useful in the future (e.g. `salmon alevin` instead of `Cell Ranger`)
-- [download_EGA](download_EGA/): script to download data files for lung adenocarcinoma dataset (Kim et al. 2020) from European Genome-phenome Archive (EGA) (requires access to the controlled access data repository)
-- [download_souporcell](download_souporcell/): scripts to download data files for healthy (non-cancer) iPSC cell line dataset from souporcell paper (Heaton et al. 2020) from European Nucleotide Archive (ENA)
-- [filter_vcf](filter_vcf/): script to filter 1000 Genomes Project genotype VCF file to retain only SNPs in 3' untranslated regions (UTRs), for faster runtime
-- [genotype](genotype/): scripts to run different options of tools to generate custom genotype VCF file, including from matched bulk RNA-seq samples (using either `bcftools` or `cellSNP`), or directly from single-cell RNA-seq samples (using `cellSNP`)
+- [alternative/](alternative/): scripts for alternative tools that were not used in the final workflow, which may be useful in the future (e.g. `salmon alevin` instead of `Cell Ranger`)
+- [download_EGA/](download_EGA/): script to download data files for lung adenocarcinoma dataset (Kim et al. 2020) from European Genome-phenome Archive (EGA) (requires access to the controlled access data repository)
+- [download_souporcell/](download_souporcell/): scripts to download data files for healthy (non-cancer) iPSC cell line dataset from souporcell paper (Heaton et al. 2020) from European Nucleotide Archive (ENA)
+- [filter_vcf/](filter_vcf/): script to filter 1000 Genomes Project genotype VCF file to retain only SNPs in 3' untranslated regions (UTRs), for faster runtime
+- [genotype/](genotype/): scripts to run different options of tools to generate custom genotype VCF file, including from matched bulk RNA-seq samples (using either `bcftools` or `cellSNP`), or directly from single-cell RNA-seq samples (using `cellSNP`)
 
 
 ## Links
 
 - `Vireo` paper: [Huang et al. (2019), Genome Biology](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1865-2)
-- `Vireo`: [documentation](https://vireosnp.readthedocs.io/en/latest/index.html)
-- `cellsnp-lite`: [documentation](https://github.com/single-cell-genetics/cellsnp-lite)
+- [Vireo documentation](https://vireosnp.readthedocs.io/en/latest/index.html)
+- [cellsnp-lite documentation](https://github.com/single-cell-genetics/cellsnp-lite)
 
