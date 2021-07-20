@@ -1,4 +1,7 @@
 #!/bin/bash
+#$ -cwd
+#$ -l mem_free=2G,h_vmem=3G,h_fsize=100G
+
 
 #######################################
 # Shell script to run debris simulation
@@ -16,9 +19,6 @@
 # Notes:
 # - lookup tables used in awk command are saved in .tsv files generated with 
 # the scripts "generate_awk_lookup_tables_X_debris.R"
-
-
-# qsub -cwd -l mem_free=2G,h_vmem=3G,h_fsize=100G parse_BAM_debris.sh
 
 
 # start runtime

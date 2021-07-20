@@ -1,4 +1,7 @@
 #!/bin/bash
+#$ -cwd
+#$ -l mem_free=5G,h_vmem=6G,h_fsize=100G
+
 
 ##################################################
 # Shell script to run doublets simulation scenario
@@ -8,9 +11,6 @@
 # given doublets simulation scenario (VCF file, dataset, percent doublets).
 
 # Requires the modified BAM file from the previous script "parse_BAM_doublets_X.sh".
-
-
-# qsub -cwd -l mem_free=5G,h_vmem=6G,h_fsize=100G run_scenario.sh
 
 
 # start runtime

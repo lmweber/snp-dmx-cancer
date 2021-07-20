@@ -1,4 +1,7 @@
 #!/bin/bash
+#$ -cwd
+#$ -l mem_free=5G,h_vmem=6G,h_fsize=100G
+
 
 ################################################
 # Shell script to run debris simulation scenario
@@ -9,9 +12,6 @@
 # debris).
 
 # Requires the modified BAM file from the previous script "parse_BAM_X_debris.sh".
-
-
-# qsub -cwd -l mem_free=5G,h_vmem=6G,h_fsize=100G run_scenario.sh
 
 
 # start runtime
